@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="black_transparent">#99000000</color>
+    <color name="backgroundBox">#444444</color>
+    <color name="editText_Login">#242424</color>
 </resources>

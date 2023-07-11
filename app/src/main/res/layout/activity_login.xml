@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:scaleType="centerCrop"
+            android:src="@drawable/background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ImageView>
+        <LinearLayout
+            android:gravity="center"
+            android:background="@color/black_transparent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:background="@drawable/background_box"
+                android:layout_width="400dp"
+                android:layout_height="580dp">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="30dp"
+                        android:textSize="40dp"
+                        android:text="Đăng kí"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"></TextView>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <EditText
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Email"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="25dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
+
+                        <EditText
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Số điện thoại"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
+
+                        <EditText
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Mật khẩu"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
+
+                        <EditText
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Nhập lại mật khẩu"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity="center_horizontal"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <Button
+                                android:textAllCaps="false"
+                                android:textSize="15dp"
+                                android:background="@drawable/button_transparent"
+                                style="@style/btnLogingg"
+                                android:textColor="@color/white"
+                                android:layout_marginBottom="10dp"
+                                android:text="Tiếp tục bằng Email"
+                                android:layout_width="350dp"
+                                android:layout_height="50dp"></Button>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:gravity="center">
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="2dp"
+                                    android:background="@color/white"></TextView>
+
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:textSize="16dp"
+                                    android:layout_width="50dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Hoặc"
+                                    android:textColor="@color/white"></TextView>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="2dp"
+                                    android:background="@color/white"></TextView>
+                            </LinearLayout>
+                            <Button
+                                android:textAllCaps="false"
+                                android:textSize="15dp"
+                                android:background="@drawable/button_transparent"
+                                style="@style/btnLogingg"
+                                android:textColor="@color/white"
+                                android:layout_marginTop="10dp"
+                                android:text="Đăng nhập bằng Email"
+                                android:layout_width="350dp"
+                                android:layout_height="50dp"></Button>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:textSize="16dp"
+                            android:textColor="@color/white"
+                            android:text="Khi bạn đăng kí có nghĩa bạn đã chấp nhận toàn bộ điều khoản"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"></TextView>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
