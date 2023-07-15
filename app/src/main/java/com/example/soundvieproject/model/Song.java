@@ -81,4 +81,15 @@ public class Song {
     public void setArtis(String artis) {
         this.artis = artis;
     }
+
+    @Override
+    public String toString() {
+        return "Song{" +
+                "nameSong='" + nameSong + '\'' +
+                ", imgCover=" + imgCover +
+                ", stateData='" + stateData + '\'' +
+                ", lyrics='" + lyrics + '\'' +
+                ", artis='" + artis + '\'' +
+                '}';
+    }
 }
