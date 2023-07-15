@@ -13,9 +13,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ImageView>
+            android:layout_height="match_parent"></ImageView>
         <LinearLayout
             android:gravity="center"
             android:background="@color/black_transparent"
@@ -24,7 +22,7 @@
             <LinearLayout
                 android:background="@drawable/background_box"
                 android:layout_width="400dp"
-                android:layout_height="410dp">
+                android:layout_height="580dp">
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -35,7 +33,7 @@
                         android:layout_marginTop="20dp"
                         android:paddingLeft="30dp"
                         android:textSize="40dp"
-                        android:text="Đăng nhập"
+                        android:text="Đăng kí"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"></TextView>
                     <LinearLayout
@@ -44,6 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <EditText
+                            android:id="@+id/edtEmail"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
                             android:hint="Email"
@@ -54,6 +53,7 @@
                         </EditText>
 
                         <EditText
+                            android:id="@+id/edtPhone"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
                             android:hint="Số điện thoại"
@@ -63,23 +63,48 @@
                             android:layout_height="50dp">
                         </EditText>
 
+                        <EditText
+                            android:id="@+id/edtPassword"
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Mật khẩu"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
+
+                        <EditText
+                            android:id="@+id/edtComfirmPass"
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Nhập lại mật khẩu"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="350dp"
+                            android:layout_height="50dp">
+                        </EditText>
 
                         <LinearLayout
+
                             android:orientation="vertical"
                             android:gravity="center_horizontal"
                             android:layout_marginTop="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <Button
+                                android:id="@+id/btnSignup"
+                                android:gravity="center"
                                 android:textAllCaps="false"
                                 android:textSize="15dp"
                                 android:background="@drawable/button_transparent"
                                 style="@style/btnLogingg"
                                 android:textColor="@color/white"
                                 android:layout_marginBottom="10dp"
-                                android:text="Tiếp tục bằng Email"
+                                android:text="Đăng kí"
                                 android:layout_width="350dp"
-                                android:layout_height="50dp"></Button>
+                                android:layout_height="50dp" />
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -107,6 +132,7 @@
                                     android:background="@color/white"></TextView>
                             </LinearLayout>
                             <Button
+                                android:gravity="center"
                                 android:textAllCaps="false"
                                 android:textSize="15dp"
                                 android:background="@drawable/button_transparent"
@@ -118,7 +144,14 @@
                                 android:layout_height="50dp"></Button>
 
                         </LinearLayout>
-
+                        <TextView
+                            android:layout_margin="10dp"
+                            android:gravity="center"
+                            android:textSize="16dp"
+                            android:textColor="@color/white"
+                            android:text="Khi bạn đăng kí có nghĩa bạn đã chấp nhận toàn bộ điều khoản"
+                            android:layout_width="300dp"
+                            android:layout_height="wrap_content"></TextView>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -126,3 +159,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
+
