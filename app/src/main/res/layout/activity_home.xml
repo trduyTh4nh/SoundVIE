@@ -36,30 +36,34 @@
                         android:layout_height="wrap_content">
                     </TextView>
                     <LinearLayout
+
                         android:layout_gravity="center"
-                        android:gravity="right"
+                        android:gravity="center_vertical|end"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <ImageButton
-                            android:layout_margin="12dp"
-                            android:background="@color/transparent"
+                            style="@style/imageBtn"
+                            android:padding="5dp"
+                            android:layout_margin="6dp"
                             android:src="@drawable/icon_search"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content">
                         </ImageButton>
                         <ImageButton
-                            android:layout_margin="12dp"
-                            android:background="@color/transparent"
+                            style="@style/imageBtn"
+                            android:padding="5dp"
+                            android:layout_margin="6dp"
                             android:src="@drawable/icon_notify"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content">
                         </ImageButton>
                         <ImageButton
-                            android:layout_margin="12dp"
-                            android:background="@color/transparent"
+                            style="@style/imageBtn"
+                            android:padding="5dp"
+                            android:layout_marginStart="6dp"
                             android:src="@drawable/icon_setting"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content">
                         </ImageButton>
                     </LinearLayout>
                 </LinearLayout>

@@ -49,17 +49,21 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
     SongAdapter adapter;
-
-
+    SongAdapter adapter2;
+    RecyclerView rcv2;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         RecyclerView recyclerView = view.findViewById(R.id.rv_songs);
         adapter = new SongAdapter(getActivity().getApplicationContext(), list());
+        adapter2 = new SongAdapter(getActivity().getApplicationContext(), list());
+        rcv2 = view.findViewById(R.id.rv_songsPopular);
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+        rcv2.setLayoutManager(layoutManager1);
+        rcv2.setAdapter(adapter);
     }
 
     public ArrayList<Song> list(){
