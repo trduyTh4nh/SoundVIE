@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
 
         navigationView = findViewById(R.id.nav_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
-        viewPager = findViewById(R.id.viewPager);
 
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
