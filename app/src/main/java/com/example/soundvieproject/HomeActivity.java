@@ -6,16 +6,15 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.soundvieproject.DB.App;
 import com.example.soundvieproject.fragment.HomeFragment;
 import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
 import com.example.soundvieproject.fragment.UserFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
@@ -26,7 +25,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         navigationView = findViewById(R.id.nav_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
 

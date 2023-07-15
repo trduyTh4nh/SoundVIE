@@ -1,14 +1,29 @@
 package com.example.soundvieproject.model;
 
+import org.bson.types.ObjectId;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 public class Song {
 
 
     private String idSong;
+    private ObjectId id;
     private String nameSong;
     private int imgCover;
     private String stateData;
     private String lyrics;
     private String artis;
+    public Song(){}
+    public Song(ObjectId idSong, String nameSong, int imgCover, String stateData, String lyrics, String artis) {
+        this.id = idSong;
+        this.nameSong = nameSong;
+        this.imgCover = imgCover;
+        this.stateData = stateData;
+        this.lyrics = lyrics;
+        this.artis = artis;
+    }
 
     public Song(String idSong, String nameSong, int imgCover, String stateData, String lyrics, String artis) {
         this.idSong = idSong;
@@ -19,12 +34,12 @@ public class Song {
         this.artis = artis;
     }
 
-    public String getIdSong() {
-        return idSong;
+    public ObjectId getIdSong() {
+        return id;
     }
 
-    public void setIdSong(String idSong) {
-        this.idSong = idSong;
+    public void setIdSong(ObjectId idSong) {
+        this.id = idSong;
     }
 
     public String getNameSong() {

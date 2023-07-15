@@ -3,6 +3,7 @@ package com.example.soundvieproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,10 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.soundvieproject.DB.App;
+
 import org.bson.Document;
 
 import io.realm.Realm;
-import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.User;
@@ -35,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     Realm uiThreadRealm;
     MongoCollection<Document> mongoCollection;
-    App app;
+    io.realm.mongodb.App app;
     User user;
 
 
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Realm.init(this);
-        app = new App(new AppConfiguration.Builder(Appid).build());
+        app = new io.realm.mongodb.App(new AppConfiguration.Builder(Appid).build());
 
         edtEmail = findViewById(R.id.edtEmail);
         edtPass = findViewById(R.id.edtPassword);
@@ -57,14 +59,22 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String email = edtEmail.getText().toString();
                 String pass = edtPass.getText().toString();
+                if(email.equals("") || pass.equals("")){
+                    Toast.makeText(LoginActivity.this, "Vui lòng nhập nội dung", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Credentials credentials = Credentials.emailPassword(email, pass);
-                app.loginAsync(credentials, new App.Callback<User>() {
+                app.loginAsync(credentials, new io.realm.mongodb.App.Callback<User>() {
                     @Override
-                    public void onResult(App.Result<User> result) {
+                    public void onResult(io.realm.mongodb.App.Result<User> result) {
                         if (result.isSuccess()) {
-                            Log.v("Login", "Successfully!");
+                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                            App.INSTANCE.setA(app);
+                            Intent i = new Intent(LoginActivity.this, TestMongoActivity.class);
+                            startActivity(i);
                         } else
                         {
                            Log.v("Login", "Failed");
