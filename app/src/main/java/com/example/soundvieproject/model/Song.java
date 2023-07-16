@@ -1,11 +1,14 @@
 package com.example.soundvieproject.model;
 
+import androidx.annotation.NonNull;
+
 import org.bson.types.ObjectId;
 
+import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Song {
+public class Song extends RealmObject {
 
 
     private String idSong;
@@ -14,32 +17,41 @@ public class Song {
     private int imgCover;
     private String stateData;
     private String lyrics;
-    private String artis;
+    private RealmList<User> artists;
     public Song(){}
-    public Song(ObjectId idSong, String nameSong, int imgCover, String stateData, String lyrics, String artis) {
-        this.id = idSong;
+
+    public Song(ObjectId id, String nameSong, int imgCover, String stateData, String lyrics, RealmList<User> artists) {
+        this.id = id;
         this.nameSong = nameSong;
         this.imgCover = imgCover;
         this.stateData = stateData;
         this.lyrics = lyrics;
-        this.artis = artis;
+        this.artists = artists;
     }
 
-    public Song(String idSong, String nameSong, int imgCover, String stateData, String lyrics, String artis) {
+    public Song(String idSong, String nameSong, int imgCover, String stateData, String lyrics, RealmList<User> artists) {
         this.idSong = idSong;
         this.nameSong = nameSong;
         this.imgCover = imgCover;
         this.stateData = stateData;
         this.lyrics = lyrics;
-        this.artis = artis;
+        this.artists = artists;
     }
 
-    public ObjectId getIdSong() {
+    public String getIdSong() {
+        return idSong;
+    }
+
+    public void setIdSong(String idSong) {
+        this.idSong = idSong;
+    }
+
+    public ObjectId getId() {
         return id;
     }
 
-    public void setIdSong(ObjectId idSong) {
-        this.id = idSong;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getNameSong() {
@@ -74,22 +86,25 @@ public class Song {
         this.lyrics = lyrics;
     }
 
-    public String getArtis() {
-        return artis;
+    public RealmList<User> getArtists() {
+        return artists;
     }
 
-    public void setArtis(String artis) {
-        this.artis = artis;
+    public void setArtists(RealmList<User> artists) {
+        this.artists = artists;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Song{" +
-                "nameSong='" + nameSong + '\'' +
+                "idSong='" + idSong + '\'' +
+                ", id=" + id +
+                ", nameSong='" + nameSong + '\'' +
                 ", imgCover=" + imgCover +
                 ", stateData='" + stateData + '\'' +
                 ", lyrics='" + lyrics + '\'' +
-                ", artis='" + artis + '\'' +
+                ", artists=" + artists +
                 '}';
     }
 }

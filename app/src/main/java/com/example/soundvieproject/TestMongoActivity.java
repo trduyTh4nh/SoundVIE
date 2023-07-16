@@ -17,6 +17,7 @@ import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.realm.RealmList;
 import io.realm.mongodb.RealmResultTask;
 import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoCollection;
@@ -47,7 +48,7 @@ public class TestMongoActivity extends AppCompatActivity {
     }
     public void postContent(){
         User u = instance.getUser();
-        Song s = new Song(new ObjectId(), edtName.getText().toString(), R.drawable.muoingannam,edtState.getText().toString(), edtLyrics.getText().toString(), edtArtist.getText().toString());
+        Song s = new Song("test", edtName.getText().toString(), R.drawable.muoingannam,edtState.getText().toString(), edtLyrics.getText().toString(), new RealmList<com.example.soundvieproject.model.User>());
         instance.insertItem(s);
     }
     public void getContent(){

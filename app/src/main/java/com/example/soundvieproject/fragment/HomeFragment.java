@@ -67,12 +67,13 @@ public class HomeFragment extends Fragment {
     }
 
     public ArrayList<Song> list(){
-        ArrayList<Song> list = new ArrayList<>();
-        list.add(new Song("1","Blue Tequila",R.drawable.img_album, "128kbps", "Hi tequila như mọi khi trong tuần", "Táo"));
-        list.add(new Song("2","10 ngàn năm",R.drawable.muoingannam, "128kbps", "Hi tequila như mọi khi trong tuần", "PC"));
-        list.add(new Song("3","Là bạn không thể yêu",R.drawable.labankhongtheyeu, "128kbps", "Hi tequila như mọi khi trong tuần", "Lou Hoàng"));
-        list.add(new Song("4","Chúng ta của hiện tại",R.drawable.chungtacuahientai, "128kbps", "Hi tequila như mọi khi trong tuần", "Sơn Tùng MTP"));
-        return list;
+        // comment để mai connect database.
+//        ArrayList<Song> list = new ArrayList<>();
+//        list.add(new Song("1","Blue Tequila",R.drawable.img_album, "128kbps", "Hi tequila như mọi khi trong tuần", "Táo"));
+//        list.add(new Song("2","10 ngàn năm",R.drawable.muoingannam, "128kbps", "Hi tequila như mọi khi trong tuần", "PC"));
+//        list.add(new Song("3","Là bạn không thể yêu",R.drawable.labankhongtheyeu, "128kbps", "Hi tequila như mọi khi trong tuần", "Lou Hoàng"));
+//        list.add(new Song("4","Chúng ta của hiện tại",R.drawable.chungtacuahientai, "128kbps", "Hi tequila như mọi khi trong tuần", "Sơn Tùng MTP"));
+        return new ArrayList<>();
 
     }
 }
