@@ -23,7 +23,7 @@ import io.realm.mongodb.mongo.MongoDatabase;
 
 public class SignupActivity extends AppCompatActivity {
     String Appid = "soundvie-zvqhd";
-    EditText edtEmail, edtPhone, edtPass, edtConfirmPass;
+    EditText edtEmail, edtPhone, edtPass, edtConfirmPass, edtName;
     Button btnSignup;
 
     MongoDatabase mongoDatabase;
@@ -47,11 +47,11 @@ public class SignupActivity extends AppCompatActivity {
         edtPass = findViewById(R.id.edtPassword);
         edtConfirmPass = findViewById(R.id.edtComfirmPass);
         btnSignup = findViewById(R.id.btnSignup);
-
+        edtName = findViewById(R.id.edtName);
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                h.register(edtEmail.getText().toString(), edtPass.getText().toString(), edtPhone.getText().toString(), getApplicationContext());
+                h.register(edtEmail.getText().toString(), edtPass.getText().toString(), edtPhone.getText().toString(), edtName.getText().toString(), getApplicationContext());
             }
         });
     }

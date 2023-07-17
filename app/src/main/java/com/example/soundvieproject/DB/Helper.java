@@ -5,6 +5,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Dumpable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -107,11 +108,11 @@ public class Helper {
             }
         });
     }
-    public void register(String email, String password, String phone, Context c){
+    public void register(String email, String password, String phone, String name, Context c){
         a.getEmailPassword().registerUserAsync(email, password, t -> {
             if(t.isSuccess()){
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
-                insertUser(email, password,phone, c, a.currentUser().getId());
+                insertUser(email, password,phone, name, c, a.currentUser().getId());
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
@@ -121,7 +122,7 @@ public class Helper {
     public void prepare(){
 
     }
-    public void insertUser(String email, String password, String phone, Context c, String id){
+    public void insertUser(String email, String password, String phone, String name, Context c, String id){
         //prepare();
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, t -> {
@@ -135,8 +136,15 @@ public class Helper {
                 Document query = new Document("idUser", id);
                 Document newVal = new Document("$set", new Document("email", email));
                 Document newPhone = new Document("$set", new Document("phone", phone));
-
+                Document newName = new Document("$set", new Document("name", name));
                 usr.updateOne(query, newVal).getAsync(tsk -> {
+                    if(tsk.isSuccess()){
+                        Log.d("Success", "succesfully inserted user");
+                    } else {
+                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+                    }
+                });
+                usr.updateOne(query, newName).getAsync(tsk -> {
                     if(tsk.isSuccess()){
                         Log.d("Success", "succesfully inserted user");
                     } else {

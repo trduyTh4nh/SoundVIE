@@ -27,7 +27,7 @@ import io.realm.mongodb.mongo.MongoDatabase;
 public class LoginActivity extends AppCompatActivity {
 
     String Appid = "soundvie-zvqhd";
-    EditText edtEmail, edtPass, loginEmail, loginPassword, edtTest;
+    EditText edtEmail, edtPass, loginEmail, loginPassword, edtTest, edtName;
     Button btnSignup, btnLogin, btnUpload, btnRegister;
     Button btnFind;
     TextView tvShow;

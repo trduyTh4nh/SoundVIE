@@ -30,6 +30,7 @@
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
                     <TextView
                         android:textStyle="bold"
                         android:textColor="@color/white"
@@ -47,12 +48,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <EditText
+                            android:id="@+id/edtName"
+                            android:textColorHint="@color/white"
+                            android:padding="15dp"
+                            android:hint="Họ tên"
+                            android:background="@drawable/edittext_login"
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        </EditText>
+                        <EditText
                             android:id="@+id/edtEmail"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
                             android:hint="Email"
                             android:background="@drawable/edittext_login"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                         </EditText>
@@ -129,7 +140,7 @@
                                     android:layout_marginStart="10dp"
                                     android:layout_marginEnd="10dp"
                                     android:gravity="center"
-                                    android:text="Hoặc"
+                                    android:text="Có tài khoản?"
                                     android:textColor="@color/white"
                                     android:textSize="16dp"
                                     android:textStyle="bold" />
