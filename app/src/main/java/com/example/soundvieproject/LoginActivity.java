@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.soundvieproject.DB.App;
+import com.example.soundvieproject.DB.Helper;
 
 import org.bson.Document;
 
@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String Appid = "soundvie-zvqhd";
     EditText edtEmail, edtPass, loginEmail, loginPassword, edtTest;
-    Button btnSignup, btnLogin, btnUpload;
+    Button btnSignup, btnLogin, btnUpload, btnRegister;
     Button btnFind;
     TextView tvShow;
 
@@ -50,12 +50,15 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Realm.init(this);
         app = new io.realm.mongodb.App(new AppConfiguration.Builder(Appid).build());
-
+        btnRegister = findViewById(R.id.btnRegister);
         edtEmail = findViewById(R.id.edtEmail);
         edtPass = findViewById(R.id.edtPassword);
         btnLogin = findViewById(R.id.btnLogin);
 
-
+        btnRegister.setOnClickListener(v -> {
+            Intent i = new Intent(LoginActivity.this, SignupActivity.class);
+            startActivity(i);
+        });
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResult(io.realm.mongodb.App.Result<User> result) {
                         if (result.isSuccess()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                            App.INSTANCE.setA(app);
+                            Helper.INSTANCE.setA(app);
                             Intent i = new Intent(LoginActivity.this, TestMongoActivity.class);
                             startActivity(i);
                         } else

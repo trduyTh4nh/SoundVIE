@@ -35,7 +35,7 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Song song = songs.get(position);
         imgSong.setImageResource(song.getImgCover());
         nameSong.setText(song.getNameSong());
-        nameArtist.setText(song.getArtis());
+        nameArtist.setText(song.getArtists().toString());
     }
      ImageView imgSong;
      TextView nameSong;

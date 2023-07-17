@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.soundvieproject.DB.App;
 import com.example.soundvieproject.fragment.HomeFragment;
 import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;

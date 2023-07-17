@@ -9,17 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.example.soundvieproject.DB.App;
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.model.Song;
 
-import org.bson.types.ObjectId;
-
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
-import io.realm.RealmList;
 import io.realm.mongodb.RealmResultTask;
-import io.realm.mongodb.User;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
@@ -28,7 +23,7 @@ public class TestMongoActivity extends AppCompatActivity {
     Button btnAdd, btnShow;
     ListView lv;
     ArrayList<Song> songss;
-    App instance;
+    Helper instance;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,16 +35,14 @@ public class TestMongoActivity extends AppCompatActivity {
         edtArtist = findViewById(R.id.edtArtist);
         btnAdd = findViewById(R.id.btnAdd);
         btnShow = findViewById(R.id.btnShow);
-        instance = App.INSTANCE;
+        instance = Helper.INSTANCE;
         btnAdd.setOnClickListener(v -> postContent());
         btnShow.setOnClickListener(v -> getContent());
         lv = findViewById(R.id.lvMongo);
         songss = new ArrayList<Song>();
     }
     public void postContent(){
-        User u = instance.getUser();
-        Song s = new Song("test", edtName.getText().toString(), R.drawable.muoingannam,edtState.getText().toString(), edtLyrics.getText().toString(), new RealmList<com.example.soundvieproject.model.User>());
-        instance.insertItem(s);
+        instance.prepareDatabase();
     }
     public void getContent(){
         MongoCollection<Song> col = instance.getDb().getCollection("Song", Song.class).withCodecRegistry(instance.getPojoCodecRegistry());

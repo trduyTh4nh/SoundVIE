@@ -9,6 +9,7 @@ public class Payment extends RealmObject {
     private User user;
     private String paymentMethod;
     private Premium subscription;
+    public Payment(){}
 
     public Payment(Date ngayTT, User user, String paymentMethod, Premium subscription) {
         NgayTT = ngayTT;

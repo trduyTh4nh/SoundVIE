@@ -8,7 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
+import com.example.soundvieproject.DB.Helper;
 
 import org.bson.Document;
 
@@ -32,7 +33,7 @@ public class SignupActivity extends AppCompatActivity {
     MongoCollection<Document> mongoCollection;
     App app;
     User user;
-
+    Helper h = Helper.INSTANCE;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +51,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edtEmail.getText().toString();
-                String password = edtPass.getText().toString();
-
-                app.getEmailPassword().registerUserAsync(email, password, result -> {
-                    if(result.isSuccess()){
-                        Log.v("Signup", "SUCCESSFULLY!!");
-                    }
-                    else {
-                        Log.v("Signup", "Failed!!");
-                    }
-                });
+                h.register(edtEmail.getText().toString(), edtPass.getText().toString(), edtPhone.getText().toString(), getApplicationContext());
             }
         });
     }

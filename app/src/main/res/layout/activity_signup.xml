@@ -13,7 +13,9 @@
             android:scaleType="centerCrop"
             android:src="@drawable/background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ImageView>
+            android:layout_height="match_parent">
+
+        </ImageView>
         <LinearLayout
             android:gravity="center"
             android:background="@color/black_transparent"
@@ -21,21 +23,24 @@
             android:layout_height="match_parent">
             <LinearLayout
                 android:background="@drawable/background_box"
-                android:layout_width="400dp"
-                android:layout_height="580dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <LinearLayout
+                    android:padding="20dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <TextView
                         android:textStyle="bold"
                         android:textColor="@color/white"
-                        android:layout_marginTop="20dp"
-                        android:paddingLeft="30dp"
+                        android:layout_marginTop="0dp"
+                        android:paddingLeft="0dp"
                         android:textSize="40dp"
                         android:text="Đăng kí"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"></TextView>
+                        android:layout_height="wrap_content">
+
+                    </TextView>
                     <LinearLayout
                         android:orientation="vertical"
                         android:gravity="center_horizontal"
@@ -47,9 +52,9 @@
                             android:padding="15dp"
                             android:hint="Email"
                             android:background="@drawable/edittext_login"
-                            android:layout_marginTop="25dp"
-                            android:layout_width="350dp"
-                            android:layout_height="50dp">
+                            android:layout_marginTop="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         </EditText>
 
                         <EditText
@@ -59,8 +64,8 @@
                             android:hint="Số điện thoại"
                             android:background="@drawable/edittext_login"
                             android:layout_marginTop="20dp"
-                            android:layout_width="350dp"
-                            android:layout_height="50dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         </EditText>
 
                         <EditText
@@ -70,8 +75,8 @@
                             android:hint="Mật khẩu"
                             android:background="@drawable/edittext_login"
                             android:layout_marginTop="20dp"
-                            android:layout_width="350dp"
-                            android:layout_height="50dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         </EditText>
 
                         <EditText
@@ -81,8 +86,8 @@
                             android:hint="Nhập lại mật khẩu"
                             android:background="@drawable/edittext_login"
                             android:layout_marginTop="20dp"
-                            android:layout_width="350dp"
-                            android:layout_height="50dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
                         </EditText>
 
                         <LinearLayout
@@ -93,55 +98,59 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
+
                             <Button
                                 android:id="@+id/btnSignup"
                                 android:gravity="center"
                                 android:textAllCaps="false"
-                                android:textSize="15dp"
-                                android:background="@drawable/button_transparent"
                                 style="@style/btnLogingg"
                                 android:textColor="@color/white"
                                 android:layout_marginBottom="10dp"
                                 android:text="Đăng kí"
-                                android:layout_width="350dp"
-                                android:layout_height="50dp" />
-
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:gravity="center">
 
                                 <TextView
-                                    android:layout_width="100dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="2dp"
-                                    android:background="@color/white"></TextView>
+                                    android:layout_weight="1"
+                                    android:background="@color/white">
+
+                                </TextView>
 
                                 <TextView
-                                    android:textStyle="bold"
-                                    android:textSize="16dp"
-                                    android:layout_width="50dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
                                     android:gravity="center"
                                     android:text="Hoặc"
-                                    android:textColor="@color/white"></TextView>
+                                    android:textColor="@color/white"
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
 
                                 <TextView
-                                    android:layout_width="100dp"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="2dp"
-                                    android:background="@color/white"></TextView>
+                                    android:layout_weight="1"
+                                    android:background="@color/white" />
                             </LinearLayout>
+
                             <Button
+                                android:id="@+id/btnLogin"
                                 android:gravity="center"
                                 android:textAllCaps="false"
-                                android:textSize="15dp"
-                                android:background="@drawable/button_transparent"
                                 style="@style/btnLogingg"
                                 android:textColor="@color/white"
                                 android:layout_marginTop="10dp"
                                 android:text="Đăng nhập bằng Email"
-                                android:layout_width="350dp"
-                                android:layout_height="50dp"></Button>
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
                         <TextView
@@ -150,8 +159,10 @@
                             android:textSize="16dp"
                             android:textColor="@color/white"
                             android:text="Khi bạn đăng kí có nghĩa bạn đã chấp nhận toàn bộ điều khoản"
-                            android:layout_width="300dp"
-                            android:layout_height="wrap_content"></TextView>
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </TextView>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

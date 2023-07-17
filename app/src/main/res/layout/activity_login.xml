@@ -69,6 +69,19 @@ tools:context=".MainActivity">
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"></EditText>
 
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        style="@style/btnLogingg"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/btnlogin_ripple"
+                        android:gravity="center"
+                        android:text="Đăng nhập"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="20dp" />
                     <LinearLayout
                         android:layout_marginTop="20dp"
                         android:layout_width="match_parent"
@@ -99,20 +112,18 @@ tools:context=".MainActivity">
                             android:layout_height="2dp"
                             android:background="@color/white"></TextView>
                     </LinearLayout>
-
                     <Button
-                        android:id="@+id/btnLogin"
+                        android:id="@+id/btnRegister"
                         style="@style/btnLogingg"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/btnlogin_ripple"
                         android:gravity="center"
-                        android:text="Đăng nhập"
+                        android:text="Đăng ký bằng Email"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="20dp" />
-
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
