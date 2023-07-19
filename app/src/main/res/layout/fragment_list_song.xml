@@ -1,143 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayingMusicActivity"
-    android:background="@drawable/background_playlist">
+    tools:context=".fragment.HomeFragment">
+
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvPlayList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.cardview.widget.CardView
-                app:cardCornerRadius="10dp"
-                android:background="@drawable/border"
-                android:layout_width="100dp"
-                android:layout_height="100dp">
-                <ImageView
-                    android:src="@drawable/img_playlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </ImageView>
-            </androidx.cardview.widget.CardView>
-            <LinearLayout
-                android:paddingLeft="10dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:textColor="@color/white"
-                    android:textSize="28dp"
-                    android:textStyle="bold"
-                    android:text="Playlist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:text="Được tạo bởi: "
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                    <TextView
-                        android:textColor="@color/white"
-                        android:layout_marginLeft="5dp"
-                        android:text="Người dùng"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </TextView>
-                </LinearLayout>
-                <TextView
-                    android:textColor="@color/white"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:text="Just a playlist, nothing else"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-            </LinearLayout>
-        </LinearLayout>
-        <Button
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/button_transparent"
-            android:text="Chơi nhạc"
-            android:layout_marginTop="15dp"
-            android:layout_gravity="center"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content">
-        </Button>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_margin="10dp"
-                android:src="@drawable/vector"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </ImageView>
-            <ImageView
-                android:layout_margin="10dp"
-                android:src="@drawable/vector_down"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </ImageView>
-            <ImageView
-                android:layout_margin="10dp"
-                android:src="@drawable/vector_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </ImageView>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_marginTop="15dp"
-                android:textSize="19dp"
-                android:textColor="@color/white"
-                android:text="10 bài hát - 40 phút 34 giây"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_songsPl"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-
-
-
-
+            android:layout_height="match_parent"/>
     </LinearLayout>
-</LinearLayout>
+
+</FrameLayout>

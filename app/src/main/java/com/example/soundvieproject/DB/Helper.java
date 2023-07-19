@@ -136,7 +136,7 @@ public class Helper {
         a.getEmailPassword().registerUserAsync(email, password, t -> {
             if(t.isSuccess()){
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
-                insertUser(email, password,phone, name, c, a.currentUser().getId());
+                insertUser(email, password,phone, name, c);
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
@@ -146,13 +146,14 @@ public class Helper {
     public void prepare(){
 
     }
-    public void insertUser(String email, String password, String phone, String name, Context c, String id){
+    public void insertUser(String email, String password, String phone, String name, Context c){
         //prepare();
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, t -> {
             if(t.isSuccess()){
                 user = a.currentUser();
                 client = user.getMongoClient("mongodb-atlas");
+                String id = user.getId();
                 db = client.getDatabase("SoundVIE");
                 pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
                         fromProviders(PojoCodecProvider.builder().automatic(true).build()));

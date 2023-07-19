@@ -2,6 +2,7 @@ package com.example.soundvieproject.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,13 @@ import com.example.soundvieproject.model.Song;
 import java.util.ArrayList;
 
 public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+    public interface OnItemsClickListener{
+        void OnItemClick(Song song);
+    }
+    private OnItemsClickListener listener = null;
+    public void setItemClickListener(OnItemsClickListener listener){
+        this.listener = listener;
+    }
     @NonNull
     @Override
     public SongAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,7 +44,13 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Song song = songs.get(position);
         imgSong.setImageURI(Uri.parse(song.getImgCover()));
         nameSong.setText(song.getNameSong());
-        nameArtist.setText(song.getArtists().toString());
+        nameArtist.setText(song.getArtist());
+        Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));
+        imgSong.setOnClickListener(v -> {
+            if(listener != null){
+                listener.OnItemClick(song);
+            }
+        });
     }
      ImageView imgSong;
      TextView nameSong;

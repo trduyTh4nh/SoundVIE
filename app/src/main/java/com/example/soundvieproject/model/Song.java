@@ -20,6 +20,8 @@ public class Song extends RealmObject {
     private String song;
     private String artis;
     private RealmList<User> artists;
+    private String artist;
+    private int image;
     public Song(){}
 
     public Song(ObjectId id, String nameSong, String imgCover, String stateData, String lyrics, RealmList<User> artists, String song) {
@@ -48,6 +50,7 @@ public class Song extends RealmObject {
         this.lyrics = lyrics;
         this.artis = artists;
     }
+
     public String getIdSong() {
         return idSong;
     }
@@ -120,6 +123,22 @@ public class Song extends RealmObject {
 
     public String getSong() {
         return song;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public void setSong(String song) {

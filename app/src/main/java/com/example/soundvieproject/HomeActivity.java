@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
 import com.example.soundvieproject.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.bson.types.ObjectId;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -26,7 +29,10 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         navigationView = findViewById(R.id.nav_main);
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
-
+        for(int i = 1; i <= 100; i++){
+            ObjectId id = new ObjectId();
+            Log.d("objectID", id.toString());
+        }
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")
@@ -59,23 +65,23 @@ public class HomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.home:
                         isAdd = false;
-                        fragment = new HomeFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
                         break;
                     case R.id.list:
                         isAdd = false;
-                        fragment = new ListSongFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new ListSongFragment()).commit();
                         break;
                     case R.id.user:
                         isAdd = false;
-                        fragment = new UserFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new UserFragment()).commit();
                         break;
                     case R.id.more:
                         isAdd = false;
-                        fragment = new MoreFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new MoreFragment()).commit();
                         break;
                 }
                 if(!isAdd){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.body_container, fragment).commit();
+
                 }
                 return true;
             }
