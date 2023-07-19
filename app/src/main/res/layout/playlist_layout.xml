@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:id="@+id/llLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="20dp">
+        <androidx.cardview.widget.CardView
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            app:cardCornerRadius="16dp">
+            <ImageView
+                android:id="@+id/ivCover"
+                android:src="@drawable/chungtacuahientai"
+                android:layout_width="175dp"
+                android:layout_height="175dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintDimensionRatio="H,1:1"/>
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Title"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/tvDesc"
+            android:layout_weight="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="sdasdasfvasdadsacac"
+            android:textSize="16dp"
+            android:ellipsize="marquee"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

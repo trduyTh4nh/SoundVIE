@@ -2,13 +2,25 @@ package com.example.soundvieproject.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.adapter.PlaylistAdapter;
+import com.example.soundvieproject.model.Album;
+import com.example.soundvieproject.model.Playlist;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,50 +29,49 @@ import com.example.soundvieproject.R;
  */
 public class ListSongFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public ListSongFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ListSongFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ListSongFragment newInstance(String param1, String param2) {
-        ListSongFragment fragment = new ListSongFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static ListSongFragment newInstance() {
+        return new ListSongFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        Log.d("Hello", "hello");
         return inflater.inflate(R.layout.fragment_list_song, container, false);
+    }
+    RecyclerView rcvList;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        rcvList = view.findViewById(R.id.rcvPlayList);
+        Log.d("hello", "hello");
+        ArrayList<Playlist> p = getPlaylists();
+        PlaylistAdapter adap = new PlaylistAdapter(getActivity().getApplicationContext(), p);
+        GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
+        rcvList.setAdapter(adap);
+        rcvList.setLayoutManager(l);
+        super.onViewCreated(view, savedInstanceState);
+
+    }
+    public ArrayList<Playlist> getPlaylists(){
+        ArrayList<Playlist> p = new ArrayList<>();
+        String[] names = {"Tổng hợp nhạc 1", "Chiến báo", "Cx hay, cx mạnh", "Cx chiến báo"};
+        String[] descs = {"1", "234", "abc", "xyz"};
+        int cover = R.drawable.labankhongtheyeu;
+        Random r = new Random();
+        for(int i = 0; i < 10; i++){
+            p.add(new Playlist(names[r.nextInt(names.length)], cover, descs[r.nextInt(descs.length)]));
+        }
+        return p;
     }
 }

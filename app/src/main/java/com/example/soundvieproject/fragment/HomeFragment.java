@@ -104,7 +104,6 @@ public class HomeFragment extends Fragment {
         rcv2.setLayoutManager(layoutManager1);
         rcv2.setAdapter(adapter);
     }
-
     public ArrayList<Song> list(){
         // comment để mai connect database.
         ArrayList<Song> list = new ArrayList<>();
