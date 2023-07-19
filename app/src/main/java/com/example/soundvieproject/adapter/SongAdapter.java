@@ -1,6 +1,7 @@
 package com.example.soundvieproject.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,10 +38,11 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         songs = arrayList;
         context = c;
     };
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Song song = songs.get(position);
-        imgSong.setImageResource(song.getImgCover());
+        imgSong.setImageURI(Uri.parse(song.getImgCover()));
         nameSong.setText(song.getNameSong());
         nameArtist.setText(song.getArtist());
         Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));

@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 apply plugin: "realm-android"
 realm {
@@ -26,6 +27,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -40,4 +45,19 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation "io.reactivex.rxjava2:rxjava:2.1.8"
+
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:32.2.0"))
+
+    // Add the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-storage")
+
+    implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+    // Find the latest Glide releases here: https://goo.gl/LpksbR
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+// If you're using Kotlin (and therefore, kapt), use kapt instead of annotationProcessor
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+
 }

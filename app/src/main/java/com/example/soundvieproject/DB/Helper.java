@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
+import com.example.soundvieproject.model.Premium;
 import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.UserTypes;
 
@@ -91,6 +92,29 @@ public class Helper {
             }
         });
     }
+    public void insertPremium(Premium premium){
+        MongoCollection<Premium> pre = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
+        pre.insertOne(premium).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("Success", "Added.");
+            } else {
+                Log.d("Error", "Error: " + result.getError());
+            }
+        });
+    }
+
+  public void insertSong(Song song){
+        MongoCollection<Song> songcol = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        songcol.insertOne(song).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("Success", "Added.");
+            }
+            else
+            {
+                Log.d("Error", "Error: " + result.getError());
+            }
+        });
+  }
     public void getSong(){
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
@@ -188,4 +212,6 @@ public class Helper {
     public void setPojoCodecRegistry(CodecRegistry pojoCodecRegistry) {
         this.pojoCodecRegistry = pojoCodecRegistry;
     }
+
+
 }

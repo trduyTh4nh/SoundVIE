@@ -1,5 +1,7 @@
 package com.example.soundvieproject.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -7,10 +9,10 @@ import io.realm.RealmObject;
 public class Premium extends RealmObject {
     private String tenLoai;
     private String moTa;
-    private String gia;
+    private int gia;
     private int ThoiHan;
     public Premium(){}
-    public Premium(String tenLoai, String moTa, String gia, int thoiHan) {
+    public Premium(String tenLoai, String moTa, int gia, int thoiHan) {
         this.tenLoai = tenLoai;
         this.moTa = moTa;
         this.gia = gia;
@@ -33,11 +35,11 @@ public class Premium extends RealmObject {
         this.moTa = moTa;
     }
 
-    public String getGia() {
+    public int getGia() {
         return gia;
     }
 
-    public void setGia(String gia) {
+    public void setGia(int gia) {
         this.gia = gia;
     }
 
@@ -47,5 +49,16 @@ public class Premium extends RealmObject {
 
     public void setThoiHan(int thoiHan) {
         ThoiHan = thoiHan;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Premium{" +
+                "tenLoai='" + tenLoai + '\'' +
+                ", moTa='" + moTa + '\'' +
+                ", gia=" + gia +
+                ", ThoiHan=" + ThoiHan +
+                '}';
     }
 }

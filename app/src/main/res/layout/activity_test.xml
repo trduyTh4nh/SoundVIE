@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TestActivity"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:hint="Name song"
+        android:id="@+id/edtNameSong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></EditText>
+    <EditText
+        android:hint="Image"
+        android:id="@+id/edtImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></EditText>
+    <EditText
+        android:hint="State data"
+        android:id="@+id/edtState"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></EditText>
+
+    <EditText
+        android:hint="Lyrics"
+        android:id="@+id/edtLyrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></EditText>
+
+    <EditText
+        android:hint="Artist"
+        android:id="@+id/edtArtist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></EditText>
+
+    <Button
+        android:enabled="false"
+        android:id="@+id/btnUp"
+        android:text="Up"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Button>
+    <Button
+        android:id="@+id/btnChooseSong"
+        android:text="Choose Song"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Button>
+
+    <Button
+        android:id="@+id/uploadimagebtn"
+        android:text="Upload Image"
+        android:textAllCaps="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></Button>
+
+    <Button
+        android:textAllCaps="false"
+        android:id="@+id/btnSelect"
+        android:text="Select Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Button>
+    <ProgressBar
+        android:id="@+id/pbProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal">
+
+    </ProgressBar>
+    <TextView
+        android:id="@+id/tvBytes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:id="@+id/imgChoose"
+        android:layout_width="300dp"
+        android:layout_height="200dp">
+    </ImageView>
+
+</LinearLayout>

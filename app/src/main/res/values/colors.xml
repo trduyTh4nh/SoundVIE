@@ -15,5 +15,7 @@
     <color name="editText_Login">#242424</color>
     <color name="border">#fff</color>
     <color name="gradient_start">#fff</color>
-    <color name="primary_user"></color>
+    <color name="primary_user" />
+    <color name="orange">#f86f03</color>
+    <color name="gray">#404040</color>
 </resources>

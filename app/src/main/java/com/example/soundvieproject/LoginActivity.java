@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         Realm.init(this);
         app = new io.realm.mongodb.App(new AppConfiguration.Builder(Appid).build());
         btnRegister = findViewById(R.id.btnRegister);
@@ -76,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (result.isSuccess()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             Helper.INSTANCE.setA(app);
-                            Intent i = new Intent(LoginActivity.this, TestMongoActivity.class);
+                            Intent i = new Intent(LoginActivity.this, TestActivity.class);
                             startActivity(i);
                         } else
                         {
