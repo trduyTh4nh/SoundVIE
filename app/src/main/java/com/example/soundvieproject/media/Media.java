@@ -1,11 +1,17 @@
 package com.example.soundvieproject.media;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.net.Uri;
+import android.widget.Toast;
 
 import com.example.soundvieproject.R;
 
+import java.io.IOException;
+
 public class Media {
+
     public static Media INSTANCE = new Media();
     private MediaPlayer player;
     private Context context;
@@ -32,6 +38,25 @@ public class Media {
     }
     public void setContext(Context c){
         context = c;
-        player = MediaPlayer.create(context, R.raw.music);
+        player = new MediaPlayer();
+    }
+    public void playMusic(Uri uri) throws IOException {
+        Toast.makeText(context, "select resource" + uri, Toast.LENGTH_SHORT).show();
+        player.setDataSource(context, uri);
+        player.prepareAsync();
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.start();
+            }
+        });
+    }
+
+    public MediaPlayer getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(MediaPlayer player) {
+        this.player = player;
     }
 }

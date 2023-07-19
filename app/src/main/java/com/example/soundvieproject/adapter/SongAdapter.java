@@ -15,11 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Song;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public interface OnItemsClickListener{
-        void OnItemClick(Song song);
+        void OnItemClick(Song song) throws IOException;
     }
     private OnItemsClickListener listener = null;
     public void setItemClickListener(OnItemsClickListener listener){
@@ -48,7 +49,11 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));
         imgSong.setOnClickListener(v -> {
             if(listener != null){
-                listener.OnItemClick(song);
+                try {
+                    listener.OnItemClick(song);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.example.soundvieproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Playlist;
 
@@ -22,7 +24,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     TextView tvTitle, tvDesc;
     Context context;
     ArrayList<Playlist> pl;
-    LinearLayout ll;
+    LinearLayout ll, btnAdd;
     public PlaylistAdapter(Context c, ArrayList<Playlist> playlists){
         context = c;
         pl = playlists;
@@ -51,6 +53,13 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if(getItemViewType(position) == 0){
+            if(btnAdd != null){
+                btnAdd.setOnClickListener(v -> {
+                    Intent i = new Intent(context, PlaylistActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(i);
+                });
+            }
             return;
         }
         Playlist p = pl.get(position - 1);
@@ -75,6 +84,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             tvDesc = itemView.findViewById(R.id.tvDesc);
             ivCover = itemView.findViewById(R.id.ivCover);
             ll = itemView.findViewById(R.id.llLayout);
+            btnAdd = itemView.findViewById(R.id.btnAdd);
         }
     }
 
