@@ -1,121 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:id="@+id/body_container"
     tools:context=".HomeActivity"
     android:background="@drawable/background_home">
-
-    <LinearLayout
-        android:id="@+id/viewMain"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/nav_main"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_main"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        tools:ignore="MissingConstraints"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
+            android:gravity="center"
+            android:paddingRight="20dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
+            <TextView
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="23dp"
+                android:text="Trang Chủ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <LinearLayout
 
-            <androidx.appcompat.widget.Toolbar
+                android:layout_gravity="center"
+                android:gravity="center_vertical|end"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="center"
-                tools:ignore="MissingConstraints">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingRight="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Trang Chủ"
-                        android:textColor="@color/white"
-                        android:textSize="23dp"
-                        android:textStyle="bold">
-
-                    </TextView>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:gravity="center_vertical|end">
-
-                        <ImageButton
-                            style="@style/imageBtn"
-                            android:background="@drawable/transparent_ripple"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="3dp"
-                            android:padding="10dp"
-                            android:src="@drawable/icon_search">
-
-                        </ImageButton>
-
-                        <ImageButton
-                            style="@style/imageBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="3dp"
-                            android:padding="10dp"
-                            android:src="@drawable/icon_notify">
-
-                        </ImageButton>
-
-                        <ImageButton
-                            style="@style/imageBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="3dp"
-                            android:padding="10dp"
-                            android:src="@drawable/icon_setting">
-
-                        </ImageButton>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-
+                android:layout_height="match_parent">
+                <ImageButton
+                    style="@style/imageBtn"
+                    android:padding="5dp"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/icon_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </ImageButton>
+                <ImageButton
+                    style="@style/imageBtn"
+                    android:padding="5dp"
+                    android:layout_margin="6dp"
+                    android:src="@drawable/icon_notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </ImageButton>
+                <ImageButton
+                    style="@style/imageBtn"
+                    android:padding="5dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/icon_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </ImageButton>
+            </LinearLayout>
         </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <LinearLayout
-            android:id="@+id/body_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
+            tools:ignore="UselessParent">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.viewpager.widget.ViewPager>
         </LinearLayout>
     </LinearLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_main"
+        android:background="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/black"
-        android:elevation="2dp"
-        app:itemBackground="@drawable/line"
+        tools:ignore="MissingConstraints"
         app:itemIconSize="28sp"
-        app:itemIconTint="@color/white"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="2dp"
+        android:layout_alignParentBottom="true"
         app:menu="@menu/main_menu"
-        tools:ignore="MissingConstraints">
+        app:itemBackground="@drawable/line"
+        app:itemIconTint="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:itemRippleColor="@android:color/transparent">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

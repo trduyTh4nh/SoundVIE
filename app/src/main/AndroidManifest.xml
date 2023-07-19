@@ -12,13 +12,22 @@
         android:theme="@style/Theme.SoundVIEProject"
         tools:targetApi="31">
         <activity
-            android:name=".TestMongoActivity"
+            android:name=".PlaylistActivity"
             android:exported="false" />
+        <activity
+            android:name=".PlayingMusicActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".TestActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".HomeActivity"
             android:exported="true"></activity>
         <activity
             android:name=".LoginActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".SignupActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,14 +36,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name=".TestMongoActivity"
             android:exported="true"></activity>
         <activity
             android:name=".Flash_LoginActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>
