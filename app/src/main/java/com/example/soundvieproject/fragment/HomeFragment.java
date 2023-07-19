@@ -24,6 +24,8 @@ import com.example.soundvieproject.model.Song;
 
 import java.util.ArrayList;
 
+import io.realm.RealmList;
+
 
 public class HomeFragment extends Fragment {
 
@@ -85,7 +87,7 @@ public class HomeFragment extends Fragment {
                 btnResume.setVisibility(View.GONE);
                 btnPause.setVisibility(View.VISIBLE);
                 currentSong.setVisibility(View.VISIBLE);
-                img_song.setImageResource(song.getImgCover());
+                //img_song.setImageResource(song.getImgCover());
                 song_name.setText(song.getNameSong());
                 artist.setText(song.getArtist());
                 btnPause.setOnClickListener(v -> {
@@ -107,10 +109,10 @@ public class HomeFragment extends Fragment {
     public ArrayList<Song> list(){
         // comment để mai connect database.
         ArrayList<Song> list = new ArrayList<>();
-        list.add(new Song("1","Blue Tequila",R.drawable.img_album, "128kbps", "Hi tequila như mọi khi trong tuần", "Táo"));
-        list.add(new Song("2","10 ngàn năm",R.drawable.muoingannam, "128kbps", "Hi tequila như mọi khi trong tuần", "PC"));
-        list.add(new Song("3","Là bạn không thể yêu",R.drawable.labankhongtheyeu, "128kbps", "Hi tequila như mọi khi trong tuần", "Lou Hoàng"));
-        list.add(new Song("4","Chúng ta của hiện tại",R.drawable.chungtacuahientai, "128kbps", "Hi tequila như mọi khi trong tuần", "Sơn Tùng MTP"));
+//        list.add(new Song("1","Blue Tequila",R.drawable.img_album, "128kbps", "Hi tequila như mọi khi trong tuần", new RealmList<>()));
+//        list.add(new Song("2","10 ngàn năm",R.drawable.muoingannam, "128kbps", "Hi tequila như mọi khi trong tuần", "PC"));
+//        list.add(new Song("3","Là bạn không thể yêu",R.drawable.labankhongtheyeu, "128kbps", "Hi tequila như mọi khi trong tuần", "Lou Hoàng"));
+//        list.add(new Song("4","Chúng ta của hiện tại",R.drawable.chungtacuahientai, "128kbps", "Hi tequila như mọi khi trong tuần", "Sơn Tùng MTP"));
         return list;
 
     }
