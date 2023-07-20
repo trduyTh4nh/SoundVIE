@@ -59,5 +59,7 @@ dependencies {
 // If you're using Kotlin (and therefore, kapt), use kapt instead of annotationProcessor
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'com.firebaseui:firebase-ui-storage:7.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 }

@@ -27,6 +27,7 @@ import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.media.MediaPlayerUtils;
 import com.example.soundvieproject.model.Song;
+import com.google.firebase.storage.FirebaseStorage;
 
 import org.bson.types.ObjectId;
 
@@ -104,8 +105,9 @@ public class HomeFragment extends Fragment {
                     Log.d("Test", s.toString());
                     list.add(new Song(s.getId(), s.getNameSong(), s.getImgCover(), s.getStateData(), s.getLyrics(), s.getArtists(), s.getSong()));
                 }
-                adapter = new SongAdapter(getActivity().getApplicationContext(), list);
-                adapter2 = new SongAdapter(getActivity().getApplicationContext(), list);
+                FirebaseStorage sto = FirebaseStorage.getInstance();
+                adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
+                adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
                 rcv2 = view.findViewById(R.id.rv_songsPopular);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);

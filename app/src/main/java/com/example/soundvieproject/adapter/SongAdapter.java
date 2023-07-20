@@ -12,8 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Song;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,17 +36,20 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         view = LayoutInflater.from(context).inflate(R.layout.component_song, parent, false);
         return new ViewHolder(view);
     }
+    FirebaseStorage storage;
     private final ArrayList<Song> songs;
     Context context;
-    public SongAdapter(Context c, ArrayList<Song> arrayList){
+    public SongAdapter(Context c, ArrayList<Song> arrayList, FirebaseStorage storage){
         songs = arrayList;
         context = c;
+        this.storage = storage;
     };
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Song song = songs.get(position);
-        imgSong.setImageURI(Uri.parse(song.getImgCover()));
+        StorageReference ref = storage.getReference("images/"+song.getImgCover());
+        Glide.with(context).load(ref).into(imgSong);
         nameSong.setText(song.getNameSong());
         nameArtist.setText(song.getArtist());
         Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));
