@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.soundvieproject.AddPlaylistActivity;
 import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Playlist;
@@ -55,7 +56,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         if(getItemViewType(position) == 0){
             if(btnAdd != null){
                 btnAdd.setOnClickListener(v -> {
-                    Intent i = new Intent(context, PlaylistActivity.class);
+                    Intent i = new Intent(context, AddPlaylistActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);
                 });
