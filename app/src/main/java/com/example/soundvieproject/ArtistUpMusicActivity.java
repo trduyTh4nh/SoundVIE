@@ -6,10 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +23,6 @@ import com.example.soundvieproject.model.Song;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -35,8 +32,6 @@ import com.google.firebase.storage.UploadTask;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import io.reactivex.annotations.NonNull;
@@ -50,7 +45,7 @@ import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 
 
-public class TestActivity extends AppCompatActivity {
+public class ArtistUpMusicActivity extends AppCompatActivity {
 
     String Appid = "soundvie-zvqhd";
     EditText edtEmail, edtPass, loginEmail, loginPassword, edtTest;
@@ -89,8 +84,7 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         pbProgress = findViewById(R.id.pbProgress);
         edtNameSong = findViewById(R.id.edtNameSong);
-        edtImg = findViewById(R.id.edtImage);
-        edtStateData = findViewById(R.id.edtState);
+
         edtLyrics = findViewById(R.id.edtLyrics);
         edtArtist = findViewById(R.id.edtArtist);
         btnUp = findViewById(R.id.btnUp);
@@ -184,9 +178,9 @@ public class TestActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(View v) {
                                     String nameSong = edtNameSong.getText().toString();
-                                    String imgSong = edtImg.getText().toString();
-                                    String stateData = edtStateData.getText().toString();
+                                    String stateData = "normal";
                                     String lyrics = edtLyrics.getText().toString();
+
                                     RealmList<com.example.soundvieproject.model.User> artists = new RealmList<>();
                                     instance.insertSong(new Song(new ObjectId(), nameSong, uriImage, stateData, lyrics, artists, UriPath));
                                 }
@@ -217,7 +211,7 @@ public class TestActivity extends AppCompatActivity {
 
         storageReference.putFile(imageUri).addOnSuccessListener(taskSnapshot -> {
             imageView.setImageURI(imageUri);
-            Toast.makeText(TestActivity.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ArtistUpMusicActivity.this, "Successfully Uploaded", Toast.LENGTH_SHORT).show();
             if(progressDialog.isShowing()){
                 progressDialog.dismiss();
             }
@@ -227,7 +221,7 @@ public class TestActivity extends AppCompatActivity {
                 if(progressDialog.isShowing()){
                     progressDialog.dismiss();
                 }
-                Toast.makeText(TestActivity.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ArtistUpMusicActivity.this, "Failed to Upload", Toast.LENGTH_SHORT).show();
             }
         });
 

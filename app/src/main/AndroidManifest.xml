@@ -23,7 +23,7 @@
             android:name=".PlayingMusicActivity"
             android:exported="true" />
         <activity
-            android:name=".TestActivity"
+            android:name=".ArtistUpMusicActivity"
             android:exported="true" />
         <activity
             android:name=".HomeActivity"
