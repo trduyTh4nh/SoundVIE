@@ -1,5 +1,6 @@
 package com.example.soundvieproject.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.DB.StorageHelper;
+import com.example.soundvieproject.EditUserActivity;
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.model.User;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import io.realm.mongodb.App;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +42,11 @@ public class UserFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User u;
+    TextView tvName, tvDesc;
+    ImageView ivUser;
+    Button btnEdit;
+    ProgressBar progress;
 
     public UserFragment() {
         // Required empty public constructor
@@ -50,7 +69,7 @@ public class UserFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    Helper h = Helper.INSTANCE;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +89,33 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("Hello", "Hello");
+        tvName = view.findViewById(R.id.tvName);
+        ivUser = view.findViewById(R.id.ivUser);
+        btnEdit = view.findViewById(R.id.btnEdit);
+        tvDesc = view.findViewById(R.id.tvDesc);
+        progress = getActivity().findViewById(R.id.loadingProgress);
+        progress.setVisibility(View.VISIBLE);
+        h.getUserCurrentBy(new App.Callback<User>() {
+            @Override
+            public void onResult(App.Result<User> result) {
+                if(result.isSuccess()){
+                    u = result.get();
+                    Log.d("user", u.toString());
+                    tvName.setText(u.getName());
+                    tvDesc.setText(u.getMoTa().equals("") ? "Không có mô tả" : u.getMoTa());
+                    if(!u.getAvatar().equals("")){
+                        StorageHelper h = new StorageHelper(getContext());
+                        FirebaseStorage sto = h.getStorage();
+                        StorageReference ref = sto.getReference("image/"+u.getAvatar());
+                        Glide.with(getActivity()).load(ref).into(ivUser);
+                    }
+                    progress.setVisibility(View.GONE);
+                }
+            }
+        });
+        btnEdit.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity().getApplicationContext(), EditUserActivity.class);
+            startActivity(i);
+        });
     }
 }

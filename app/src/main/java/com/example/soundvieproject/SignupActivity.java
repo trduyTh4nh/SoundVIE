@@ -64,7 +64,7 @@ public class SignupActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences = this.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
-        if (sharedPreferences != null) {
+        if (sharedPreferences.getString(KEY_EMAIL, null) != null) {
             String email = sharedPreferences.getString(KEY_EMAIL, null);
             String password = sharedPreferences.getString(KEY_PASSWORD, null);
             h.login(email, password, new App.Callback<User>() {

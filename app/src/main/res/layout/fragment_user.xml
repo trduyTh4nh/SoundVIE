@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment"
-    android:background="@drawable/background_playlist"
     android:padding="16dp"
     android:orientation="vertical">
     <LinearLayout
@@ -17,9 +16,10 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="16dp">
             <ImageView
+                android:id="@+id/ivUser"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/img_choivoi"
+                android:src="@drawable/default_avt"
                 android:scaleType="centerCrop"/>
 
         </androidx.cardview.widget.CardView>
@@ -29,9 +29,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Đang tải..."
                 android:textSize="25sp"
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
@@ -43,19 +44,39 @@
                 android:textStyle="normal"
                 android:textColor="@color/white"/>
             <TextView
+                android:id="@+id/tvFollow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đang theo dõi: -1"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:textColor="@color/white"/>
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đang tải..."
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
         </LinearLayout>
     </LinearLayout>
+
     <Button
+        android:id="@+id/btnEdit"
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chỉnh sửa thông tin cá nhân"
         android:background="@drawable/btnlogin_ripple"
         android:textColor="@color/white"/>
+    <com.google.android.material.tabs.TabLayout
+        android:layout_marginTop="15dp"
+        android:id="@+id/tlUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vpUser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

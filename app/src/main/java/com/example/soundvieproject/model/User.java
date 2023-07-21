@@ -1,12 +1,13 @@
 package com.example.soundvieproject.model;
 
+import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class User extends RealmObject {
-    private ObjectId _id;
+    private ObjectId id;
     private String idUser;
     private String name;
     private String email;
@@ -16,10 +17,11 @@ public class User extends RealmObject {
     private RealmList<User> followers;
     private UserTypes type;
     private String idLoai;
+    private String avatar;
     public User(){}
 
-    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, String idLoai) {
-        this._id = _id;
+    public User(ObjectId id, String idUser, String name, String email, String phone, boolean state, String moTa, String idLoai, String avatar) {
+        this.id = id;
         this.idUser = idUser;
         this.name = name;
         this.email = email;
@@ -27,41 +29,7 @@ public class User extends RealmObject {
         this.state = state;
         this.moTa = moTa;
         this.idLoai = idLoai;
-    }
-
-    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, RealmList<User> followers, String idLoai) {
-        this._id = _id;
-        this.idUser = idUser;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.state = state;
-        this.moTa = moTa;
-        this.followers = followers;
-        this.idLoai = idLoai;
-    }
-
-    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, RealmList<User> followers, UserTypes type) {
-        this._id = _id;
-        this.idUser = idUser;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.state = state;
-        this.moTa = moTa;
-        this.followers = followers;
-        this.type = type;
-    }
-
-    public User(String idUser, String name, String email, String phone, boolean state, String moTa, UserTypes type) {
-        this.idUser = idUser;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.state = state;
-        this.moTa = moTa;
-        this.type = type;
-        followers = new RealmList<>();
+        this.avatar = avatar;
     }
 
     public String getIdUser() {
@@ -127,5 +95,46 @@ public class User extends RealmObject {
 
     public void setType(UserTypes type) {
         this.type = type;
+    }
+
+    public ObjectId get_id() {
+        return id;
+    }
+
+    public void set_id(ObjectId _id) {
+        this.id = _id;
+    }
+
+    public String getIdLoai() {
+        return idLoai;
+    }
+
+    public void setIdLoai(String idLoai) {
+        this.idLoai = idLoai;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "_id=" + id +
+                ", idUser='" + idUser + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", state=" + state +
+                ", moTa='" + moTa + '\'' +
+                ", followers=" + followers +
+                ", type=" + type +
+                ", idLoai='" + idLoai + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }

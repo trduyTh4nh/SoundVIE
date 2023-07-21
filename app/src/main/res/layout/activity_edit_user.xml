@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditUserActivity"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Chỉnh sửa thông tin cá nhân"
+                android:textColor="@color/white"
+                android:textSize="23dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|end">
+                <ProgressBar
+                    android:id="@+id/loadingProgress"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="15dp"
+                    android:indeterminateTint="@color/white"
+                    android:visibility="gone"
+                    />
+                <Button
+                    android:layout_marginEnd="15dp"
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_primary"
+                    android:text="Lưu"
+                    android:textColor="@color/black" />
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btnlogin_ripple"
+                    android:text="Hủy"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+    <ScrollView
+        app:layout_constraintTop_toBottomOf="@id/toolbar2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+        <LinearLayout
+            app:layout_constraintTop_toBottomOf="@id/toolbar2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="15dp"
+            android:gravity="center_horizontal">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp">
+                <ImageButton
+                    android:id="@+id/btnAddImage"
+                    android:background="@drawable/rounded_generic"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:src="@drawable/default_avt"
+                    android:scaleType="centerCrop"/>
+            </androidx.cardview.widget.CardView>
+            <EditText
+                android:id="@+id/edtHoTen"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_login"
+                android:hint="Họ tên"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_login"
+                android:hint="Email"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_login"
+                android:hint="Số điện thoại"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+            <EditText
+                android:id="@+id/edtDesc"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_login"
+                android:hint="Mô tả"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/edtPsswd"
+                    android:layout_marginTop="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_login"
+                    android:hint="Mật khẩu"
+                    android:padding="15dp"
+                    android:textColor="@color/white"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/white"/>
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="0dp"
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnlogin_ripple"
+                android:text="Đổi mật khẩu"
+                android:textColor="@color/white" />
+            <Button
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="0dp"
+                android:id="@+id/btnBecomeArtist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnlogin_ripple"
+                android:text="Trở thành nghệ sĩ"
+                android:textColor="@color/white" />
+            <Button
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="0dp"
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btnlogin_ripple"
+                android:text="Đăng xuất"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
