@@ -20,6 +20,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.mongodb.App;
@@ -43,6 +44,8 @@ public class Helper {
     public Helper(){
         String Appid = "soundvie-zvqhd";
         a = new io.realm.mongodb.App(new AppConfiguration.Builder(Appid).build());
+        pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
     }
 
     public User getUser() {
@@ -51,8 +54,8 @@ public class Helper {
 
     public void setUser(User user) {
         this.user = user;
-
     }
+
 
     public io.realm.mongodb.App getA() {
         return a;
@@ -65,6 +68,13 @@ public class Helper {
         db = client.getDatabase("SoundVIE");
         pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+    }
+
+    public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
+        String idUser = Objects.requireNonNull(a.currentUser()).getId();
+        Document doc = new Document("idUser", idUser);
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        col.findOne(doc).getAsync(callback);
     }
     public void prepareDatabase(){
         MongoCollection<UserTypes> col = db.getCollection("UserTypes", UserTypes.class).withCodecRegistry(pojoCodecRegistry);
@@ -92,6 +102,10 @@ public class Helper {
                 Log.d("Error", "Error: " + task.getError());
             }
         });
+    }
+    public void login(String email, String password, App.Callback<User> callback){
+        Credentials creds = Credentials.emailPassword(email, password);
+        a.loginAsync(creds, callback);
     }
     public void insertPremium(Premium premium){
         MongoCollection<Premium> pre = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);

@@ -6,6 +6,7 @@ import io.realm.RealmList;
 import io.realm.RealmObject;
 
 public class User extends RealmObject {
+    private ObjectId _id;
     private String idUser;
     private String name;
     private String email;
@@ -14,8 +15,43 @@ public class User extends RealmObject {
     private String moTa;
     private RealmList<User> followers;
     private UserTypes type;
+    private String idLoai;
     public User(){}
 
+    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, String idLoai) {
+        this._id = _id;
+        this.idUser = idUser;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.state = state;
+        this.moTa = moTa;
+        this.idLoai = idLoai;
+    }
+
+    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, RealmList<User> followers, String idLoai) {
+        this._id = _id;
+        this.idUser = idUser;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.state = state;
+        this.moTa = moTa;
+        this.followers = followers;
+        this.idLoai = idLoai;
+    }
+
+    public User(ObjectId _id, String idUser, String name, String email, String phone, boolean state, String moTa, RealmList<User> followers, UserTypes type) {
+        this._id = _id;
+        this.idUser = idUser;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.state = state;
+        this.moTa = moTa;
+        this.followers = followers;
+        this.type = type;
+    }
 
     public User(String idUser, String name, String email, String phone, boolean state, String moTa, UserTypes type) {
         this.idUser = idUser;
