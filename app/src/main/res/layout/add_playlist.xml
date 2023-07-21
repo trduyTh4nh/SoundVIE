@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/btnAdd"
             android:clickable="true"
             android:focusable="true"
             android:layout_width="175dp"

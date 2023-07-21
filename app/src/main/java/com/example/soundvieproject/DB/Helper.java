@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicReference;
 
+import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
 import io.realm.mongodb.RealmResultTask;
@@ -115,22 +116,10 @@ public class Helper {
             }
         });
   }
-    public void getSong(){
+    public void getSong(App.Callback<MongoCursor<Song>> callback){
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
-        AtomicReference<MongoCursor<Song>> c = null;
-        task.getAsync(t -> {
-            if (t.isSuccess()) {
-                MongoCursor<Song> songs = t.get();
-                c.set(songs);
-                while (songs.hasNext()) {
-                    Log.d("Success", "succesfully get doc: " + songs.next().getIdSong());
-                }
-
-            } else {
-                Log.d("Failed", "failed");
-            }
-        });
+        task.getAsync(callback);
     }
     public void register(String email, String password, String phone, String name, Context c){
         a.getEmailPassword().registerUserAsync(email, password, t -> {
@@ -146,6 +135,7 @@ public class Helper {
     public void prepare(){
 
     }
+
     public void insertUser(String email, String password, String phone, String name, Context c){
         //prepare();
         Credentials creds = Credentials.emailPassword(email, password);

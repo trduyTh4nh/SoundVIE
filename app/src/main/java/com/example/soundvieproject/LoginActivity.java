@@ -64,8 +64,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String email = edtEmail.getText().toString();
-                String pass = edtPass.getText().toString();
+                String email = "steveTran@gmail.com";
+                String pass = "123456";
                 if(email.equals("") || pass.equals("")){
                     Toast.makeText(LoginActivity.this, "Vui lòng nhập nội dung", Toast.LENGTH_SHORT).show();
                     return;
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (result.isSuccess()) {
                             Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                             Helper.INSTANCE.setA(app);
-                            Intent i = new Intent(LoginActivity.this, TestActivity.class);
+                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                             startActivity(i);
                         } else
                         {

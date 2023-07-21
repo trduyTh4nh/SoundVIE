@@ -47,7 +47,6 @@ tools:context=".MainActivity">
                     android:padding="25dp">
 
 
-
                     <EditText
                         android:id="@+id/edtEmail"
                         android:layout_width="match_parent"

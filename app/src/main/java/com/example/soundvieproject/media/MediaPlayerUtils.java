@@ -15,8 +15,7 @@ public class MediaPlayerUtils {
     public static void playRawMedia(Context context, MediaPlayer mediaPlayer, String resName){
         try
         {
-            int id = MediaPlayerUtils.getRawResIDByName(context, resName);
-            Uri uri = Uri.parse("android.resource://" + context.getPackageName() + "/" + id);
+            Uri uri = Uri.parse(resName);
             Log.i(LOG_TAG, "Media URI: " + uri);
             Toast.makeText(context, "select resource" + uri, Toast.LENGTH_SHORT).show();
             mediaPlayer.setDataSource(context, uri);

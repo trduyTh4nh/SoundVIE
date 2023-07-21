@@ -117,7 +117,8 @@ public class Song extends RealmObject {
                 ", imgCover=" + imgCover +
                 ", stateData='" + stateData + '\'' +
                 ", lyrics='" + lyrics + '\'' +
-                ", artists=" + artists +
+                ", artists=" + artists + + '\'' +
+                ", song='" + song + '\'' +
                 '}';
     }
 
