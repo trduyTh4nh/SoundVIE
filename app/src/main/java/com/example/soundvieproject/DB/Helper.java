@@ -63,7 +63,6 @@ public class Helper {
         if(user != null){
             client = user.getMongoClient("mongodb-atlas");
             db = client.getDatabase("SoundVIE");
-
         }
         pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
@@ -235,6 +234,9 @@ public class Helper {
                     }
                 });
                 usr.updateOne(query, newAvatar).getAsync(callback);
+    }
+    public void logOut(App.Callback<User> callback){
+        user.logOutAsync(callback);
     }
     public MongoClient getClient() {
         return client;

@@ -2,9 +2,12 @@ package com.example.soundvieproject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -117,6 +120,36 @@ public class EditUserActivity extends AppCompatActivity {
                 }
             });
 
+        });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder b = new AlertDialog.Builder(EditUserActivity.this);
+                b.setTitle("Đăng xuất");
+                b.setMessage("Bạn có muốn đăng xuất không?");
+                b.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        db.logOut(new App.Callback<io.realm.mongodb.User>() {
+                            @Override
+                            public void onResult(App.Result<io.realm.mongodb.User> result) {
+                                if(result.isSuccess()){
+                                    SharedPreferences prefs = getSharedPreferences("shipper", MODE_PRIVATE);
+                                    prefs.edit().clear().apply();
+                                    Toast.makeText(EditUserActivity.this, "Bạn đã bị đăng xuất", Toast.LENGTH_SHORT).show();
+                                    Intent in = new Intent(EditUserActivity.this, Flash_LoginActivity.class);
+                                    startActivity(in);
+                                }
+                            }
+                        });
+
+                    }
+                });
+                b.setNegativeButton("Không", null);
+                AlertDialog a = b.create();
+                a.show();;
+
+            }
         });
     }
     private void saveChanges(){
