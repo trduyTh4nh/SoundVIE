@@ -8,3 +8,5 @@ Storage: Firebase Cloud Storage
 15% - Một vài tính năng và connect đc mongo
 # Mục tiêu
 Hoàn thành 20/49 nghiệp vụ đã thiết kế.
+# Tải binary:
+![Nếu không chạy được code](https://github.com/trduyTh4nh/SoundVIE/releases/tag/alpha)
