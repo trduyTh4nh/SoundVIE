@@ -90,6 +90,7 @@ public class HomeFragment extends Fragment {
         img_song = getActivity().findViewById(R.id.img_song);
         song_name = getActivity().findViewById(R.id.song_name);
         artist = getActivity().findViewById(R.id.artist);
+
         list(view);
 
 
@@ -105,10 +106,12 @@ public class HomeFragment extends Fragment {
                     Log.d("Test", s.toString());
                     list.add(new Song(s.getId(), s.getNameSong(), s.getImgCover(), s.getStateData(), s.getLyrics(), s.getArtists(), s.getSong()));
                 }
+
                 FirebaseStorage sto = FirebaseStorage.getInstance();
                 adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
                 adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
                 rcv2 = view.findViewById(R.id.rv_songsPopular);
+
                 LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);

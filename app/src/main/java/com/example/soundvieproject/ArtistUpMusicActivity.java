@@ -77,6 +77,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
     StorageReference storageReference;
     ImageView imageView;
 
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +184,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
 
                                     RealmList<com.example.soundvieproject.model.User> artists = new RealmList<>();
                                     instance.insertSong(new Song(new ObjectId(), nameSong, uriImage, stateData, lyrics, artists, UriPath));
+                                    Toast.makeText(ArtistUpMusicActivity.this, "Đăng thành công!", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             Log.d("Res", d.toString());

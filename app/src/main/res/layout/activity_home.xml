@@ -57,6 +57,7 @@
                         android:gravity="center_vertical|end">
 
                         <ImageButton
+                            android:id="@+id/btnSearch"
                             style="@style/imageBtn"
                             android:background="@drawable/transparent_ripple"
                             android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
                         </ImageButton>
 
                         <ImageButton
+
                             style="@style/imageBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

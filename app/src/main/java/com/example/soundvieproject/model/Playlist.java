@@ -1,14 +1,24 @@
 package com.example.soundvieproject.model;
 
+import org.bson.types.ObjectId;
+
 import io.realm.RealmList;
 
 public class Playlist {
+    private ObjectId id;
     private String name;
     private String cover;
     private int coverHard;
     private User user;
     private String description;
-    private RealmList<Song> songs;
+
+    public Playlist(ObjectId id, String name, String cover, User user, String description) {
+        this.id = id;
+        this.name = name;
+        this.cover = cover;
+        this.user = user;
+        this.description = description;
+    }
 
     public int getCoverHard() {
         return coverHard;
@@ -20,11 +30,11 @@ public class Playlist {
         this.description = description;
     }
 
-    public Playlist(String name, int coverHard, User user, RealmList<Song> songs) {
+    public Playlist(String name, int coverHard, User user) {
         this.name = name;
         this.coverHard = coverHard;
         this.user = user;
-        this.songs = songs;
+
     }
 
     public void setCoverHard(int coverHard) {
@@ -35,7 +45,6 @@ public class Playlist {
         this.name = name;
         this.cover = cover;
         this.user = user;
-        songs = new RealmList<>();
     }
 
     public Playlist(String name, String cover, int coverHard, User user, String description, RealmList<Song> songs) {
@@ -44,7 +53,6 @@ public class Playlist {
         this.coverHard = coverHard;
         this.user = user;
         this.description = description;
-        this.songs = songs;
     }
 
     public String getName() {
@@ -71,13 +79,7 @@ public class Playlist {
         this.user = user;
     }
 
-    public RealmList<Song> getSongs() {
-        return songs;
-    }
 
-    public void setSongs(RealmList<Song> songs) {
-        this.songs = songs;
-    }
 
     public String getDescription() {
         return description;

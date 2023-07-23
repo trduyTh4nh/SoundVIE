@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="10dp">
+   <LinearLayout
+       android:id="@+id/linearMusic"
+       android:background="@drawable/transparent_ripple"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <ImageView
+           android:scaleType="centerCrop"
+           android:id="@+id/imgCover"
+           android:src="@drawable/testimg"
+           android:layout_width="100dp"
+           android:layout_height="100dp"></ImageView>
+       <LinearLayout
+           android:paddingLeft="10dp"
+           android:gravity="center_vertical"
+           android:orientation="vertical"
+           android:layout_width="200dp"
+           android:layout_height="match_parent">
+           <TextView
+               android:textSize="20dp"
+               android:textStyle="bold"
+               android:layout_marginTop="-10dp"
+               android:text="Lửng lơ"
+               android:id="@+id/nameMusic"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"></TextView>
+           <TextView
+               android:textStyle="bold"
+               android:layout_marginTop="10dp"
+               android:text="Masew, B Ray, REDT, Ý Tiên"
+               android:id="@+id/nameArtist"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"></TextView>
+       </LinearLayout>
+
+   </LinearLayout>
+    <CheckBox
+        android:layout_marginTop="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></CheckBox>
+</RelativeLayout>

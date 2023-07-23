@@ -12,6 +12,23 @@ public class User extends RealmObject {
     private String email;
     private String phone;
     private boolean state;
+
+    public ObjectId get_id() {
+        return _id;
+    }
+
+    public void set_id(ObjectId _id) {
+        this._id = _id;
+    }
+
+    public String getIdLoai() {
+        return idLoai;
+    }
+
+    public void setIdLoai(String idLoai) {
+        this.idLoai = idLoai;
+    }
+
     private String moTa;
     private RealmList<User> followers;
     private UserTypes type;
