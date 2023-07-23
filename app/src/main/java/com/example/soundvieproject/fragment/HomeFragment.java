@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,6 +78,7 @@ public class HomeFragment extends Fragment {
     ImageButton btnPause, btnResume;
     RecyclerView recyclerView;
     MediaPlayer p;
+    ProgressBar b;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,7 +92,8 @@ public class HomeFragment extends Fragment {
         img_song = getActivity().findViewById(R.id.img_song);
         song_name = getActivity().findViewById(R.id.song_name);
         artist = getActivity().findViewById(R.id.artist);
-
+        b = getActivity().findViewById(R.id.loadingProgress);
+        b.setVisibility(View.VISIBLE);
         list(view);
 
 
@@ -120,7 +123,7 @@ public class HomeFragment extends Fragment {
                 LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
                 rcv2.setLayoutManager(layoutManager1);
                 rcv2.setAdapter(adapter);
-
+                b.setVisibility(View.GONE);
                 adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
                     @Override
                     public void OnItemClick(Song song) throws IOException {

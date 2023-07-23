@@ -86,8 +86,14 @@
                             android:layout_marginStart="3dp"
                             android:padding="10dp"
                             android:src="@drawable/icon_setting">
-
                         </ImageButton>
+                        <ProgressBar
+                            android:id="@+id/loadingProgress"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_margin="15dp"
+                            android:indeterminateTint="@color/white"
+                            />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>

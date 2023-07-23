@@ -4,8 +4,6 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
-import android.content.Intent;
-import android.util.Dumpable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,9 +19,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
@@ -34,6 +30,7 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class Helper {
     public static final Helper INSTANCE = new Helper();
@@ -66,10 +63,13 @@ public class Helper {
     public void setA(io.realm.mongodb.App a) {
         this.a = a;
         user = a.currentUser();
-        client = user.getMongoClient("mongodb-atlas");
-        db = client.getDatabase("SoundVIE");
+        if(user != null){
+            client = user.getMongoClient("mongodb-atlas");
+            db = client.getDatabase("SoundVIE");
+        }
         pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
     }
 
     public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
@@ -153,7 +153,7 @@ public class Helper {
         a.getEmailPassword().registerUserAsync(email, password, t -> {
             if(t.isSuccess()){
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
-                insertUser(email, password,phone, name, c);
+                updateUser(email, password,phone, name, c);
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
@@ -164,7 +164,7 @@ public class Helper {
 
     }
 
-    public void insertUser(String email, String password, String phone, String name, Context c){
+    public void updateUser(String email, String password, String phone, String name, Context c){
         //prepare();
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, t -> {
@@ -206,7 +206,53 @@ public class Helper {
             }
         });
     }
-
+    public void updateUser(String email, String phone, String name, String img, String desc, App.Callback<UpdateResult> callback){
+                user = a.currentUser();
+                client = user.getMongoClient("mongodb-atlas");
+                String id = user.getId();
+                db = client.getDatabase("SoundVIE");
+                pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
+                        fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+                MongoCollection<com.example.soundvieproject.model.User> usr = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+                Document query = new Document("idUser", id);
+                Document newVal = new Document("$set", new Document("email", email));
+                Document newPhone = new Document("$set", new Document("phone", phone));
+                Document newName = new Document("$set", new Document("name", name));
+                Document newDesc = new Document("$set", new Document("moTa", desc));
+                Document newAvatar = new Document("$set", new Document("avatar", img));
+                usr.updateOne(query, newVal).getAsync(tsk -> {
+                    if(tsk.isSuccess()){
+                        Log.d("Success", "succesfully inserted user");
+                    } else {
+                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+                    }
+                });
+                usr.updateOne(query, newName).getAsync(tsk -> {
+                    if(tsk.isSuccess()){
+                        Log.d("Success", "succesfully inserted user");
+                    } else {
+                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+                    }
+                });
+                usr.updateOne(query, newPhone).getAsync(tsk -> {
+                    if(tsk.isSuccess()){
+                        Log.d("Success", "succesfully inserted user");
+                    } else {
+                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+                    }
+                });
+                usr.updateOne(query, newDesc).getAsync(tsk -> {
+                    if(tsk.isSuccess()){
+                        Log.d("Success", "succesfully inserted user");
+                    } else {
+                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+                    }
+                });
+                usr.updateOne(query, newAvatar).getAsync(callback);
+    }
+    public void logOut(App.Callback<User> callback){
+        user.logOutAsync(callback);
+    }
     public MongoClient getClient() {
         return client;
     }
@@ -233,8 +279,6 @@ public class Helper {
     public void checkRole(App.Callback<com.example.soundvieproject.model.User> callback){
         getUserCurrentBy(callback);
     }
-
-
 
 
 }
