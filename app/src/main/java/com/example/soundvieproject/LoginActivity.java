@@ -105,12 +105,29 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResult(io.realm.mongodb.App.Result<User> result) {
                         if (result.isSuccess()) {
-                            Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                            Helper.INSTANCE.setA(app);
-                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                            ApiKeyAuth key = app.currentUser().getApiKeys();
-                            Log.d("test", key.toString());
-                            startActivity(i);
+                            h.checkRole(new App.Callback<com.example.soundvieproject.model.User>() {
+                                @Override
+                                public void onResult(App.Result<com.example.soundvieproject.model.User> result) {
+
+                                    u = result.get();
+                                    if(u.getIdLoai().equals("ns")){
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                        Helper.INSTANCE.setA(app);
+                                        Intent i = new Intent(LoginActivity.this, ArtistUpMusicActivity.class);
+                                        ApiKeyAuth key = app.currentUser().getApiKeys();
+                                        Log.d("test", key.toString());
+                                        startActivity(i);
+                                    }
+                                    else {
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                        Helper.INSTANCE.setA(app);
+                                        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                        ApiKeyAuth key = app.currentUser().getApiKeys();
+                                        Log.d("test", key.toString());
+                                        startActivity(i);
+                                    }
+                                }
+                            });
                             h.getUserCurrentBy(new App.Callback<com.example.soundvieproject.model.User>() {
                                 @Override
                                 public void onResult(App.Result<com.example.soundvieproject.model.User> result) {

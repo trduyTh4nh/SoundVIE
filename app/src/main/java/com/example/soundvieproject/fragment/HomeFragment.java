@@ -109,10 +109,12 @@ public class HomeFragment extends Fragment {
                     Log.d("Test", s.toString());
                     list.add(new Song(s.getId(), s.getNameSong(), s.getImgCover(), s.getStateData(), s.getLyrics(), s.getArtists(), s.getSong()));
                 }
+
                 FirebaseStorage sto = FirebaseStorage.getInstance();
                 adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
                 adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
                 rcv2 = view.findViewById(R.id.rv_songsPopular);
+
                 LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(adapter);

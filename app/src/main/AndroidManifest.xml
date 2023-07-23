@@ -17,6 +17,9 @@
             android:name=".EditUserActivity"
             android:exported="false"
             android:theme="@style/Theme.SoundVIEProject"/>
+       <activity
+            android:name=".ActivityAddSongToPlayList"
+            android:exported="true" />
         <activity
             android:name=".AddPlaylistActivity"
             android:exported="false" />

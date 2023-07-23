@@ -26,6 +26,7 @@ import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.User;
+import io.realm.mongodb.auth.ApiKeyAuth;
 import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
@@ -39,6 +40,7 @@ public class SignupActivity extends AppCompatActivity {
     private static String SHARE_PRE_NAME = "shipper";
     private static String KEY_EMAIL = "email";
     private static String KEY_PASSWORD = "password";
+    private static String KEY_ROLE = "role";
 
 
     MongoDatabase mongoDatabase;
@@ -51,6 +53,8 @@ public class SignupActivity extends AppCompatActivity {
     Helper h;
     Button btnLogin;
     StorageHelper storageHelper;
+    com.example.soundvieproject.model.User u;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +68,38 @@ public class SignupActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sharedPreferences = this.getSharedPreferences(SHARE_PRE_NAME, Context.MODE_PRIVATE);
+
+        String email = sharedPreferences.getString(KEY_EMAIL, null);
+        String password = sharedPreferences.getString(KEY_PASSWORD, null);
+
         if (sharedPreferences.getString(KEY_EMAIL, null) != null) {
-            String email = sharedPreferences.getString(KEY_EMAIL, null);
-            String password = sharedPreferences.getString(KEY_PASSWORD, null);
             h.login(email, password, new App.Callback<User>() {
                 @Override
                 public void onResult(App.Result<User> result) {
                     if(result.isSuccess()){
-                        Intent i = new Intent(SignupActivity.this, HomeActivity.class);
-                        startActivity(i);
+                        h.checkRole(new App.Callback<com.example.soundvieproject.model.User>() {
+                            @Override
+                            public void onResult(App.Result<com.example.soundvieproject.model.User> result) {
+
+                                u = result.get();
+                                if(u.getIdLoai().equals("ns")){
+                                    Toast.makeText(SignupActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                    Helper.INSTANCE.setA(app);
+                                    Intent i = new Intent(SignupActivity.this, ArtistUpMusicActivity.class);
+                                    ApiKeyAuth key = app.currentUser().getApiKeys();
+                                    Log.d("test", key.toString());
+                                    startActivity(i);
+                                }
+                                else {
+                                    Toast.makeText(SignupActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                                    Helper.INSTANCE.setA(app);
+                                    Intent i = new Intent(SignupActivity.this, HomeActivity.class);
+                                    ApiKeyAuth key = app.currentUser().getApiKeys();
+                                    Log.d("test", key.toString());
+                                    startActivity(i);
+                                }
+                            }
+                        });
                     }
                 }
             });

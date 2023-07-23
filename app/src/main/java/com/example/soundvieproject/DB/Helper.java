@@ -7,8 +7,11 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.soundvieproject.HomeActivity;
+import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Premium;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.SongInPlayList;
 import com.example.soundvieproject.model.UserTypes;
 
 import org.bson.Document;
@@ -102,6 +105,7 @@ public class Helper {
             }
         });
     }
+
     public void login(String email, String password, App.Callback<User> callback){
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, callback);
@@ -129,6 +133,17 @@ public class Helper {
             }
         });
   }
+    public void addPlaylist(Playlist playl){
+        MongoCollection<Playlist> playlist = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        playlist.insertOne(playl).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("Insert playlist", "Success");
+            }
+            else {
+                Log.d("Insert playlist", "Failed because: " + result.getError());
+            }
+        });
+    }
     public void getSong(App.Callback<MongoCursor<Song>> callback){
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
@@ -261,7 +276,9 @@ public class Helper {
     public void setPojoCodecRegistry(CodecRegistry pojoCodecRegistry) {
         this.pojoCodecRegistry = pojoCodecRegistry;
     }
-    public void saveChanges(){};
+    public void checkRole(App.Callback<com.example.soundvieproject.model.User> callback){
+        getUserCurrentBy(callback);
+    }
 
 
 }
