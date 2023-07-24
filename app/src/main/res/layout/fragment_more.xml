@@ -3,22 +3,108 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.HomeFragment">
 
-
-    <LinearLayout
-        android:background="#FF2655"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:layout_gravity="center"
-            android:gravity="center"
+        <LinearLayout
+            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="More" />
-    </LinearLayout>
+            android:orientation="vertical">
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1 tháng dùng miễn phí Premium" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_marginTop="16dp"
+                android:id="@+id/vpFeatures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <com.google.android.material.tabs.TabLayout
+                android:layout_marginTop="16dp"
+                app:tabBackground="@drawable/dot_selector"
+
+                app:tabGravity="center"
+                app:tabIndicatorHeight="0dp"
+                android:id="@+id/tlFeatures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <LinearLayout
+                android:padding="16dp"
+                android:background="@drawable/background_card"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SoundVIE Free"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gói hiện tại"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:background="@drawable/highlight_bg"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:background="@drawable/background_card"
+                    android:backgroundTint="#C8C8C8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Miễn phí 1 tháng"
+                    android:textSize="12sp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"/>
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Premium Individual"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="25sp"/>
+                <TextView
+                    android:layout_marginTop="16dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1 tháng dùng Premium miễn phí - Nghe nhạc không giới hạn chất lượng cao, tải bài hát offline, tạo danh sách phát vô tận và hơn thể nữa!"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
+            <Button
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng ký ngay"
+                android:textColor="@color/white"
+                android:background="@drawable/btnlogin_ripple"/>
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>

@@ -73,6 +73,8 @@ public class Helper {
     }
 
     public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
+        client = user.getMongoClient("mongodb-atlas");
+        db = client.getDatabase("SoundVIE");
         String idUser = Objects.requireNonNull(a.currentUser()).getId();
         Document doc = new Document("idUser", idUser);
         MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
@@ -279,6 +281,12 @@ public class Helper {
     public void checkRole(App.Callback<com.example.soundvieproject.model.User> callback){
         getUserCurrentBy(callback);
     }
-
+    public void getPlayistByID(App.Callback<MongoCursor<Playlist>> callback){
+        String id = Objects.requireNonNull(a.currentUser()).getId().toString();
+        Document doc = new Document("idUser", id);
+        MongoCollection<Playlist> playlists = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Playlist>> tsk = playlists.find(doc).iterator();
+        tsk.getAsync(callback);
+    }
 
 }

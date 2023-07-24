@@ -48,7 +48,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
     Uri imageUri;
 
     String uriImage;
-    com.example.soundvieproject.model.User user;
+    String user;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -77,8 +77,8 @@ public class AddPlaylistActivity extends AppCompatActivity {
                     @Override
                     public void onResult(App.Result<com.example.soundvieproject.model.User> result) {
                         if(result.isSuccess()){
-                            user = result.get();
-                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user, desPL));
+                            user = result.get().getIdUser();
+                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user));
                         }
                     }
                 });
