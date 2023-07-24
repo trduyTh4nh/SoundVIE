@@ -14,14 +14,6 @@ public class User extends RealmObject {
     private String phone;
     private boolean state;
 
-    public ObjectId get_id() {
-        return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
-    }
-
     public String getIdLoai() {
         return idLoai;
     }
@@ -112,22 +104,6 @@ public class User extends RealmObject {
 
     public void setType(UserTypes type) {
         this.type = type;
-    }
-
-    public ObjectId get_id() {
-        return id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this.id = _id;
-    }
-
-    public String getIdLoai() {
-        return idLoai;
-    }
-
-    public void setIdLoai(String idLoai) {
-        this.idLoai = idLoai;
     }
 
     public String getAvatar() {

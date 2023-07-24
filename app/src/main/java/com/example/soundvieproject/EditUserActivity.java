@@ -152,9 +152,7 @@ public class EditUserActivity extends AppCompatActivity {
             }
         });
     }
-    private void saveChanges(){
-        db.saveChanges();
-    }
+
     String imageUri;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
