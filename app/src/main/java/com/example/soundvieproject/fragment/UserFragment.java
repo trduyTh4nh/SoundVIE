@@ -107,7 +107,7 @@ public class UserFragment extends Fragment {
                         StorageHelper h = new StorageHelper(getContext());
                         FirebaseStorage sto = h.getStorage();
                         StorageReference ref = sto.getReference("image/"+u.getAvatar());
-                        Glide.with(getActivity()).load(ref).into(ivUser);
+                        Glide.with(getContext()).load(ref).into(ivUser);
                     }
                     progress.setVisibility(View.GONE);
                 }

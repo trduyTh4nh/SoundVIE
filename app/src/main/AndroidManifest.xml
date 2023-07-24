@@ -14,10 +14,16 @@
         android:theme="@style/Theme.SoundVIEProject"
         tools:targetApi="31">
         <activity
+            android:name=".VisaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PremiumRegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditUserActivity"
             android:exported="false"
-            android:theme="@style/Theme.SoundVIEProject"/>
-       <activity
+            android:theme="@style/Theme.SoundVIEProject" />
+        <activity
             android:name=".ActivityAddSongToPlayList"
             android:exported="true" />
         <activity

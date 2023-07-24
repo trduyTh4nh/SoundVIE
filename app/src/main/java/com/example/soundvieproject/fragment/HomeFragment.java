@@ -1,5 +1,6 @@
 package com.example.soundvieproject.fragment;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.PremiumRegisterActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.media.Media;
@@ -67,7 +69,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
-
+    Button btnPremium;
     SongAdapter adapter;
     SongAdapter adapter2;
     RecyclerView rcv2;

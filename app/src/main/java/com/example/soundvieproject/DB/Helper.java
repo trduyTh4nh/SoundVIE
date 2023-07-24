@@ -17,6 +17,7 @@ import com.example.soundvieproject.model.UserTypes;
 import org.bson.Document;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -287,6 +288,11 @@ public class Helper {
         MongoCollection<Playlist> playlists = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Playlist>> tsk = playlists.find(doc).iterator();
         tsk.getAsync(callback);
+    }
+    public void getPremium(String id, App.Callback<Premium> callback){
+        Document doc = new Document("_id", new ObjectId(id));
+        MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
+        prem.findOne(doc).getAsync(callback);
     }
 
 }

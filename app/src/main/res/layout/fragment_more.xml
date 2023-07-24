@@ -98,6 +98,7 @@
                     tools:ignore="RtlCompat" />
             </LinearLayout>
             <Button
+                android:id="@+id/btnPremium"
                 android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

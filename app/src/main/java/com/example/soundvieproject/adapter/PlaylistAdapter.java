@@ -64,9 +64,9 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             return;
         }
         Playlist p = pl.get(position - 1);
-        ivCover.setImageResource(p.getCoverHard());
-        tvTitle.setText(p.getName());
-        tvDesc.setText(p.getDescription());
+//        ivCover.setImageResource(p.getCoverHard());
+//        tvTitle.setText(p.getName());
+//        tvDesc.setText(p.getDescription());
         if(position % 2 != 0){
             ll.setGravity(Gravity.END);
         }
