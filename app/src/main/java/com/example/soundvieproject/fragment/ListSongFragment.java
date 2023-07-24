@@ -70,7 +70,7 @@ public class ListSongFragment extends Fragment {
         int cover = R.drawable.labankhongtheyeu;
         Random r = new Random();
         for(int i = 0; i < 10; i++){
-            p.add(new Playlist(names[r.nextInt(names.length)], cover, descs[r.nextInt(descs.length)]));
+            //p.add(new Playlist(names[r.nextInt(names.length)], cover, descs[r.nextInt(descs.length)]));
         }
         return p;
     }
