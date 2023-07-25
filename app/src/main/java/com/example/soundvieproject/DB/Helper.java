@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
+import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Premium;
 import com.example.soundvieproject.model.Song;
@@ -15,10 +16,13 @@ import com.example.soundvieproject.model.SongInPlayList;
 import com.example.soundvieproject.model.UserTypes;
 
 import org.bson.Document;
+import org.bson.codecs.DateCodec;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
+import org.bson.types.ObjectId;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Objects;
 
 import io.realm.mongodb.App;
@@ -30,6 +34,7 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class Helper {
@@ -288,5 +293,16 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> tsk = playlists.find(doc).iterator();
         tsk.getAsync(callback);
     }
-
+    public void getPremium(String id, App.Callback<Premium> callback){
+        Document doc = new Document("_id", new ObjectId(id));
+        MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
+        prem.findOne(doc).getAsync(callback);
+    }
+    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback){
+        String idUser = a.currentUser().getId();
+        Date date = new Date();
+        Payment pay = new Payment(date, idUser, prem, method);
+        MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertOne(pay).getAsync(callback);
+    }
 }

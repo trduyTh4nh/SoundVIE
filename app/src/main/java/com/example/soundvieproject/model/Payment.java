@@ -1,52 +1,55 @@
 package com.example.soundvieproject.model;
 
+import org.bson.types.ObjectId;
+
 import java.util.Date;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import io.realm.RealmObject;
 
 public class Payment extends RealmObject {
-    private Date NgayTT;
-    private User user;
-    private String paymentMethod;
-    private Premium subscription;
+    private Date ngayTT;
+    private String idUser;
+    private ObjectId idGoi;
+    private String phuongThucTT;
     public Payment(){}
-
-    public Payment(Date ngayTT, User user, String paymentMethod, Premium subscription) {
-        NgayTT = ngayTT;
-        this.user = user;
-        this.paymentMethod = paymentMethod;
-        this.subscription = subscription;
+    public Payment(Date ngayTT, String idUser, ObjectId idGoi, String phuongThucTT) {
+        this.ngayTT = ngayTT;
+        this.idUser = idUser;
+        this.idGoi = idGoi;
+        this.phuongThucTT = phuongThucTT;
     }
 
     public Date getNgayTT() {
-        return NgayTT;
+        return ngayTT;
     }
 
     public void setNgayTT(Date ngayTT) {
-        NgayTT = ngayTT;
+        this.ngayTT = ngayTT;
     }
 
-    public User getUser() {
-        return user;
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public ObjectId getIdGoi() {
+        return idGoi;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setIdGoi(ObjectId idGoi) {
+        this.idGoi = idGoi;
     }
 
-    public Premium getSubscription() {
-        return subscription;
+    public String getPhuongThucTT() {
+        return phuongThucTT;
     }
 
-    public void setSubscription(Premium subscription) {
-        this.subscription = subscription;
+    public void setPhuongThucTT(String phuongThucTT) {
+        this.phuongThucTT = phuongThucTT;
     }
 }
