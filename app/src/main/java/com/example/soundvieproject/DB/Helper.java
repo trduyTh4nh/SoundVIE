@@ -77,7 +77,9 @@ public class Helper {
 
     }
 
-    public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback) {
+
+    public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
+        user = a.currentUser();
         client = user.getMongoClient("mongodb-atlas");
         db = client.getDatabase("SoundVIE");
         String idUser = Objects.requireNonNull(a.currentUser()).getId();
