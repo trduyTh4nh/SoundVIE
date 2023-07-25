@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.adapter.PlaylistAdapter;
 import com.example.soundvieproject.model.Album;
@@ -21,6 +22,9 @@ import com.example.soundvieproject.model.Playlist;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +47,8 @@ public class ListSongFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+    ArrayList<Playlist> arrayPlayList;
+    Helper helper = Helper.INSTANCE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,24 +60,27 @@ public class ListSongFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rcvList = view.findViewById(R.id.rcvPlayList);
-        Log.d("hello", "hello");
-        ArrayList<Playlist> p = getPlaylists();
-        PlaylistAdapter adap = new PlaylistAdapter(getActivity().getApplicationContext(), p);
-        GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
-        rcvList.setAdapter(adap);
-        rcvList.setLayoutManager(l);
         super.onViewCreated(view, savedInstanceState);
-
+        getPlaylists();
     }
-    public ArrayList<Playlist> getPlaylists(){
-        ArrayList<Playlist> p = new ArrayList<>();
-        String[] names = {"Tổng hợp nhạc 1", "Chiến báo", "Cx hay, cx mạnh", "Cx chiến báo"};
-        String[] descs = {"1", "234", "abc", "xyz"};
-        int cover = R.drawable.labankhongtheyeu;
-        Random r = new Random();
-        for(int i = 0; i < 10; i++){
-            //p.add(new Playlist(names[r.nextInt(names.length)], cover, descs[r.nextInt(descs.length)]));
-        }
-        return p;
+    public void getPlaylists(){
+        arrayPlayList = new ArrayList<>();
+        helper.getPlayList(result -> {
+            if(result.isSuccess()){
+                MongoCursor<Playlist> cursor = result.get();
+                while (cursor.hasNext()){
+                    Playlist playlist = cursor.next();
+                    Log.d("Check", playlist.toString());
+                    arrayPlayList.add(new Playlist(playlist.getId(), playlist.getName(), playlist.getImage(), playlist.getIdUser(), playlist.getDes()));
+                }
+                PlaylistAdapter adap = new PlaylistAdapter(getActivity().getApplicationContext(), arrayPlayList);
+                GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
+                rcvList.setAdapter(adap);
+                rcvList.setLayoutManager(l);
+
+            }
+        });
+
+
     }
 }

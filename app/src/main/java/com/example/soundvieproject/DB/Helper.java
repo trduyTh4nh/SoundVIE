@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
-import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Premium;
 import com.example.soundvieproject.model.Song;
@@ -16,15 +15,17 @@ import com.example.soundvieproject.model.SongInPlayList;
 import com.example.soundvieproject.model.UserTypes;
 
 import org.bson.Document;
-import org.bson.codecs.DateCodec;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
+import java.security.KeyStore;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.Collection;
 import java.util.Objects;
+import java.util.Random;
 
+import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
@@ -34,7 +35,6 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
-import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class Helper {
@@ -45,7 +45,7 @@ public class Helper {
     private MongoDatabase db;
     private CodecRegistry pojoCodecRegistry;
 
-    public Helper(){
+    public Helper() {
         String Appid = "soundvie-zvqhd";
         a = new io.realm.mongodb.App(new AppConfiguration.Builder(Appid).build());
         pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
@@ -68,7 +68,7 @@ public class Helper {
     public void setA(io.realm.mongodb.App a) {
         this.a = a;
         user = a.currentUser();
-        if(user != null){
+        if (user != null) {
             client = user.getMongoClient("mongodb-atlas");
             db = client.getDatabase("SoundVIE");
         }
@@ -76,6 +76,7 @@ public class Helper {
                 fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 
     }
+
 
     public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
         user = a.currentUser();
@@ -86,7 +87,8 @@ public class Helper {
         MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
         col.findOne(doc).getAsync(callback);
     }
-    public void prepareDatabase(){
+
+    public void prepareDatabase() {
         MongoCollection<UserTypes> col = db.getCollection("UserTypes", UserTypes.class).withCodecRegistry(pojoCodecRegistry);
         col.insertMany(Arrays.asList(
                 new UserTypes("Nghệ sĩ", "Người sáng tạo nội dung cho nền tảng", "ns"),
@@ -95,18 +97,19 @@ public class Helper {
                 new UserTypes("Quản lý người dùng", "Quản lý phân quyền và tài khoản người dùng", "qlnd"),
                 new UserTypes("Kế toán", "Báo cáo các khoản tiền", "kt")
         )).getAsync(task -> {
-            if(task.isSuccess()){
+            if (task.isSuccess()) {
                 Log.d("Success!", "successfully inserted userTypes");
-            }else {
+            } else {
                 Log.d("Failed.", "unsuccessfully inserted userTypes: Error " + task.getError());
             }
         });
 
     }
-    public void insertItem(Song s){
+
+    public void insertItem(Song s) {
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         col.insertOne(s).getAsync(task -> {
-            if(task.isSuccess()){
+            if (task.isSuccess()) {
                 Log.d("Success", "Added.");
             } else {
                 Log.d("Error", "Error: " + task.getError());
@@ -114,14 +117,15 @@ public class Helper {
         });
     }
 
-    public void login(String email, String password, App.Callback<User> callback){
+    public void login(String email, String password, App.Callback<User> callback) {
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, callback);
     }
-    public void insertPremium(Premium premium){
+
+    public void insertPremium(Premium premium) {
         MongoCollection<Premium> pre = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
         pre.insertOne(premium).getAsync(result -> {
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 Log.d("Success", "Added.");
             } else {
                 Log.d("Error", "Error: " + result.getError());
@@ -129,54 +133,82 @@ public class Helper {
         });
     }
 
-  public void insertSong(Song song){
-        MongoCollection<Song> songcol = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
-        songcol.insertOne(song).getAsync(result -> {
+    public void insertSongInPlayList(SongInPlayList songInPlayList){
+        MongoCollection<SongInPlayList> song = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        song.insertOne(songInPlayList).getAsync(result -> {
             if(result.isSuccess()){
-                Log.d("Success", "Added.");
+                Log.d("Add song in playlist", "Success");
             }
             else
-            {
+                Log.d("Add song in playlist", "Failed");
+        });
+    }
+
+
+    public void insertSong(Song song) {
+        MongoCollection<Song> songcol = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        songcol.insertOne(song).getAsync(result -> {
+            if (result.isSuccess()) {
+                Log.d("Success", "Added.");
+            } else {
                 Log.d("Error", "Error: " + result.getError());
             }
         });
-  }
-    public void addPlaylist(Playlist playl){
+    }
+
+    public void addPlaylist(Playlist playl) {
         MongoCollection<Playlist> playlist = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
         playlist.insertOne(playl).getAsync(result -> {
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 Log.d("Insert playlist", "Success");
-            }
-            else {
+            } else {
                 Log.d("Insert playlist", "Failed because: " + result.getError());
             }
         });
     }
-    public void getSong(App.Callback<MongoCursor<Song>> callback){
+
+    public void getSong(App.Callback<MongoCursor<Song>> callback) {
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
         task.getAsync(callback);
     }
-    public void register(String email, String password, String phone, String name, Context c){
+
+    public void getSongByID(App.Callback<MongoCursor<Song>> callback, String idSong){
+        Document document = new Document("_id", new ObjectId(idSong));
+        MongoCollection<Song> songMongoCollection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Song>> task = songMongoCollection.find(document).iterator();
+        task.getAsync(callback);
+    }
+
+    public void getPlayList(App.Callback<MongoCursor<Playlist>> callback) {
+        String idUser = a.currentUser().getId().toString();
+        Document doc = new Document("idUser", idUser);
+        MongoCollection<Playlist> playlist = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Playlist>> task = playlist.find(doc).iterator();
+        task.getAsync(callback);
+    }
+
+    public void register(String email, String password, String phone, String name, Context c) {
         a.getEmailPassword().registerUserAsync(email, password, t -> {
-            if(t.isSuccess()){
+            if (t.isSuccess()) {
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
-                updateUser(email, password,phone, name, c);
+                updateUser(email, password, phone, name, c);
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
             }
         });
     }
-    public void prepare(){
+
+    public void prepare() {
 
     }
 
-    public void updateUser(String email, String password, String phone, String name, Context c){
+    public void updateUser(String email, String password, String phone, String name, Context c) {
         //prepare();
         Credentials creds = Credentials.emailPassword(email, password);
         a.loginAsync(creds, t -> {
-            if(t.isSuccess()){
+            if (t.isSuccess()) {
                 user = a.currentUser();
                 client = user.getMongoClient("mongodb-atlas");
                 String id = user.getId();
@@ -189,21 +221,21 @@ public class Helper {
                 Document newPhone = new Document("$set", new Document("phone", phone));
                 Document newName = new Document("$set", new Document("name", name));
                 usr.updateOne(query, newVal).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
+                    if (tsk.isSuccess()) {
                         Log.d("Success", "succesfully inserted user");
                     } else {
                         Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
                     }
                 });
                 usr.updateOne(query, newName).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
+                    if (tsk.isSuccess()) {
                         Log.d("Success", "succesfully inserted user");
                     } else {
                         Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
                     }
                 });
                 usr.updateOne(query, newPhone).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
+                    if (tsk.isSuccess()) {
                         Log.d("Success", "succesfully inserted user");
                     } else {
                         Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
@@ -214,53 +246,56 @@ public class Helper {
             }
         });
     }
-    public void updateUser(String email, String phone, String name, String img, String desc, App.Callback<UpdateResult> callback){
-                user = a.currentUser();
-                client = user.getMongoClient("mongodb-atlas");
-                String id = user.getId();
-                db = client.getDatabase("SoundVIE");
-                pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
-                        fromProviders(PojoCodecProvider.builder().automatic(true).build()));
-                MongoCollection<com.example.soundvieproject.model.User> usr = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
-                Document query = new Document("idUser", id);
-                Document newVal = new Document("$set", new Document("email", email));
-                Document newPhone = new Document("$set", new Document("phone", phone));
-                Document newName = new Document("$set", new Document("name", name));
-                Document newDesc = new Document("$set", new Document("moTa", desc));
-                Document newAvatar = new Document("$set", new Document("avatar", img));
-                usr.updateOne(query, newVal).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
-                        Log.d("Success", "succesfully inserted user");
-                    } else {
-                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
-                    }
-                });
-                usr.updateOne(query, newName).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
-                        Log.d("Success", "succesfully inserted user");
-                    } else {
-                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
-                    }
-                });
-                usr.updateOne(query, newPhone).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
-                        Log.d("Success", "succesfully inserted user");
-                    } else {
-                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
-                    }
-                });
-                usr.updateOne(query, newDesc).getAsync(tsk -> {
-                    if(tsk.isSuccess()){
-                        Log.d("Success", "succesfully inserted user");
-                    } else {
-                        Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
-                    }
-                });
-                usr.updateOne(query, newAvatar).getAsync(callback);
+
+    public void updateUser(String email, String phone, String name, String img, String desc, App.Callback<UpdateResult> callback) {
+        user = a.currentUser();
+        client = user.getMongoClient("mongodb-atlas");
+        String id = user.getId();
+        db = client.getDatabase("SoundVIE");
+        pojoCodecRegistry = fromRegistries(AppConfiguration.DEFAULT_BSON_CODEC_REGISTRY,
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+        MongoCollection<com.example.soundvieproject.model.User> usr = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        Document query = new Document("idUser", id);
+        Document newVal = new Document("$set", new Document("email", email));
+        Document newPhone = new Document("$set", new Document("phone", phone));
+        Document newName = new Document("$set", new Document("name", name));
+        Document newDesc = new Document("$set", new Document("moTa", desc));
+        Document newAvatar = new Document("$set", new Document("avatar", img));
+        usr.updateOne(query, newVal).getAsync(tsk -> {
+            if (tsk.isSuccess()) {
+                Log.d("Success", "succesfully inserted user");
+            } else {
+                Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+            }
+        });
+        usr.updateOne(query, newName).getAsync(tsk -> {
+            if (tsk.isSuccess()) {
+                Log.d("Success", "succesfully inserted user");
+            } else {
+                Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+            }
+        });
+        usr.updateOne(query, newPhone).getAsync(tsk -> {
+            if (tsk.isSuccess()) {
+                Log.d("Success", "succesfully inserted user");
+            } else {
+                Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+            }
+        });
+        usr.updateOne(query, newDesc).getAsync(tsk -> {
+            if (tsk.isSuccess()) {
+                Log.d("Success", "succesfully inserted user");
+            } else {
+                Log.e("Error", "Error: " + tsk.getError().getErrorCode().toString());
+            }
+        });
+        usr.updateOne(query, newAvatar).getAsync(callback);
     }
-    public void logOut(App.Callback<User> callback){
+
+    public void logOut(App.Callback<User> callback) {
         user.logOutAsync(callback);
     }
+
     public MongoClient getClient() {
         return client;
     }
@@ -284,26 +319,31 @@ public class Helper {
     public void setPojoCodecRegistry(CodecRegistry pojoCodecRegistry) {
         this.pojoCodecRegistry = pojoCodecRegistry;
     }
-    public void checkRole(App.Callback<com.example.soundvieproject.model.User> callback){
+
+    public void checkRole(App.Callback<com.example.soundvieproject.model.User> callback) {
         getUserCurrentBy(callback);
     }
-    public void getPlayistByID(App.Callback<MongoCursor<Playlist>> callback){
+
+    public void getUserByObjID(String id, App.Callback<com.example.soundvieproject.model.User> callback) {
+        Document doc = new Document("idUser", id);
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        col.findOne(doc).getAsync(callback);
+    }
+
+    public void getPlayistByID(App.Callback<MongoCursor<Playlist>> callback) {
         String id = Objects.requireNonNull(a.currentUser()).getId().toString();
         Document doc = new Document("idUser", id);
         MongoCollection<Playlist> playlists = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Playlist>> tsk = playlists.find(doc).iterator();
         tsk.getAsync(callback);
     }
-    public void getPremium(String id, App.Callback<Premium> callback){
-        Document doc = new Document("_id", new ObjectId(id));
-        MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
-        prem.findOne(doc).getAsync(callback);
+
+    public void getSongInPlayList(App.Callback<MongoCursor<SongInPlayList>> callback, String idPlayListCurrent){
+        Document docu = new Document("idPlaylist", new ObjectId(idPlayListCurrent));
+        MongoCollection<SongInPlayList> colSongInPl = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<SongInPlayList>> task = colSongInPl.find(docu).iterator();
+        task.getAsync(callback);
     }
-    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback){
-        String idUser = a.currentUser().getId();
-        Date date = new Date();
-        Payment pay = new Payment(date, idUser, prem, method);
-        MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
-        col.insertOne(pay).getAsync(callback);
-    }
+
+
 }

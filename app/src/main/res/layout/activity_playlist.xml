@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayingMusicActivity"
+    tools:context=".PlaylistActivity"
     android:background="@drawable/background_playlist">
     <LinearLayout
         android:orientation="vertical"
@@ -20,6 +20,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp">
                 <ImageView
+                    android:id="@+id/imgPl"
                     android:src="@drawable/img_playlist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -32,6 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/namePl"
                     android:textColor="@color/white"
                     android:textSize="28dp"
                     android:textStyle="bold"
@@ -51,6 +53,7 @@
                         android:layout_height="wrap_content">
                     </TextView>
                     <TextView
+                        android:id="@+id/nameUserPl"
                         android:textColor="@color/white"
                         android:layout_marginLeft="5dp"
                         android:text="Người dùng"
@@ -59,6 +62,7 @@
                     </TextView>
                 </LinearLayout>
                 <TextView
+                    android:id="@+id/titllePl"
                     android:textColor="@color/white"
                     android:textSize="17dp"
                     android:textStyle="bold"
@@ -83,27 +87,31 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <ImageButton
+                android:id="@+id/btnAddSong"
+                android:background="@color/transparent"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            </ImageView>
-            <ImageView
+            </ImageButton>
+            <ImageButton
+                android:background="@color/transparent"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            </ImageView>
-            <ImageView
+            </ImageButton>
+            <ImageButton
+                android:background="@color/transparent"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
-            </ImageView>
+            </ImageButton>
 
 
         </LinearLayout>
