@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,8 +24,11 @@ import com.example.soundvieproject.adapter.MusicInSearchAdapter;
 import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.SongInPlayList;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,6 +48,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
     ImageButton btnPause, btnResume;
     ImageView img_song;
     Helper helper = Helper.INSTANCE;
+    Button btnSave;
 
     MediaPlayer p;
 
@@ -64,7 +70,30 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         img_song = findViewById(R.id.img_song);
         song_name = findViewById(R.id.song_name);
         artist = findViewById(R.id.artist);
+        btnSave = findViewById(R.id.btnSave);
+
+
+        Bundle b = getIntent().getExtras();
+
         Hup();
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                for(int i = rvSongInSearch.getChildCount() - 1; i >= 0; i--){
+                    v = rvSongInSearch.getChildAt(i);
+                    CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
+                    if(checkBox.isChecked()){
+                        String idPlCr = b.getString("idPlaylistCurrent");
+                        ObjectId idSong = songsArr.get(i).getId();
+                        SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
+                        helper.insertSongInPlayList(songInPlayList);
+                    }
+                }
+
+            }
+        });
+
 
     }
     public void Hup(){
@@ -100,6 +129,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                         //img_song.setImageResource(song.getImgCover());
                         song_name.setText(song.getNameSong());
                         artist.setText(song.getArtist());
+
                         StorageReference sto = firebaseStorage.getReference("images/" + song.getImgCover());
                         Glide.with(ActivityAddSongToPlayList.this).load(sto).into(img_song);
 

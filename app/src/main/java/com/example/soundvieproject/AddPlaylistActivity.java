@@ -67,6 +67,8 @@ public class AddPlaylistActivity extends AppCompatActivity {
         edtDesPL = findViewById(R.id.etdDesPl);
         btnCreatePL = findViewById(R.id.btnCreate);
 
+
+
         btnCreatePL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +80,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
                     public void onResult(App.Result<com.example.soundvieproject.model.User> result) {
                         if(result.isSuccess()){
                             user = result.get().getIdUser();
-                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user));
+                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user, desPL));
                         }
                     }
                 });

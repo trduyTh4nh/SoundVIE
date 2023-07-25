@@ -40,31 +40,31 @@ public class VisaActivity extends AppCompatActivity {
         tvCost = findViewById(R.id.tvCost);
         btnContinue = findViewById(R.id.btnContinue);
         String premid = b.getString("_id");
-        h.getPremium(premid, new App.Callback<Premium>() {
-            @Override
-            public void onResult(App.Result<Premium> result) {
-                if(result.isSuccess()){
-                    loadingProgress.setVisibility(View.GONE);
-                    Premium prem = result.get();
-                    premiumType.setText(prem.getTenLoai());
-                    double amount = prem.getGia();
-                    DecimalFormat format = new DecimalFormat("#,###");
-                    tvCost.setText(format.format(amount) + " VND");
-                    tvDuration.setText(String.format("Trả mỗi %d ngày, bắt đầu từ hôm nay", prem.getThoiHan()));
-                }
-            }
-        });
-        btnContinue.setOnClickListener(v -> {
-            h.insertPayment(new ObjectId(premid), "VISA", new App.Callback<InsertOneResult>() {
-                @Override
-                public void onResult(App.Result<InsertOneResult> result) {
-                    if(result.isSuccess()){
-                        Toast.makeText(VisaActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(VisaActivity.this, HomeActivity.class);
-                        startActivity(i);
-                    }
-                }
-            });
-        });
+//        h.getPremium(premid, new App.Callback<Premium>() {
+//            @Override
+//            public void onResult(App.Result<Premium> result) {
+//                if(result.isSuccess()){
+//                    loadingProgress.setVisibility(View.GONE);
+//                    Premium prem = result.get();
+//                    premiumType.setText(prem.getTenLoai());
+//                    double amount = prem.getGia();
+//                    DecimalFormat format = new DecimalFormat("#,###");
+//                    tvCost.setText(format.format(amount) + " VND");
+//                    tvDuration.setText(String.format("Trả mỗi %d ngày, bắt đầu từ hôm nay", prem.getThoiHan()));
+//                }
+//            }
+        //});
+//        btnContinue.setOnClickListener(v -> {
+//            h.insertPayment(new ObjectId(premid), "VISA", new App.Callback<InsertOneResult>() {
+//                @Override
+//                public void onResult(App.Result<InsertOneResult> result) {
+//                    if(result.isSuccess()){
+//                        Toast.makeText(VisaActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+//                        Intent i = new Intent(VisaActivity.this, HomeActivity.class);
+//                        startActivity(i);
+//                    }
+//                }
+//            });
+//        });
     }
 }

@@ -9,23 +9,32 @@ public class Playlist {
     private String Name;
     private String Image;
     private String idUser;
+    private String Des;
 
-    public Playlist(ObjectId id, String name, String Image, String IdUser) {
+    public Playlist(ObjectId id, String name, String image, String idUser, String des) {
         this.id = id;
-        this.Name = name;
-        this.Image = Image;
-        this.idUser = IdUser;
+        Name = name;
+        Image = image;
+        this.idUser = idUser;
+        Des = des;
     }
 
+    public Playlist(){}
 
+    public ObjectId getId() {
+        return id;
+    }
 
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
     public String getName() {
         return Name;
     }
 
     public void setName(String name) {
-        this.Name = name;
+        Name = name;
     }
 
     public String getImage() {
@@ -33,9 +42,22 @@ public class Playlist {
     }
 
     public void setImage(String image) {
-        this.Image = image;
+        Image = image;
     }
 
+    public String getIdUser() {
+        return idUser;
+    }
 
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
+    public String getDes() {
+        return Des;
+    }
+
+    public void setDes(String des) {
+        Des = des;
+    }
 }
