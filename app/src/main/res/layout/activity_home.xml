@@ -19,12 +19,14 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:orientation="vertical"
             android:elevation="10dp"
             android:background="@color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarNormal"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="center"
@@ -94,6 +96,81 @@
                             android:layout_margin="15dp"
                             android:indeterminateTint="@color/white"
                             />
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.appcompat.widget.Toolbar>
+
+            <androidx.appcompat.widget.Toolbar
+                android:visibility="gone"
+                android:id="@+id/toolbarSearch"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                tools:ignore="MissingConstraints">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingRight="20dp">
+
+
+                    <ImageButton
+                        android:id="@+id/btnBack"
+                        style="@style/imageBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:padding="10dp"
+                        android:src="@drawable/arrow_left_line">
+                    </ImageButton>
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center_vertical|end">
+                        <EditText
+                            android:id="@+id/edtSearch"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/icon_search"
+                            android:layout_width="wrap_content"
+                            android:padding="10dp"
+                            android:hint="Tìm kiếm"
+                            android:drawablePadding="16dp"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:background="@drawable/search_background"
+                            android:layout_height="wrap_content"/>
+                        <ImageButton
+
+                            style="@style/imageBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="3dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icon_notify">
+
+                        </ImageButton>
+
+                        <ImageButton
+                            style="@style/imageBtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:padding="10dp"
+                            android:src="@drawable/icon_setting"></ImageButton>
+
+                        <ProgressBar
+                            android:visibility="gone"
+                            android:id="@+id/searchProgress"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_margin="15dp"
+                            android:indeterminateTint="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </androidx.appcompat.widget.Toolbar>

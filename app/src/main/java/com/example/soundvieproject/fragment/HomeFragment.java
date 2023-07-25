@@ -23,7 +23,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.DB.StorageHelper;
 import com.example.soundvieproject.PremiumRegisterActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.adapter.SongAdapter;
@@ -31,6 +33,7 @@ import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.media.MediaPlayerUtils;
 import com.example.soundvieproject.model.Song;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.bson.types.ObjectId;
 
@@ -152,6 +155,9 @@ public class HomeFragment extends Fragment {
                             btnPause.setVisibility(View.VISIBLE);
                             media.start();
                         });
+                        StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
+                        StorageReference ref = help.getStorage().getReference("images/" + song.getImgCover());
+                        Glide.with(getActivity()).load(ref).into(img_song);
                     }
                 });
             } else {

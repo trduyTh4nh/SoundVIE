@@ -5,6 +5,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
@@ -24,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import io.realm.Realm;
 import io.realm.mongodb.App;
@@ -344,6 +346,26 @@ public class Helper {
         RealmResultTask<MongoCursor<SongInPlayList>> task = colSongInPl.find(docu).iterator();
         task.getAsync(callback);
     }
-
+    public void getSongByQuery(App.Callback<MongoCursor<Song>> callback,String name){
+        Document doc = new Document();
+        doc.append("$regex", "(?)"+Pattern.quote(name));
+        doc.append("$options", "i");
+        Document find = new Document();
+        find.append("nameSong",doc);
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Song>> tsk = col.find(find).iterator();
+        tsk.getAsync(callback);
+    }
+    public void getArtistByQuery(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback, String name){
+        Document doc = new Document();
+        doc.append("$regex", "(?)"+Pattern.quote(name));
+        doc.append("$options", "i");
+        Document find = new Document();
+        find.append("name",doc);
+        find.append("idLoai", "ns");
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<com.example.soundvieproject.model.User>> tsk = col.find(find).iterator();
+        tsk.getAsync(callback);
+    }
 
 }
