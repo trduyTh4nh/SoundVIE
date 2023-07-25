@@ -183,6 +183,7 @@
                     android:textColor="@color/white"
                     android:textSize="16dp" />
                 <TextView
+
                     android:id="@+id/tvCost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -191,9 +192,10 @@
                     android:textColor="@color/white"
                     android:textSize="40sp" />
                 <TextView
+                    android:id="@+id/tvDuration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trả hàng tháng (30 ngày), bắt đầu từ bây giờ."
+                    android:text="Trả hàng tháng (0 ngày), bắt đầu từ bây giờ."
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>
