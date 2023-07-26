@@ -2,6 +2,7 @@ package com.example.soundvieproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.soundvieproject.fragment.HomeFragment;
 import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
+import com.example.soundvieproject.fragment.SearchFragment;
 import com.example.soundvieproject.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,7 +29,8 @@ public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
     private ViewPager viewPager;
-    ImageButton btnSearch;
+    Toolbar toolbarNormal, toolbarSearch;
+    ImageButton btnSearch, btnBack;
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,14 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         navigationView = findViewById(R.id.nav_main);
         btnSearch = findViewById(R.id.btnSearch);
+        toolbarNormal = findViewById(R.id.toolbarNormal);
+        toolbarSearch = findViewById(R.id.toolbarSearch);
+        btnBack = findViewById(R.id.btnBack);
+        btnBack.setOnClickListener(v -> {
+            getSupportFragmentManager().popBackStack();
+            toolbarNormal.setVisibility(View.VISIBLE);
+            toolbarSearch.setVisibility(View.GONE);
+        });
         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
         for(int i = 1; i <= 100; i++){
             ObjectId id = new ObjectId();
@@ -43,8 +54,9 @@ public class HomeActivity extends AppCompatActivity {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, ActivityAddSongToPlayList.class);
-                startActivity(i);
+                getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new SearchFragment()).commit();
+                toolbarNormal.setVisibility(View.GONE);
+                toolbarSearch.setVisibility(View.VISIBLE);
             }
         });
 
@@ -54,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.home:
+
                         Toast.makeText(HomeActivity.this, "Home", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.list:
@@ -78,18 +91,26 @@ public class HomeActivity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.home:
+                        toolbarNormal.setVisibility(View.VISIBLE);
+                        toolbarSearch.setVisibility(View.GONE);
                         isAdd = false;
                         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new HomeFragment()).commit();
                         break;
                     case R.id.list:
+                        toolbarNormal.setVisibility(View.VISIBLE);
+                        toolbarSearch.setVisibility(View.GONE);
                         isAdd = false;
                         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new ListSongFragment()).commit();
                         break;
                     case R.id.user:
+                        toolbarNormal.setVisibility(View.VISIBLE);
+                        toolbarSearch.setVisibility(View.GONE);
                         isAdd = false;
                         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new UserFragment()).commit();
                         break;
                     case R.id.more:
+                        toolbarNormal.setVisibility(View.VISIBLE);
+                        toolbarSearch.setVisibility(View.GONE);
                         isAdd = false;
                         getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new MoreFragment()).commit();
                         break;
