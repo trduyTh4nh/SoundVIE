@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
 import com.example.soundvieproject.model.ArtistInSong;
+import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Premium;
 import com.example.soundvieproject.model.Report;
@@ -27,6 +28,7 @@ import org.bson.types.ObjectId;
 import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Random;
 import java.util.regex.Pattern;
@@ -42,6 +44,7 @@ import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 import io.realm.mongodb.mongo.result.DeleteResult;
+import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class Helper {
@@ -436,5 +439,22 @@ public class Helper {
         RealmResultTask<MongoCursor<com.example.soundvieproject.model.User>> tsk = col.find(find).iterator();
         tsk.getAsync(callback);
     }
-
+    public void getPayment(App.Callback<Payment> callback){
+        String usr = user.getId();
+        Document doc = new Document("idUser", usr);
+        MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        col.findOne(doc).getAsync(callback);
+    }
+    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback){
+        String idUser = a.currentUser().getId();
+        Date date = new Date();
+        Payment pay = new Payment(date, idUser, prem, method);
+        MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertOne(pay).getAsync(callback);
+    }
+    public void getPremium(String id, App.Callback<Premium> callback){
+        Document doc = new Document("_id", new ObjectId(id));
+        MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
+        prem.findOne(doc).getAsync(callback);
+    }
 }
