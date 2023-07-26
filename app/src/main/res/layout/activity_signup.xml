@@ -48,6 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <EditText
+                            android:textColor="@color/white"
                             android:id="@+id/edtName"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
@@ -58,6 +59,7 @@
                             android:layout_height="wrap_content">
                         </EditText>
                         <EditText
+                            android:textColor="@color/white"
                             android:id="@+id/edtEmail"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
@@ -69,6 +71,8 @@
                         </EditText>
 
                         <EditText
+                            android:inputType="textPassword"
+                            android:textColor="@color/white"
                             android:id="@+id/edtPhone"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
@@ -80,6 +84,7 @@
                         </EditText>
 
                         <EditText
+                            android:textColor="@color/white"
                             android:id="@+id/edtPassword"
                             android:textColorHint="@color/white"
                             android:padding="15dp"
@@ -91,6 +96,8 @@
                         </EditText>
 
                         <EditText
+                            android:textColor="@color/white"
+                            android:inputType="textPassword"
                             android:id="@+id/edtComfirmPass"
                             android:textColorHint="@color/white"
                             android:padding="15dp"

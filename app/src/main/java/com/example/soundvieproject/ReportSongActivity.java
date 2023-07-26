@@ -56,6 +56,7 @@ public class ReportSongActivity extends AppCompatActivity {
         cb3 = findViewById(R.id.check3);
         cb4 = findViewById(R.id.check4);
         cb5 = findViewById(R.id.check5);
+        arrArtistInSong = new ArrayList<>();
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,13 +79,10 @@ public class ReportSongActivity extends AppCompatActivity {
             }
         });
 
-
-
 //        String check = "";
 //        for(int i = 0; i < testsouce.size(); i++){
 //            check += testsouce.get(i);
 //        }
-
         Bundle b = getIntent().getExtras();
         String idSongReport = b.getString("idSongReport");
         //ObjectId idSongReportObj = new ObjectId(idSongReport);
@@ -104,12 +102,15 @@ public class ReportSongActivity extends AppCompatActivity {
             if(result.isSuccess()){
                 arrArtistOfSongReport = new ArrayList<>();
                 MongoCursor<ArtistInSong> cursorArtist = result.get();
+                Log.d("Hello", "Hello");
                 while (cursorArtist.hasNext()){
                     ArtistInSong artistInSong = cursorArtist.next();
                     arrArtistInSong.add(new ArtistInSong(artistInSong.getId(), artistInSong.getIdUser(), artistInSong.getIdSong()));
 
                     String  IDArtistCurrent = arrArtistInSong.get(0).getIdUser();
-
+                    for(int i = 0 ; i < arrArtistInSong.size(); i++){
+                        Log.e("ID Artist", String.valueOf(arrArtistInSong.get(i)));
+                    }
                     helper.getArtistOfSongbyID(element -> {
                         if(element.isSuccess()){
                             artistSong = element.get();
@@ -118,6 +119,7 @@ public class ReportSongActivity extends AppCompatActivity {
                     }, IDArtistCurrent);
                 }
             }
+
         },idSongReport);
 
 
@@ -153,12 +155,6 @@ public class ReportSongActivity extends AppCompatActivity {
                 helper.userReport(reportDetail);
             }
         });
-
-    //        helper.getSongByID(result -> {
-    //
-    //        }, String.valueOf(idSongReportObj));
-
-
 
     }
 }

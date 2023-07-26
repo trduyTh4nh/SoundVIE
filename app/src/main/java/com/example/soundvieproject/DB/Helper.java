@@ -229,8 +229,8 @@ public class Helper {
 
     }
     public void getArtitsbyIDSong(App.Callback<MongoCursor<ArtistInSong>> callback, String idSongRp){
-        Document docu = new Document("idSong", idSongRp);
-        MongoCollection<ArtistInSong> colArtistInSong = db.getCollection("ArtistInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        Document docu = new Document("idSong", new ObjectId(idSongRp));
+        MongoCollection<ArtistInSong> colArtistInSong = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<ArtistInSong>> task = colArtistInSong.find(docu).iterator();
         task.getAsync(callback);
     }
