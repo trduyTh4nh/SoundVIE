@@ -16,20 +16,26 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.fragment.CurrentPremiumFragment;
 import com.example.soundvieproject.fragment.HomeFragment;
 import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
 import com.example.soundvieproject.fragment.SearchFragment;
 import com.example.soundvieproject.fragment.UserFragment;
+import com.example.soundvieproject.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.bson.types.ObjectId;
+
+import io.realm.mongodb.App;
 
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
     private ViewPager viewPager;
     Toolbar toolbarNormal, toolbarSearch;
+    Helper h = Helper.INSTANCE;
     ImageButton btnSearch, btnBack;
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
@@ -111,8 +117,20 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.more:
                         toolbarNormal.setVisibility(View.VISIBLE);
                         toolbarSearch.setVisibility(View.GONE);
-                        isAdd = false;
-                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new MoreFragment()).commit();
+                        h.getPayment(new App.Callback<Payment>() {
+                            @Override
+                            public void onResult(App.Result<Payment> result) {
+                                if(result.isSuccess()){
+                                    if(result.get() != null){
+                                        Log.d("Test", result.get().toString());
+                                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new CurrentPremiumFragment()).commit();
+                                    } else {
+                                        getSupportFragmentManager().beginTransaction().replace(R.id.body_container, new MoreFragment()).commit();
+                                    }
+                                }
+                            }
+                        });
+
                         break;
                 }
                 if(!isAdd){
