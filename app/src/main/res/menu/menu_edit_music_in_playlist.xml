@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/delete_music" android:title="Xóa" ></item>
+    <item android:id="@+id/delete_music" android:title="Xóa" android:icon="@drawable/baseline_delete_24">
+    </item>
+    <item android:id="@+id/report_music" android:title="Tố cáo" android:icon="@drawable/baseline_report_24">
+    </item>
+
 </menu>
