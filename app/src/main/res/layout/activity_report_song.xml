@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ReportSongActivity"
+    android:background="@drawable/background_home"
+    android:orientation="vertical">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="20dp">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Tố cáo"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|end">
+                <Button
+
+                    android:textStyle="bold"
+                    android:layout_marginEnd="15dp"
+                    android:id="@+id/btnSendReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_btngg"
+                    android:text="Gửi"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black" />
+                <Button
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btnlogin_ripple"
+                    android:text="Hủy"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+            
+
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:textSize="18dp"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:text="Bạn đang tố cáo bài hát này. Hãy cho chúng tôi biết lý do mà bạn tố cáo bài hát"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:paddingLeft="18dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/back_ground_report_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Người dùng: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/nameUser"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Steve"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:paddingLeft="18dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/back_ground_report_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Bài hát: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/nameSong"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Song"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="20dp"
+                android:paddingLeft="18dp"
+                android:gravity="center_vertical"
+                android:background="@drawable/back_ground_report_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <TextView
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Nghệ sĩ: "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/nameArtist"
+                    android:textColor="@color/white"
+                    android:textSize="18dp"
+                    android:text="Artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:textSize="18dp"
+            android:padding="15dp"
+            android:textColor="@color/white"
+            android:text="Lý do tố cáo: Chọn 1 hoặc nhiều lý do"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:paddingRight="10dp"
+                    android:paddingLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/back_ground_report_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:text="Nội dung khiêu dâm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/check1"
+                        android:layout_alignParentRight="true"
+                        android:buttonTint="@color/white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/back_ground_report_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:text="Tính chất bạo lực hoặc nguy hiểm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/check2"
+                        android:layout_alignParentRight="true"
+                        android:buttonTint="@color/white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/back_ground_report_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:text="Kích động thù địch, hoặc lạm dụng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/check3"
+                        android:layout_alignParentRight="true"
+                        android:buttonTint="@color/white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/back_ground_report_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:text="Nội dung lừa đảo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/check4"
+                        android:layout_alignParentRight="true"
+                        android:buttonTint="@color/white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="18dp"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/back_ground_report_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/white"
+                        android:textSize="18dp"
+                        android:text="Phân biệt chủng tộc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </TextView>
+                    <CheckBox
+                        android:id="@+id/check5"
+                        android:layout_alignParentRight="true"
+                        android:buttonTint="@color/white"
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </CheckBox>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+        </ScrollView>
+        
+    </LinearLayout>
+</LinearLayout>

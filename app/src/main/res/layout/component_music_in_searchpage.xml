@@ -2,20 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingRight="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingRight="10dp"
+    android:layout_marginTop="20dp">
    <LinearLayout
        android:id="@+id/linearMusic"
        android:background="@drawable/transparent_ripple"
        android:layout_width="match_parent"
        android:layout_height="wrap_content">
-       <ImageView
-           android:scaleType="centerCrop"
-           android:id="@+id/imgCover"
-           android:src="@drawable/testimg"
-           android:layout_width="100dp"
-           android:layout_height="100dp">
-
-       </ImageView>
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/imgCover"
+                android:src="@drawable/testimg"
+                android:layout_width="95dp"
+                android:layout_height="95dp">
+            </ImageView>
+        </androidx.cardview.widget.CardView>
        <LinearLayout
            android:paddingLeft="10dp"
            android:gravity="center_vertical"
@@ -23,6 +29,7 @@
            android:layout_width="200dp"
            android:layout_height="match_parent">
            <TextView
+               android:textColor="@color/white"
                android:textSize="20dp"
                android:textStyle="bold"
                android:layout_marginTop="-10dp"
@@ -33,6 +40,7 @@
 
            </TextView>
            <TextView
+               android:textColor="@color/white"
                android:textStyle="bold"
                android:layout_marginTop="10dp"
                android:text="Masew, B Ray, REDT, Ý Tiên"
@@ -45,6 +53,8 @@
 
    </LinearLayout>
     <CheckBox
+        android:background="@drawable/border"
+        android:buttonTint="@color/white"
         android:id="@+id/checkAddSong"
         android:layout_marginTop="30dp"
         android:layout_alignParentRight="true"

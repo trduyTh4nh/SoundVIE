@@ -4,14 +4,18 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Patterns;
 import android.widget.Toast;
 
 import com.example.soundvieproject.HomeActivity;
+import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Premium;
+import com.example.soundvieproject.model.Report;
+import com.example.soundvieproject.model.ReportDetail;
 import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.SongInPlayList;
 import com.example.soundvieproject.model.UserTypes;
@@ -39,6 +43,7 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.result.DeleteResult;
 import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
 
@@ -137,6 +142,17 @@ public class Helper {
             }
         });
     }
+    public void insertArtistInSongWhenUpMusic(ArtistInSong artistInSong){
+        MongoCollection<ArtistInSong> artistInSongMongoCollection = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        artistInSongMongoCollection.insertOne(artistInSong).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("Insert Artists When up music", "Success!");
+            }
+            else
+                Log.d("Insert Artists When up music", "Failed!" + result.getError());
+
+        });
+    }
 
     public void insertSongInPlayList(SongInPlayList songInPlayList){
         MongoCollection<SongInPlayList> song = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
@@ -146,6 +162,29 @@ public class Helper {
             }
             else
                 Log.d("Add song in playlist", "Failed");
+        });
+    }
+
+    public void reportSong(Report report){
+        MongoCollection<Report> rp = db.getCollection("Report", Report.class).withCodecRegistry(pojoCodecRegistry);
+        rp.insertOne(report).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("Report", "Success!");
+            }
+            else
+                Log.d("Report", "Failed!");
+        });
+    }
+
+
+    public void userReport(ReportDetail detail){
+        MongoCollection<ReportDetail> colRPDT = db.getCollection("ReportDetail", ReportDetail.class).withCodecRegistry(pojoCodecRegistry);
+        colRPDT.insertOne(detail).getAsync(result -> {
+            if(result.isSuccess()){
+                Log.d("User Report", "Success!");
+            }
+            else
+                Log.d("User Report", "Failed!");
         });
     }
 
@@ -172,6 +211,7 @@ public class Helper {
         });
     }
 
+
     public void getSong(App.Callback<MongoCursor<Song>> callback) {
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
@@ -183,6 +223,32 @@ public class Helper {
         MongoCollection<Song> songMongoCollection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = songMongoCollection.find(document).iterator();
         task.getAsync(callback);
+    }
+
+    public void getSongByIDPart2(App.Callback<Song> callback, String idSong){
+        Document document = new Document("_id", new ObjectId(idSong));
+        MongoCollection<Song> songMongoCollection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        songMongoCollection.findOne(document).getAsync(callback);
+
+    }
+    public void getArtitsbyIDSong(App.Callback<MongoCursor<ArtistInSong>> callback, String idSongRp){
+        Document docu = new Document("idSong", new ObjectId(idSongRp));
+        MongoCollection<ArtistInSong> colArtistInSong = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<ArtistInSong>> task = colArtistInSong.find(docu).iterator();
+        task.getAsync(callback);
+    }
+    public void getArtistOfSongbyID(App.Callback<com.example.soundvieproject.model.User> callback, String idArtist){
+        Document docu = new Document("idUser", idArtist);
+        MongoCollection<com.example.soundvieproject.model.User> colUser = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        colUser.findOne(docu).getAsync(callback);
+    }
+
+
+
+    public void deleteSongWidthID(App.Callback<DeleteResult> callback, ObjectId idSongdel){
+        Document docu = new Document("_id", idSongdel);
+        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlayList", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        songColDel.deleteOne(docu).getAsync(callback);
     }
 
     public void getPlayList(App.Callback<MongoCursor<Playlist>> callback) {
@@ -208,6 +274,9 @@ public class Helper {
     public void prepare() {
 
     }
+
+
+
 
     public void updateUser(String email, String password, String phone, String name, Context c) {
         //prepare();

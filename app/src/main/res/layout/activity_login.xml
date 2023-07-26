@@ -55,9 +55,12 @@ tools:context=".MainActivity">
                         android:hint="Email"
                         android:padding="15dp"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/white"></EditText>
+                        android:textColorHint="@color/white">
+
+                    </EditText>
 
                     <EditText
+                        android:inputType="textPassword"
                         android:id="@+id/edtPassword"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -66,7 +69,9 @@ tools:context=".MainActivity">
                         android:hint="Mật khẩu"
                         android:padding="15dp"
                         android:textColor="@color/white"
-                        android:textColorHint="@color/white"></EditText>
+                        android:textColorHint="@color/white">
+
+                    </EditText>
 
 
                     <Button

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.DB.StorageHelper;
+import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Song;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -183,8 +184,13 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
                                     String lyrics = edtLyrics.getText().toString();
 
                                     RealmList<com.example.soundvieproject.model.User> artists = new RealmList<>();
-                                    instance.insertSong(new Song(new ObjectId(), nameSong, uriImage, stateData, lyrics, artists, UriPath));
+                                    ObjectId id = new ObjectId();
+                                    instance.insertSong(new Song(id, nameSong, uriImage, stateData, lyrics, artists, UriPath));
                                     Toast.makeText(ArtistUpMusicActivity.this, "Đăng thành công!", Toast.LENGTH_SHORT).show();
+                                    user = instance.getUser();
+                                    ArtistInSong artistInSong = new ArtistInSong(new ObjectId() ,user.getId() ,id);
+                                    instance.insertArtistInSongWhenUpMusic(artistInSong);
+
                                 }
                             });
                             Log.d("Res", d.toString());
@@ -217,6 +223,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
             if(progressDialog.isShowing()){
                 progressDialog.dismiss();
             }
+            btnChoose.setEnabled(true);
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@androidx.annotation.NonNull Exception e) {

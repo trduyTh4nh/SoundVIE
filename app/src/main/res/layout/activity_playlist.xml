@@ -75,6 +75,10 @@
             </LinearLayout>
         </LinearLayout>
         <Button
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             android:layout_marginBottom="15dp"
             android:background="@drawable/button_transparent"
             android:text="Chơi nhạc"
@@ -89,7 +93,7 @@
             android:layout_height="wrap_content">
             <ImageButton
                 android:id="@+id/btnAddSong"
-                android:background="@color/transparent"
+                android:background="@drawable/transparent_ripple"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector"
                 android:layout_width="wrap_content"
@@ -97,7 +101,7 @@
 
             </ImageButton>
             <ImageButton
-                android:background="@color/transparent"
+                android:background="@drawable/transparent_ripple"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector_down"
                 android:layout_width="wrap_content"
@@ -105,7 +109,7 @@
 
             </ImageButton>
             <ImageButton
-                android:background="@color/transparent"
+                android:background="@drawable/transparent_ripple"
                 android:layout_margin="10dp"
                 android:src="@drawable/vector_edit"
                 android:layout_width="wrap_content"
@@ -137,6 +141,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="20dp"
                 android:id="@+id/rv_songsPl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

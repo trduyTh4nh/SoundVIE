@@ -176,6 +176,7 @@
                     </Button>
 
                     <Button
+                        android:enabled="false"
                         android:drawableLeft="@drawable/baseline_attach_file_24"
                         android:textStyle="bold"
                         android:layout_marginLeft="10dp"

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -49,6 +50,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
     ImageView img_song;
     Helper helper = Helper.INSTANCE;
     Button btnSave;
+    Button btnCancel;
 
     MediaPlayer p;
 
@@ -71,6 +73,14 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         song_name = findViewById(R.id.song_name);
         artist = findViewById(R.id.artist);
         btnSave = findViewById(R.id.btnSave);
+        btnCancel = findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 
         Bundle b = getIntent().getExtras();
@@ -90,7 +100,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                         helper.insertSongInPlayList(songInPlayList);
                     }
                 }
-
+                Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công" , Toast.LENGTH_SHORT).show();
             }
         });
 
