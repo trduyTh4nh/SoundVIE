@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -14,7 +15,7 @@ import android.widget.Toast;
 public class PremiumRegisterActivity extends AppCompatActivity {
     LinearLayout monthly, visa, paypal;
     LinearLayout yearly;
-    RadioButton monthlyRadio, yearlyRadio, radiovisa, radiopaypal;
+    CheckBox monthlyRadio, yearlyRadio, radiovisa, radiopaypal;
     Button btnNext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
