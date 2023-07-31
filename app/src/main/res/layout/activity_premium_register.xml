@@ -120,7 +120,7 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <RadioButton
+                    <CheckBox
                         android:checked="true"
                         android:id="@+id/radioMonthly"
                         android:labelFor="@id/monthly"
@@ -147,7 +147,7 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <RadioButton
+                    <CheckBox
                         android:id="@+id/radioYearly"
                         android:labelFor="@+id/yearly"
                         android:layout_width="wrap_content"
@@ -184,7 +184,7 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <RadioButton
+                    <CheckBox
                         android:checked="true"
                         android:id="@+id/radivisa"
                         android:labelFor="@id/monthly"
@@ -211,7 +211,7 @@
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <RadioButton
+                    <CheckBox
                         android:id="@+id/radiopaypal"
                         android:labelFor="@+id/yearly"
                         android:layout_width="wrap_content"

@@ -47,7 +47,7 @@ public class Media {
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.start();
+                player.start();
             }
         });
     }
@@ -57,6 +57,13 @@ public class Media {
     }
 
     public void setPlayer(MediaPlayer player) {
+        if(player != null){
+            if(player.isPlaying()){
+                player.stop();
+                player.release();
+            }
+        }
+
         this.player = player;
     }
 }

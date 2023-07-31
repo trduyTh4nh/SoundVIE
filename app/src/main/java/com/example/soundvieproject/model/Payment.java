@@ -52,4 +52,14 @@ public class Payment extends RealmObject {
     public void setPhuongThucTT(String phuongThucTT) {
         this.phuongThucTT = phuongThucTT;
     }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "ngayTT=" + ngayTT +
+                ", idUser='" + idUser + '\'' +
+                ", idGoi=" + idGoi +
+                ", phuongThucTT='" + phuongThucTT + '\'' +
+                '}';
+    }
 }

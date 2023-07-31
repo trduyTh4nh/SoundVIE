@@ -84,6 +84,7 @@
                         </EditText>
 
                         <EditText
+                            android:inputType="textPassword"
                             android:textColor="@color/white"
                             android:id="@+id/edtPassword"
                             android:textColorHint="@color/white"
