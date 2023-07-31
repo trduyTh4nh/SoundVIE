@@ -4,10 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".HomeActivity"
     android:background="@drawable/background_home">
-
     <LinearLayout
         android:id="@+id/viewMain"
         android:layout_width="0dp"
@@ -17,21 +15,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <LinearLayout
             android:orientation="vertical"
             android:elevation="10dp"
             android:background="@color/transparent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbarNormal"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:gravity="center"
                 tools:ignore="MissingConstraints">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -39,7 +34,6 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingRight="20dp">
-
                     <TextView
                         android:padding="10dp"
                         android:layout_width="wrap_content"
@@ -48,16 +42,12 @@
                         android:textColor="@color/white"
                         android:textSize="23dp"
                         android:textStyle="bold">
-
                     </TextView>
-
                     <LinearLayout
-
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center_vertical|end">
-
                         <ImageButton
                             android:id="@+id/btnSearch"
                             style="@style/imageBtn"
@@ -67,11 +57,8 @@
                             android:layout_margin="3dp"
                             android:padding="10dp"
                             android:src="@drawable/icon_search">
-
                         </ImageButton>
-
                         <ImageButton
-
                             style="@style/imageBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -82,6 +69,7 @@
                         </ImageButton>
 
                         <ImageButton
+                            android:id="@+id/btnSetting"
                             style="@style/imageBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -162,7 +150,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="3dp"
                             android:padding="10dp"
-                            android:src="@drawable/icon_setting"></ImageButton>
+                            android:src="@drawable/icon_setting">
+
+                        </ImageButton>
 
                         <ProgressBar
                             android:visibility="gone"
