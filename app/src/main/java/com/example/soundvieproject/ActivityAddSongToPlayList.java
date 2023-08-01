@@ -92,12 +92,15 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
 
                 for(int i = rvSongInSearch.getChildCount() - 1; i >= 0; i--){
                     v = rvSongInSearch.getChildAt(i);
+
+
                     CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
                     if(checkBox.isChecked()){
                         String idPlCr = b.getString("idPlaylistCurrent");
                         ObjectId idSong = songsArr.get(i).getId();
                         SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
                         helper.insertSongInPlayList(songInPlayList);
+
                     }
                 }
                 Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công" , Toast.LENGTH_SHORT).show();
@@ -121,7 +124,6 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                 rvSongInSearch.setLayoutManager(layoutManager);
                 rvSongInSearch.setAdapter(adapter);
-
 
                 adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
                     @Override

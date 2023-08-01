@@ -34,7 +34,7 @@ public class Song extends RealmObject {
         this.luotnghe = luotnghe;
     }
     //ko có lượt nghe
-    public Song(ObjectId id, String nameSong, String imgCover, String stateData, String lyrics, RealmList<User> artists, String song, int luotnghe) {
+    public Song(ObjectId id, String nameSong, String imgCover, String stateData, String lyrics, RealmList<User> artists, String song) {
         this.id = id;
         this.nameSong = nameSong;
         this.imgCover = imgCover;
@@ -42,7 +42,7 @@ public class Song extends RealmObject {
         this.lyrics = lyrics;
         this.artists = artists;
         this.song = song;
-        this.luotnghe = luotnghe;
+        this.luotnghe = 0;
     }
 
     public Song(String idSong, String nameSong, String imgCover, String stateData, String lyrics, RealmList<User> artists) {
