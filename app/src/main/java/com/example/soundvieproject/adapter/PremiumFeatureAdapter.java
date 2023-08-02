@@ -1,6 +1,7 @@
 package com.example.soundvieproject.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,15 @@ public class PremiumFeatureAdapter extends RecyclerView.Adapter<PremiumFeatureAd
         tvPerkDescFree.setText(featFree.getDescription());
         tvPerkPre.setText(featPre.getTitle());
         tvPerkDescPre.setText(featPre.getDescription());
+
+
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                arrayFree.get(position);
+//            }
+//        }, 5);
     }
 
     @Override

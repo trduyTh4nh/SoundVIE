@@ -36,18 +36,11 @@ public class CurrentPremiumFragment extends Fragment {
     Button btnCancel;
     Helper h = Helper.INSTANCE;
     public CurrentPremiumFragment() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CurrentPremiumFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
+
     public static CurrentPremiumFragment newInstance(String param1, String param2) {
         CurrentPremiumFragment fragment = new CurrentPremiumFragment();
 
@@ -75,6 +68,14 @@ public class CurrentPremiumFragment extends Fragment {
         tvPremiumPrice = view.findViewById(R.id.tvPremiumPrice);
         tvExpire = view.findViewById(R.id.tvPremiumExpire);
         btnCancel = view.findViewById(R.id.btnCancel);
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         h.getPayment(new App.Callback<Payment>() {
             @Override
             public void onResult(App.Result<Payment> result) {
