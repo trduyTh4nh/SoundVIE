@@ -125,7 +125,7 @@
             android:layout_height="wrap_content">
             <TextView
                 android:layout_marginRight="5dp"
-                android:text="10"
+                android:text="0"
                 android:textSize="19dp"
                 android:textColor="@color/white"
                 android:id="@+id/quantity"
@@ -135,7 +135,7 @@
             <TextView
                 android:textSize="19dp"
                 android:textColor="@color/white"
-                android:text="bài hát - 40 phút 34 giây"
+                android:text="bài hát"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 

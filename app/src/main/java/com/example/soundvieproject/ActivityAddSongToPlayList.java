@@ -5,11 +5,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -55,7 +59,6 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
     MediaPlayer p;
 
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,35 +89,52 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         Hup();
+
+
+        Bundle dataTransfer = getIntent().getExtras();
+        String idPlCur = dataTransfer.getString("idPlaylistCr");
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                for(int i = rvSongInSearch.getChildCount() - 1; i >= 0; i--){
+                for (int i = rvSongInSearch.getChildCount() - 1; i >= 0; i--) {
                     v = rvSongInSearch.getChildAt(i);
 
+                    //    Song songcheck = adapter.getArrSongInSreach().get(i);
 
                     CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
-                    if(checkBox.isChecked()){
+
+                    if (checkBox.isChecked()) {
                         String idPlCr = b.getString("idPlaylistCurrent");
                         ObjectId idSong = songsArr.get(i).getId();
-                        SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
-                        helper.insertSongInPlayList(songInPlayList);
 
+                        helper.checkSongRep(idSong, result -> {
+                            if (result.isSuccess()) {
+                                MongoCursor<SongInPlayList> cursor = result.get();
+                                if (cursor.hasNext()) {
+                                    ShowPopUp();
+                                } else {
+                                    SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
+                                    helper.insertSongInPlayList(songInPlayList);
+                                    Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 }
-                Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công" , Toast.LENGTH_SHORT).show();
+
+
             }
         });
-
-
     }
-    public void Hup(){
+
+    public void Hup() {
         songsArr = new ArrayList<>();
         helper.getSong(result -> {
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 MongoCursor<Song> cursor = result.get();
-                while (cursor.hasNext()){
+                while (cursor.hasNext()) {
                     Song song = cursor.next();
                     Log.d("Check", song.toString());
                     songsArr.add(new Song(song.getId(), song.getNameSong(), song.getImgCover(), song.getStateData(), song.getLyrics(), song.getArtists(), song.getSong()));
@@ -128,7 +148,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                 adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
                     @Override
                     public void OnItemClick(Song song) throws IOException {
-                        if(media.getPlayer().isPlaying()){
+                        if (media.getPlayer().isPlaying()) {
                             media.getPlayer().stop();
                             media.setPlayer(new MediaPlayer());
                         }
@@ -158,13 +178,33 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                     }
                 });
 
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Không thể lấy bài hát", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void ShowPopUp(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.custom_dialog_layout, null);
+
+        builder.setView(dialogView);
+
+        Button btnOK = dialogView.findViewById(R.id.dialog_button_positive);
+
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+        btnOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+            }
+        });
+
+    }
 
 
 }

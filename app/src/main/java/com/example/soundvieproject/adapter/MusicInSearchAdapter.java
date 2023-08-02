@@ -40,6 +40,15 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
     }
 
     ArrayList<Song> arrSongInSreach;
+
+    public ArrayList<Song> getArrSongInSreach() {
+        return arrSongInSreach;
+    }
+
+    public void setArrSongInSreach(ArrayList<Song> arrSongInSreach) {
+        this.arrSongInSreach = arrSongInSreach;
+    }
+
     Context context;
     FirebaseStorage storage;
 

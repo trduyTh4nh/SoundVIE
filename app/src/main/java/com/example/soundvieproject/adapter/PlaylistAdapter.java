@@ -38,6 +38,14 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         pl = playlists;
     }
 
+    public ArrayList<Playlist> getPl() {
+        return pl;
+    }
+
+    public void setPl(ArrayList<Playlist> pl) {
+        this.pl = pl;
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {

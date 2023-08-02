@@ -237,9 +237,10 @@ public class Helper {
 
 
     public void deleteSongWidthID(App.Callback<DeleteResult> callback, ObjectId idSongdel) {
-        Document docu = new Document("_id", idSongdel);
-        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlayList", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        Document docu = new Document("idSong", idSongdel);
+        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         songColDel.deleteOne(docu).getAsync(callback);
+
     }
 
     public void getPlayList(App.Callback<MongoCursor<Playlist>> callback) {
@@ -249,6 +250,10 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> task = playlist.find(doc).iterator();
         task.getAsync(callback);
     }
+
+
+
+
 
 
     public RealmResultTask<Long> getCollectionCount(App.Callback<MongoCursor<SongInPlayList>>callback, String idPlCurrent) {
@@ -469,6 +474,14 @@ public class Helper {
         MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
         prem.findOne(doc).getAsync(callback);
     }
+
+    public void checkSongRep(ObjectId idsong, App.Callback<MongoCursor<SongInPlayList>> callback){
+        Document docu = new Document("idSong", idsong);
+        MongoCollection<SongInPlayList> songcheck = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<SongInPlayList>> task = songcheck.find(docu).iterator();
+        task.getAsync(callback);
+    }
+
 
 
 }

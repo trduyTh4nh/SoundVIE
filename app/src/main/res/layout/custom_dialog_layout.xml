@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="30dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="16dp">
+
+        <TextView
+            android:textStyle="bold"
+            android:textSize="16dp"
+            android:gravity="center_horizontal"
+            android:id="@+id/dialog_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bài hát đã được thêm vào danh sách phát 😘" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <Button
+                android:background="@drawable/background_button_in_dialog"
+                android:id="@+id/dialog_button_positive"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="OK" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

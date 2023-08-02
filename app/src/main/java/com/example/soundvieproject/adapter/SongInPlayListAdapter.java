@@ -74,6 +74,9 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if (songspl.size() == 0) {
+            return;
+        }
         Song song = songspl.get(position);
         stoRefer = storage.getReference("images/" + song.getImgCover());
         Glide.with(context).load(stoRefer).into(imgSongpl);
@@ -90,10 +93,6 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
             }
         });
 
-        //Toast.makeText(context, String.valueOf(songspl.size()), Toast.LENGTH_SHORT).show();
-
-
-
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,14 +106,18 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
                             case R.id.delete_music: {
                                 helper.deleteSongWidthID(result -> {
                                     if (result.isSuccess()) {
-                                        Toast.makeText(context, "Xóa thành công " + songspl.get(position).getNameSong(), Toast.LENGTH_SHORT).show();
-
-                                    } else
+                                        Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
+                                       // Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getId()));
+                                    } else {
                                         Log.d("Delete: ", "không thành công!" + result.getError());
+                                    }
 
                                 }, songspl.get(position).getId());
-                                songspl.remove(position);
-                                notifyItemRemoved(position);
+                                if (songspl.size() != 0) {
+                                    songspl.remove(position);
+                                    notifyItemRemoved(position);
+                                }
+
                                 break;
                             }
                             case R.id.report_music: {
