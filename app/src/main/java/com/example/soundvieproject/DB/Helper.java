@@ -4,12 +4,9 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.util.Patterns;
 import android.widget.Toast;
 
-import com.example.soundvieproject.HomeActivity;
 import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
@@ -25,15 +22,11 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
-import java.security.KeyStore;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
-import java.util.Random;
 import java.util.regex.Pattern;
 
-import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
 import io.realm.mongodb.Credentials;
@@ -456,5 +449,50 @@ public class Helper {
         Document doc = new Document("_id", new ObjectId(id));
         MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
         prem.findOne(doc).getAsync(callback);
+    }
+    public void getSongByArtist(String idArtist, App.Callback<MongoCursor<ArtistInSong>> callback){
+        Document doc = new Document("idUser", idArtist);
+        MongoCollection<ArtistInSong> artist = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<ArtistInSong>> t = artist.find(doc).iterator();
+        t.getAsync(callback);
+    }
+    public void getSongByIdSong(ObjectId songId, App.Callback<Song> callback){
+        Document doc = new Document("_id", songId);
+        Log.d("IDSONG", songId.toString());
+        MongoCollection<Song> s = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        s.findOne(doc).getAsync(callback);
+    }
+    public void deleteSong(ObjectId id, App.Callback<DeleteResult> callback){
+        Document doc = new Document("_id", id);
+        MongoCollection<Song> s = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        s.deleteOne(doc).getAsync(callback);
+        rangBuocDelete(id);
+
+    }
+    public void rangBuocDelete(ObjectId id){
+        Document doc = new Document("idSong", id);
+        MongoCollection<SongInPlayList> s = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        s.deleteMany(doc).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Thành công", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
+        Document docu = new Document("idSong", id);
+        MongoCollection<ArtistInSong> a = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        a.deleteMany(docu).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Ràng buộc nghệ sĩ bài hát", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
     }
 }

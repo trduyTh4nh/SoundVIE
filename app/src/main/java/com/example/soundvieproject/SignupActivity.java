@@ -85,7 +85,7 @@ public class SignupActivity extends AppCompatActivity {
                                 if(u.getIdLoai().equals("ns")){
                                     Toast.makeText(SignupActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                     Helper.INSTANCE.setA(app);
-                                    Intent i = new Intent(SignupActivity.this, ArtistUpMusicActivity.class);
+                                    Intent i = new Intent(SignupActivity.this, ArtistHomeActivity.class);
                                     ApiKeyAuth key = app.currentUser().getApiKeys();
                                     Log.d("test", key.toString());
                                     startActivity(i);

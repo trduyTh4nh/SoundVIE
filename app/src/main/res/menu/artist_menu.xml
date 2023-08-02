@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/item_home_artist" android:icon="@drawable/icon_home_black" android:title="Trang chủ"/>
+    <item android:id="@+id/item_album" android:icon="@drawable/icon_list_black" android:title="Album"/>
+    <item android:id="@+id/item_music_artist" android:icon="@drawable/music_line" android:title="Nhạc"/>
+    <item android:id="@+id/item_profile_artist" android:icon="@drawable/icon_user_black" android:title="Hồ sơ"/>
+
+</menu>
