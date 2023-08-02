@@ -474,6 +474,51 @@ public class Helper {
         MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
         prem.findOne(doc).getAsync(callback);
     }
+    public void getSongByArtist(String idArtist, App.Callback<MongoCursor<ArtistInSong>> callback){
+        Document doc = new Document("idUser", idArtist);
+        MongoCollection<ArtistInSong> artist = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<ArtistInSong>> t = artist.find(doc).iterator();
+        t.getAsync(callback);
+    }
+    public void getSongByIdSong(ObjectId songId, App.Callback<Song> callback){
+        Document doc = new Document("_id", songId);
+        Log.d("IDSONG", songId.toString());
+        MongoCollection<Song> s = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        s.findOne(doc).getAsync(callback);
+    }
+    public void deleteSong(ObjectId id, App.Callback<DeleteResult> callback){
+        Document doc = new Document("_id", id);
+        MongoCollection<Song> s = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        s.deleteOne(doc).getAsync(callback);
+        rangBuocDelete(id);
+
+    }
+    public void rangBuocDelete(ObjectId id){
+        Document doc = new Document("idSong", id);
+        MongoCollection<SongInPlayList> s = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        s.deleteMany(doc).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Thành công", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
+        Document docu = new Document("idSong", id);
+        MongoCollection<ArtistInSong> a = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        a.deleteMany(docu).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Ràng buộc nghệ sĩ bài hát", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
+    }
 
     public void checkSongRep(ObjectId idsong, App.Callback<MongoCursor<SongInPlayList>> callback){
         Document docu = new Document("idSong", idsong);
@@ -481,7 +526,4 @@ public class Helper {
         RealmResultTask<MongoCursor<SongInPlayList>> task = songcheck.find(docu).iterator();
         task.getAsync(callback);
     }
-
-
-
 }

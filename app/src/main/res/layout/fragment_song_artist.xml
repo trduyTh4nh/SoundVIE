@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.SongArtistFragment"
+    android:orientation="vertical"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/tvSongNum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="0 Bài hát"
+        android:textColor="@color/black"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/btnAddSong"
+        android:background="@drawable/btn_primary_light"
+        android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/add_circle_line"
+        android:drawablePadding="16dp"
+        android:textColor="@color/white"
+        android:text="Đăng bài hát"
+        android:textSize="16dp"
+        android:textAllCaps="false" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvSongArtist"
+        android:paddingLeft="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+</LinearLayout>

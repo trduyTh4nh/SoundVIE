@@ -41,4 +41,13 @@ public class ArtistInSong extends RealmObject {
     public void setIdSong(ObjectId idSong) {
         this.idSong = idSong;
     }
+
+    @Override
+    public String toString() {
+        return "ArtistInSong{" +
+                "id=" + id +
+                ", IdUser='" + IdUser + '\'' +
+                ", idSong=" + idSong +
+                '}';
+    }
 }

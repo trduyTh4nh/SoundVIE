@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
                                     if(u.getIdLoai().equals("ns")){
                                         Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                                         Helper.INSTANCE.setA(app);
-                                        Intent i = new Intent(LoginActivity.this, ArtistUpMusicActivity.class);
+                                        Intent i = new Intent(LoginActivity.this, ArtistHomeActivity.class);
                                         ApiKeyAuth key = app.currentUser().getApiKeys();
                                         Log.d("test", key.toString());
                                         startActivity(i);
