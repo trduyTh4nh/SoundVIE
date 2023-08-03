@@ -230,7 +230,7 @@ public class PlaylistActivity extends AppCompatActivity {
                                         media.setPlayer(new MediaPlayer());
                                     }
                                     media.setContext(PlaylistActivity.this);
-                                    media.playMusic(Uri.parse(song.getSong()));
+                                    media.playMusic(song);
 
                                     btnResume.setVisibility(View.GONE);
                                     btnPause.setVisibility(View.VISIBLE);

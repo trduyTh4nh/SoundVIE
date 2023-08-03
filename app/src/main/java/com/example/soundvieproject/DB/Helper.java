@@ -22,6 +22,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -36,6 +37,7 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.options.InsertManyResult;
 import io.realm.mongodb.mongo.result.DeleteResult;
 import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
@@ -81,7 +83,7 @@ public class Helper {
     }
 
 
-    public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback) {
+    public void getUserCurrentBy(App.Callback<com.example.soundvieproject.model.User> callback){
         user = a.currentUser();
         client = user.getMongoClient("mongodb-atlas");
         db = client.getDatabase("SoundVIE");
@@ -135,45 +137,48 @@ public class Helper {
             }
         });
     }
-
-    public void insertArtistInSongWhenUpMusic(ArtistInSong artistInSong) {
+    public void insertArtistInSongWhenUpMusic(ArtistInSong artistInSong){
         MongoCollection<ArtistInSong> artistInSongMongoCollection = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
         artistInSongMongoCollection.insertOne(artistInSong).getAsync(result -> {
-            if (result.isSuccess()) {
+            if(result.isSuccess()){
                 Log.d("Insert Artists When up music", "Success!");
-            } else
+            }
+            else
                 Log.d("Insert Artists When up music", "Failed!" + result.getError());
 
         });
     }
 
-    public void insertSongInPlayList(SongInPlayList songInPlayList) {
+    public void insertSongInPlayList(SongInPlayList songInPlayList){
         MongoCollection<SongInPlayList> song = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         song.insertOne(songInPlayList).getAsync(result -> {
-            if (result.isSuccess()) {
+            if(result.isSuccess()){
                 Log.d("Add song in playlist", "Success");
-            } else
+            }
+            else
                 Log.d("Add song in playlist", "Failed");
         });
     }
 
-    public void reportSong(Report report) {
+    public void reportSong(Report report){
         MongoCollection<Report> rp = db.getCollection("Report", Report.class).withCodecRegistry(pojoCodecRegistry);
         rp.insertOne(report).getAsync(result -> {
-            if (result.isSuccess()) {
+            if(result.isSuccess()){
                 Log.d("Report", "Success!");
-            } else
+            }
+            else
                 Log.d("Report", "Failed!");
         });
     }
 
 
-    public void userReport(ReportDetail detail) {
+    public void userReport(ReportDetail detail){
         MongoCollection<ReportDetail> colRPDT = db.getCollection("ReportDetail", ReportDetail.class).withCodecRegistry(pojoCodecRegistry);
         colRPDT.insertOne(detail).getAsync(result -> {
-            if (result.isSuccess()) {
+            if(result.isSuccess()){
                 Log.d("User Report", "Success!");
-            } else
+            }
+            else
                 Log.d("User Report", "Failed!");
         });
     }
@@ -208,39 +213,37 @@ public class Helper {
         task.getAsync(callback);
     }
 
-    public void getSongByID(App.Callback<MongoCursor<Song>> callback, String idSong) {
+    public void getSongByID(App.Callback<MongoCursor<Song>> callback, String idSong){
         Document document = new Document("_id", new ObjectId(idSong));
         MongoCollection<Song> songMongoCollection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = songMongoCollection.find(document).iterator();
         task.getAsync(callback);
     }
 
-    public void getSongByIDPart2(App.Callback<Song> callback, String idSong) {
+    public void getSongByIDPart2(App.Callback<Song> callback, String idSong){
         Document document = new Document("_id", new ObjectId(idSong));
         MongoCollection<Song> songMongoCollection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         songMongoCollection.findOne(document).getAsync(callback);
 
     }
-
-    public void getArtitsbyIDSong(App.Callback<MongoCursor<ArtistInSong>> callback, String idSongRp) {
+    public void getArtitsbyIDSong(App.Callback<MongoCursor<ArtistInSong>> callback, String idSongRp){
         Document docu = new Document("idSong", new ObjectId(idSongRp));
         MongoCollection<ArtistInSong> colArtistInSong = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<ArtistInSong>> task = colArtistInSong.find(docu).iterator();
         task.getAsync(callback);
     }
-
-    public void getArtistOfSongbyID(App.Callback<com.example.soundvieproject.model.User> callback, String idArtist) {
+    public void getArtistOfSongbyID(App.Callback<com.example.soundvieproject.model.User> callback, String idArtist){
         Document docu = new Document("idUser", idArtist);
         MongoCollection<com.example.soundvieproject.model.User> colUser = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
         colUser.findOne(docu).getAsync(callback);
     }
 
 
-    public void deleteSongWidthID(App.Callback<DeleteResult> callback, ObjectId idSongdel) {
-        Document docu = new Document("idSong", idSongdel);
-        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
-        songColDel.deleteOne(docu).getAsync(callback);
 
+    public void deleteSongWidthID(App.Callback<DeleteResult> callback, ObjectId idSongdel){
+        Document docu = new Document("_id", idSongdel);
+        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlayList", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        songColDel.deleteOne(docu).getAsync(callback);
     }
 
     public void getPlayList(App.Callback<MongoCursor<Playlist>> callback) {
@@ -250,12 +253,6 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> task = playlist.find(doc).iterator();
         task.getAsync(callback);
     }
-
-
-
-
-
-
     public RealmResultTask<Long> getCollectionCount(App.Callback<MongoCursor<SongInPlayList>>callback, String idPlCurrent) {
         Document doc = new Document("idPlaylist", idPlCurrent);
         MongoCollection<SongInPlayList> collection = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
@@ -271,8 +268,6 @@ public class Helper {
         RealmResultTask<MongoCursor<SongInPlayList>> task = playlist.find(docu).iterator();
         task.getAsync(callback);
     }
-
-
     public void register(String email, String password, String phone, String name, Context c) {
         a.getEmailPassword().registerUserAsync(email, password, t -> {
             if (t.isSuccess()) {
@@ -288,6 +283,8 @@ public class Helper {
     public void prepare() {
 
     }
+
+
 
 
     public void updateUser(String email, String password, String phone, String name, Context c) {
@@ -441,50 +438,47 @@ public class Helper {
         tsk.getAsync(callback);
     }
 
-    public void getSongInPlayList(App.Callback<MongoCursor<SongInPlayList>> callback, String idPlayListCurrent) {
+    public void getSongInPlayList(App.Callback<MongoCursor<SongInPlayList>> callback, String idPlayListCurrent){
         Document docu = new Document("idPlaylist", new ObjectId(idPlayListCurrent));
         MongoCollection<SongInPlayList> colSongInPl = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<SongInPlayList>> task = colSongInPl.find(docu).iterator();
         task.getAsync(callback);
     }
-
-    public void getSongByQuery(App.Callback<MongoCursor<Song>> callback, String name) {
+    public void getSongByQuery(App.Callback<MongoCursor<Song>> callback,String name){
         Document doc = new Document();
-        doc.append("$regex", "(?)" + Pattern.quote(name));
+        doc.append("$regex", "(?)"+Pattern.quote(name));
         doc.append("$options", "i");
         Document find = new Document();
-        find.append("nameSong", doc);
+        find.append("nameSong",doc);
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> tsk = col.find(find).iterator();
         tsk.getAsync(callback);
     }
-
-    public void getArtistByQuery(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback, String name) {
+    public void getArtistByQuery(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback, String name){
         Document doc = new Document();
-        doc.append("$regex", "(?)" + Pattern.quote(name));
+        doc.append("$regex", "(?)"+Pattern.quote(name));
         doc.append("$options", "i");
         Document find = new Document();
-        find.append("name", doc);
+        find.append("name",doc);
         find.append("idLoai", "ns");
         MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<com.example.soundvieproject.model.User>> tsk = col.find(find).iterator();
         tsk.getAsync(callback);
     }
-
-    public void getPayment(App.Callback<Payment> callback) {
+    public void getPayment(App.Callback<Payment> callback){
         String usr = user.getId();
         Document doc = new Document("idUser", usr);
         MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
         col.findOne(doc).getAsync(callback);
     }
-
-    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback) {
+    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback){
         String idUser = a.currentUser().getId();
         Date date = new Date();
         Payment pay = new Payment(date, idUser, prem, method);
         MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
         col.insertOne(pay).getAsync(callback);
     }
+
 
 
     public void getPremium(String id, App.Callback<Premium> callback) {
@@ -537,6 +531,7 @@ public class Helper {
         });
     }
 
+
     public void checkSongRep(ObjectId idsong, ObjectId playlist, App.Callback<MongoCursor<SongInPlayList>> callback){
         Document docu = new Document();
         docu.append("idSong", idsong);
@@ -544,6 +539,34 @@ public class Helper {
         MongoCollection<SongInPlayList> songcheck = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<SongInPlayList>> task = songcheck.find(docu).iterator();
         task.getAsync(callback);
+    }
+
+    public void getArtists(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback){
+        Document docu = new Document("idLoai", "ns");
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<com.example.soundvieproject.model.User>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
+    public void insertArtists(ArrayList<ArtistInSong> artists, App.Callback<InsertManyResult> callback){
+        MongoCollection<ArtistInSong> art = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        art.insertMany(artists).getAsync(callback);
+    }
+    public void getSongArtists(ObjectId idSong, App.Callback<MongoCursor<ArtistInSong>> callback){
+        Document docu = new Document("idSong", idSong);
+        MongoCollection<ArtistInSong> col = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<ArtistInSong>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
+    public void incrementListenCount(ObjectId idSong, int amount, App.Callback<UpdateResult> callback){
+        Document docu = new Document("_id", idSong);
+        Document set = new Document("$set", new Document("luotnghe", amount));
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        col.updateOne(docu, set);
+    }
+    public void getLuotNghe(ObjectId idSong, App.Callback<Song> callback){
+        Document doc = new Document("_id", idSong);
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        col.findOne(doc).getAsync(callback);
     }
 
 

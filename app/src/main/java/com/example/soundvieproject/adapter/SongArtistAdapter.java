@@ -35,6 +35,16 @@ public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.Vi
     ImageButton btnSong;
     Helper h = Helper.INSTANCE;
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     public SongArtistAdapter(Context context, ArrayList<Song> song) {
         this.context = context;
         this.song = song;
@@ -49,7 +59,6 @@ public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
         Song s = song.get(position);
         StorageHelper sto = new StorageHelper(context);
         StorageReference ref = sto.getStorage().getReference("images/"+s.getImgCover());

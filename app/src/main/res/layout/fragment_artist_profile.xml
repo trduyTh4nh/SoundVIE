@@ -81,11 +81,17 @@
         android:textStyle="normal"
         android:textColor="@color/black"/>
     <com.google.android.material.tabs.TabLayout
+        app:tabIndicatorColor="@color/primaryArtist"
+        app:tabTextColor="@color/black"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="5dp"
+        app:tabRippleColor="@color/primaryArtist"
         android:layout_marginTop="15dp"
         android:id="@+id/tlUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <androidx.viewpager2.widget.ViewPager2
+        android:layout_marginTop="16dp"
         android:id="@+id/vpUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

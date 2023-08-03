@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.model.Song;
 
 import java.io.IOException;
 
@@ -40,7 +41,8 @@ public class Media {
         context = c;
         player = new MediaPlayer();
     }
-    public void playMusic(Uri uri) throws IOException {
+    public void playMusic(Song s) throws IOException {
+        Uri uri = Uri.parse(s.getSong());
         Toast.makeText(context, "select resource" + uri, Toast.LENGTH_SHORT).show();
         player.setDataSource(context, uri);
         player.prepareAsync();

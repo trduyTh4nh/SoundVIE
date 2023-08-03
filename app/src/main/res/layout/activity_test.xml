@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ArtistUpMusicActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
     <RelativeLayout
         android:gravity="center_vertical"
         android:layout_width="match_parent"
@@ -20,32 +21,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
+
         <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp">
+
             <Button
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:background="@drawable/background_button"
+                android:id="@+id/btnUp"
+                android:layout_width="110dp"
+                android:layout_height="45dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/background_button"
                 android:text="Đăng bài"
                 android:textAllCaps="false"
-                android:layout_width="110dp"
-                android:layout_height="45dp">
-            </Button>
+                android:textColor="@color/white"
+                android:textStyle="bold"></Button>
+
             <Button
-                android:textStyle="bold"
-                android:textAllCaps="false"
-                android:background="@drawable/background_borderbutton"
-                android:layout_margin="5dp"
-                android:text="Hủy"
                 android:layout_width="75dp"
-                android:layout_height="45dp">
-            </Button>
+                android:layout_height="45dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/background_borderbutton"
+                android:text="Hủy"
+                android:textAllCaps="false"
+                android:textStyle="bold"></Button>
         </LinearLayout>
+
     </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/pbProgress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progressTint="@color/primaryArtist"
+        android:progressBackgroundTint="@color/black"
+
+       >
+
+    </ProgressBar>
 
     <LinearLayout
         android:gravity="center"
@@ -55,178 +74,165 @@
             app:cardCornerRadius="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imgChoose"
+            <ImageButton
+                android:id="@+id/btnSelect"
                 android:layout_width="150dp"
+                android:background="@drawable/btn_primary"
                 android:layout_height="150dp">
-            </ImageView>
+            </ImageButton>
         </androidx.cardview.widget.CardView>
     </LinearLayout>
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:paddingLeft="15dp"
-            android:background="@drawable/border_input_upsong"
-            android:hint="Tên bài hát"
-            android:id="@+id/edtNameSong"
-            android:layout_width="380dp"
-            android:layout_height="55dp">
-
-        </EditText>
+        android:layout_height="match_parent">
         <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <LinearLayout
+            <EditText
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 android:background="@drawable/border_input_upsong"
-                android:padding="10dp"
-                android:layout_margin="20dp"
+                android:hint="Tên bài hát"
+                android:id="@+id/edtNameSong"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </EditText>
+            <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="18dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textStyle="bold"
-                    android:text="File ảnh cover"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
 
-                </TextView>
-               <LinearLayout
-                   android:gravity="center"
-                   android:layout_width="match_parent"
-                   android:layout_height="wrap_content">
-                   <Button
-                       android:id="@+id/uploadimagebtn"
-                       android:drawableTint="@color/white"
-                       android:textColor="@color/white"
-                       android:backgroundTint="@color/backgroundBox"
-                       android:layout_marginRight="10dp"
-                       android:drawablePadding="5dp"
-                       android:drawableLeft="@drawable/baseline_upload_file_24"
-                       android:text="Upload Image"
-                       android:textAllCaps="false"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content">
-
-                   </Button>
-
-                   <Button
-                       android:drawableTint="@color/white"
-                       android:textColor="@color/white"
-                       android:backgroundTint="@color/backgroundBox"
-                       android:layout_marginLeft="10dp"
-                       android:drawableLeft="@drawable/baseline_attach_file_24"
-                       android:textAllCaps="false"
-                       android:id="@+id/btnSelect"
-                       android:text="Chọn File Image(.jpg)"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content">
-
-                   </Button>
-               </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:background="@drawable/border_input_upsong"
-                android:padding="10dp"
-                android:layout_margin="20dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:textColor="@color/black"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="18dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:textStyle="bold"
-                    android:text="File bài hát"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
                 <LinearLayout
-                    android:gravity="center"
+                    android:background="@drawable/border_input_upsong"
+                    android:padding="16dp"
+                    android:layout_margin="20dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <Button
+                    <TextView
+                        android:textColor="@color/black"
+
+                        android:textSize="18dp"
+
+                        android:layout_marginBottom="10dp"
                         android:textStyle="bold"
-                        android:drawableLeft="@drawable/baseline_upload_file_24"
-                        android:layout_marginRight="10dp"
-                        android:textAllCaps="false"
-                        android:enabled="false"
-                        android:id="@+id/btnUp"
-                        android:text="Tải bài hát"
+                        android:text="File bài hát"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
-                    </Button>
-
-                    <Button
-                        android:enabled="false"
-                        android:drawableLeft="@drawable/baseline_attach_file_24"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="10dp"
-                        android:id="@+id/btnChooseSong"
-                        android:text="Chọn File bài hát"
-                        android:textAllCaps="false"
-                        android:layout_width="wrap_content"
+                    </TextView>
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                    </Button>
+                        <Button
+                            android:textStyle="bold"
 
+                            android:id="@+id/btnChooseSong"
+                            android:text="Chọn File bài hát"
+                            android:textAllCaps="false"
+                            android:layout_width="match_parent"
+                            android:background="@drawable/btnlogin_ripple"
+                            android:backgroundTint="@color/black"
+                            android:layout_height="wrap_content">
+
+                        </Button>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/border_input_upsong"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="Nghệ sĩ"
+                        android:textColor="@color/black"
+                        android:textSize="18dp"
+                        android:textStyle="bold">
+
+                    </TextView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvArtist"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:nestedScrollingEnabled="false" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/btnChooseArtist"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/btnlogin_ripple"
+                            android:backgroundTint="@color/black"
+                            android:text="Thêm nghệ sĩ"
+                            android:textAllCaps="false"
+                            android:textStyle="bold"></Button>
+
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
 
-        <EditText
-            android:textStyle="bold"
-            android:background="@drawable/border_radius_for_img_album"
-            android:paddingTop="15dp"
-            android:gravity="top"
-            android:paddingLeft="15dp"
-            android:id="@+id/edtLyrics"
-            android:layout_width="370dp"
-            android:layout_height="100dp"
-            android:hint="Viết lời bài hát ở đây................">
-
-        </EditText>
-        <LinearLayout
-            android:padding="20dp"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ProgressBar
-                android:progressDrawable="@drawable/progress_bar_custom"
-                android:id="@+id/pbProgress"
+            <EditText
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                android:id="@+id/edtLyrics"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal">
+                android:layout_height="163dp"
+                android:background="@drawable/border_radius_for_img_album"
+                android:gravity="top"
+                android:hint="Lời bài hát"
+                android:paddingLeft="15dp"
+                android:paddingTop="15dp"
+                android:textStyle="bold">
 
-            </ProgressBar>
-            <TextView
-                android:textColor="@color/orange"
-                android:textStyle="bold"
-                android:text="Tiến trình uploading %"
-                android:id="@+id/tvBytes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            </EditText>
+            <LinearLayout
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/orange"
+                    android:textStyle="bold"
+                    android:text="Tiến trình uploading %"
+                    android:id="@+id/tvBytes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
 
 </LinearLayout>
