@@ -74,6 +74,8 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             StorageReference ref = sto.getReference("images/"+s.getImgCover());
             Glide.with(c).load(ref).into(imgSong);
             tvNameSong.setText(s.getNameSong());
+
+
             llResult.setOnClickListener(v -> {
                 if(listener != null){
                     try {
@@ -83,6 +85,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
                     }
                 }
             });
+
         } else {
             User s = (User) arr.get(position);
             StorageReference ref = sto.getReference("image/"+s.getAvatar());

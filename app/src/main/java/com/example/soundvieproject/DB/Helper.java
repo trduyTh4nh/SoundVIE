@@ -253,7 +253,21 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> task = playlist.find(doc).iterator();
         task.getAsync(callback);
     }
+    public RealmResultTask<Long> getCollectionCount(App.Callback<MongoCursor<SongInPlayList>>callback, String idPlCurrent) {
+        Document doc = new Document("idPlaylist", idPlCurrent);
+        MongoCollection<SongInPlayList> collection = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<SongInPlayList>> task = collection.find(doc).iterator();
+        task.getAsync(callback);
 
+        return collection.count();
+    }
+
+    public void getSongInPlaylistByID(App.Callback<MongoCursor<SongInPlayList>> callback, String idPlaylist) {
+        Document docu = new Document("idPlaylist", idPlaylist);
+        MongoCollection<SongInPlayList> playlist = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<SongInPlayList>> task = playlist.find(docu).iterator();
+        task.getAsync(callback);
+    }
     public void register(String email, String password, String phone, String name, Context c) {
         a.getEmailPassword().registerUserAsync(email, password, t -> {
             if (t.isSuccess()) {
@@ -496,6 +510,12 @@ public class Helper {
                 }
             }
         });
+    }
+    public void checkSongRep(ObjectId idsong, App.Callback<MongoCursor<SongInPlayList>> callback){
+        Document docu = new Document("idSong", idsong);
+        MongoCollection<SongInPlayList> songcheck = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<SongInPlayList>> task = songcheck.find(docu).iterator();
+        task.getAsync(callback);
     }
     public void getArtists(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback){
         Document docu = new Document("idLoai", "ns");

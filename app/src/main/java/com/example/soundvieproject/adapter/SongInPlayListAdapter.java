@@ -3,6 +3,7 @@ package com.example.soundvieproject.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,29 +31,67 @@ import com.example.soundvieproject.model.Song;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAdapter.ViewHolder> {
 
+
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference stoRefer;
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    private OnItemsClickListener listener = null;
+
+    public interface OnItemsClickListener {
+        void OnItemClick(Song song) throws IOException;
+    }
+
+
+    public void setItemClickListener(SongInPlayListAdapter.OnItemsClickListener listener) {
+        this.listener = listener;
+    }
+
     Helper helper = Helper.INSTANCE;
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.component_song_in_playlist,parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.component_song_in_playlist, parent, false);
         return new ViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if (songspl.size() == 0) {
+            return;
+        }
         Song song = songspl.get(position);
         stoRefer = storage.getReference("images/" + song.getImgCover());
         Glide.with(context).load(stoRefer).into(imgSongpl);
-      //  imgSongpl.setImageURI(Uri.parse(song.getImgCover()));
+        //  imgSongpl.setImageURI(Uri.parse(song.getImgCover()));
         nameSongpl.setText(song.getNameSong());
         nameArtist.setText(song.getArtis());
+        llplay.setOnClickListener(v -> {
+            if (listener != null) {
+                try {
+                    listener.OnItemClick(song);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
 
         btnMenu.setOnClickListener(new View.OnClickListener() {
@@ -62,22 +102,25 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
                     @SuppressLint("NonConstantResourceId")
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.delete_music:{
-                               helper.deleteSongWidthID(result -> {
-                                   if(result.isSuccess()){
-                                       Toast.makeText(context, "Xóa thành công " + songspl.get(position).getNameSong(), Toast.LENGTH_SHORT).show();
+                        switch (item.getItemId()) {
+                            case R.id.delete_music: {
+                                helper.deleteSongWidthID(result -> {
+                                    if (result.isSuccess()) {
+                                        Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
+                                       // Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getId()));
+                                    } else {
+                                        Log.d("Delete: ", "không thành công!" + result.getError());
+                                    }
 
-                                   }
-                                   else
-                                       Log.d("Delete: ", "không thành công!" + result.getError());
+                                }, songspl.get(position).getId());
+                                if (songspl.size() != 0) {
+                                    songspl.remove(position);
+                                    notifyItemRemoved(position);
+                                }
 
-                               },songspl.get(position).getId());
-                               songspl.remove(position);
-                                notifyItemRemoved(position);
                                 break;
                             }
-                            case R.id.report_music:{
+                            case R.id.report_music: {
                                 Intent i = new Intent(context, ReportSongActivity.class);
                                 Bundle data = new Bundle();
                                 data.putString("idSongReport", songspl.get(position).getId().toString());
@@ -86,7 +129,8 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
                                 break;
                             }
                             default:
-                                Toast.makeText(context, "Không có gì", Toast.LENGTH_SHORT).show(); break;
+                                Toast.makeText(context, "Không có gì", Toast.LENGTH_SHORT).show();
+                                break;
                         }
                         return false;
                     }
@@ -105,6 +149,9 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
     private final ArrayList<Song> songspl;
     Context context;
 
+    public ArrayList<Song> getSongspl() {
+        return songspl;
+    }
 
     @Override
     public int getItemCount() {
@@ -116,14 +163,17 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
     private TextView nameArtist;
     private ImageButton btnMenu;
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    private LinearLayout llplay;
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgSongpl = itemView.findViewById(R.id.imgSongPl);
             nameSongpl = itemView.findViewById(R.id.nameSongPl);
             nameArtist = itemView.findViewById(R.id.artistSongPl);
             btnMenu = itemView.findViewById(R.id.btnMenuEdit);
-
+            llplay = itemView.findViewById(R.id.llplay);
         }
     }
 

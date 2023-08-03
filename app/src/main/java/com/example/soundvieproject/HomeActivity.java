@@ -14,10 +14,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.fragment.CurrentPremiumFragment;
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.fragment.HomeFragment;
 import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
@@ -27,16 +29,16 @@ import com.example.soundvieproject.model.Payment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.bson.types.ObjectId;
-
 import io.realm.mongodb.App;
-
 public class HomeActivity extends AppCompatActivity {
 
     private BottomNavigationView navigationView;
     private ViewPager viewPager;
     Toolbar toolbarNormal, toolbarSearch;
     Helper h = Helper.INSTANCE;
-    ImageButton btnSearch, btnBack;
+    ImageButton btnSearch, btnBack, btnSetting;
+    LinearLayout changeToMusic;
+
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,22 @@ public class HomeActivity extends AppCompatActivity {
         toolbarNormal = findViewById(R.id.toolbarNormal);
         toolbarSearch = findViewById(R.id.toolbarSearch);
         btnBack = findViewById(R.id.btnBack);
+        changeToMusic = findViewById(R.id.currentSong);
+        btnSetting = findViewById(R.id.btnSetting);
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, SettingActivity.class);
+                startActivity(i);
+            }
+        });
+        changeToMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, PlayingMusicActivity.class);
+                startActivity(i);
+            }
+        });
         btnBack.setOnClickListener(v -> {
             getSupportFragmentManager().popBackStack();
             toolbarNormal.setVisibility(View.VISIBLE);
