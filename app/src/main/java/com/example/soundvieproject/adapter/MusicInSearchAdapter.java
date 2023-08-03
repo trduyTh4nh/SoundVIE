@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdapter.ViewHolder> {
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
 
     public interface OnItemsClickListener{
         void OnItemClick(Song song) throws IOException;
@@ -37,6 +48,7 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
         this.arrSongInSreach = arrSongInSreach;
         this.context = context;
         this.storage = storage;
+        checked = new boolean[arrSongInSreach.size()];
     }
 
     ArrayList<Song> arrSongInSreach;
@@ -51,7 +63,7 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
 
     Context context;
     FirebaseStorage storage;
-
+    boolean[] checked;
 
     @NonNull
     @Override
@@ -79,6 +91,16 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
                 }
             }
         });
+        checkAddSong.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    checked[holder.getAdapterPosition()] = true;
+                } else {
+                    checked[holder.getAdapterPosition()] = false;
+                }
+            }
+        });
 
     }
 
@@ -91,6 +113,7 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
     private static TextView tvNameSong;
     private static TextView tvArtist;
     private static LinearLayout songWidth;
+    static CheckBox checkAddSong;
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         public ViewHolder(@NonNull View itemView) {
@@ -99,6 +122,11 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
             tvNameSong = itemView.findViewById(R.id.nameMusic);
             tvArtist = itemView.findViewById(R.id.nameArtist);
             songWidth = itemView.findViewById(R.id.linearMusic);
+            checkAddSong = itemView.findViewById(R.id.checkAddSong);
         }
+    }
+
+    public boolean[] getChecked() {
+        return checked;
     }
 }

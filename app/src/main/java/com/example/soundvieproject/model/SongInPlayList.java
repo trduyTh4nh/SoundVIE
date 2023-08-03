@@ -43,5 +43,12 @@ public class SongInPlayList extends RealmObject {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "SongInPlayList{" +
+                "_id=" + _id +
+                ", idPlaylist=" + idPlaylist +
+                ", idSong=" + idSong +
+                '}';
+    }
 }

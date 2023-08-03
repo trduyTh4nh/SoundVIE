@@ -42,9 +42,10 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
     FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference stoRefer;
 
+
     @Override
     public long getItemId(int position) {
-        return position;
+        return super.getItemId(position);
     }
 
     @Override
@@ -106,17 +107,19 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
                             case R.id.delete_music: {
                                 helper.deleteSongWidthID(result -> {
                                     if (result.isSuccess()) {
-                                        Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
-                                       // Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getId()));
+                                        //Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
+                                        Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getNameSong()));
+                                      //  Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                                        notifyItemRemoved(position);
+
+
+
                                     } else {
                                         Log.d("Delete: ", "không thành công!" + result.getError());
                                     }
 
                                 }, songspl.get(position).getId());
-                                if (songspl.size() != 0) {
-                                    songspl.remove(position);
-                                    notifyItemRemoved(position);
-                                }
+
 
                                 break;
                             }

@@ -28,6 +28,7 @@ import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.adapter.MusicInSearchAdapter;
 import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.media.Media;
+import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.SongInPlayList;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,6 +40,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import io.realm.mongodb.App;
+import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class ActivityAddSongToPlayList extends AppCompatActivity {
@@ -86,45 +88,47 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         });
 
 
-        Bundle b = getIntent().getExtras();
-
         Hup();
 
+        Bundle b = getIntent().getExtras();
 
         Bundle dataTransfer = getIntent().getExtras();
         String idPlCur = dataTransfer.getString("idPlaylistCr");
 
+        String idPlCr = b.getString("idPlaylistCurrent");
+
+//        Log.d("Danh sách phát hiện tại", idPlCr);
+
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean[] checked = adapter.getChecked();
+                for (int i = 0; i < checked.length; i++) {
 
-                for (int i = rvSongInSearch.getChildCount() - 1; i >= 0; i--) {
-                    v = rvSongInSearch.getChildAt(i);
-
-                    //    Song songcheck = adapter.getArrSongInSreach().get(i);
-
-                    CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
-
-                    if (checkBox.isChecked()) {
-                        String idPlCr = b.getString("idPlaylistCurrent");
+                     //   Song songcheck = adapter.getArrSongInSreach().get(i);
+                    if (checked[i]) {
                         ObjectId idSong = songsArr.get(i).getId();
 
-                        helper.checkSongRep(idSong, result -> {
+                        helper.checkSongRep(idSong, new ObjectId(idPlCr), result -> {
                             if (result.isSuccess()) {
+
+                                //String idPlCr = b.getString("idPlaylistCurrent");
                                 MongoCursor<SongInPlayList> cursor = result.get();
                                 if (cursor.hasNext()) {
+
+                                    Log.d("lỗi", "idPl" + idPlCur + " idSong: " + idSong + " obj: " + cursor.next().toString());
                                     ShowPopUp();
                                 } else {
                                     SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
                                     helper.insertSongInPlayList(songInPlayList);
                                     Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                                 }
+                            } else {
+                                Toast.makeText(ActivityAddSongToPlayList.this, "cucu" + result.getError().toString(), Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
                 }
-
-
             }
         });
     }
@@ -184,7 +188,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         });
     }
 
-    private void ShowPopUp(){
+    private void ShowPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.custom_dialog_layout, null);
@@ -203,7 +207,6 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
-
     }
 
 

@@ -32,11 +32,6 @@ import java.util.ArrayList;
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SongArtistFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SongArtistFragment extends Fragment {
     Button btnAddSong;
     RecyclerView rcvSong;
