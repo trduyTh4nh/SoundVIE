@@ -77,6 +77,10 @@ public class EditUserActivity extends AppCompatActivity {
             startActivityForResult(gallery, 102);
         });
         btnSave.setOnClickListener(v -> {
+            if(edtPsswd.getText().toString().equals("")){
+                Toast.makeText(this, "Bạn chưa nhập mật khẩu", Toast.LENGTH_SHORT).show();
+                return;
+            }
             db.login(u.getEmail(), edtPsswd.getText().toString(), new App.Callback<io.realm.mongodb.User>() {
                 @Override
                 public void onResult(App.Result<io.realm.mongodb.User> result) {

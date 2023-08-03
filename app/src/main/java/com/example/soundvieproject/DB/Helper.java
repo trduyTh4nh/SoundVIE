@@ -375,6 +375,23 @@ public class Helper {
         usr.updateOne(query, newAvatar).getAsync(callback);
     }
 
+    public void updatePayment(String idUserUserPayment, App.Callback<UpdateResult> callback){
+        Document document = new Document("idUser", idUserUserPayment);
+        Date date = new Date();
+        Document newDate= new Document("$set", new Document("ngayTT", date));
+        MongoCollection<Payment> collectionPayment = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        collectionPayment.updateOne(document, newDate).getAsync(callback);
+
+    }
+
+//    public void insertPayment(ObjectId prem, String method, App.Callback<InsertOneResult> callback) {
+//        String idUser = a.currentUser().getId();
+//        Date date = new Date();
+//        Payment pay = new Payment(date, idUser, prem, method);
+//        MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+//        col.insertOne(pay).getAsync(callback);
+//    }
+
     public void logOut(App.Callback<User> callback) {
         user.logOutAsync(callback);
     }
@@ -461,7 +478,10 @@ public class Helper {
         MongoCollection<Payment> col = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
         col.insertOne(pay).getAsync(callback);
     }
-    public void getPremium(String id, App.Callback<Premium> callback){
+
+
+
+    public void getPremium(String id, App.Callback<Premium> callback) {
         Document doc = new Document("_id", new ObjectId(id));
         MongoCollection<Premium> prem = db.getCollection("Premium", Premium.class).withCodecRegistry(pojoCodecRegistry);
         prem.findOne(doc).getAsync(callback);
@@ -483,7 +503,6 @@ public class Helper {
         MongoCollection<Song> s = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         s.deleteOne(doc).getAsync(callback);
         rangBuocDelete(id);
-
     }
     public void rangBuocDelete(ObjectId id){
         Document doc = new Document("idSong", id);
@@ -511,12 +530,17 @@ public class Helper {
             }
         });
     }
-    public void checkSongRep(ObjectId idsong, App.Callback<MongoCursor<SongInPlayList>> callback){
-        Document docu = new Document("idSong", idsong);
+
+
+    public void checkSongRep(ObjectId idsong, ObjectId playlist, App.Callback<MongoCursor<SongInPlayList>> callback){
+        Document docu = new Document();
+        docu.append("idSong", idsong);
+        docu.append("idPlaylist", playlist);
         MongoCollection<SongInPlayList> songcheck = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<SongInPlayList>> task = songcheck.find(docu).iterator();
         task.getAsync(callback);
     }
+
     public void getArtists(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback){
         Document docu = new Document("idLoai", "ns");
         MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
@@ -544,4 +568,23 @@ public class Helper {
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         col.findOne(doc).getAsync(callback);
     }
+
+
+    public void checkPremiumForUser(App.Callback<MongoCursor<Payment>> callback){
+        user = a.currentUser();
+        String idUserCurrent = user.getId();
+        Document document = new Document("idUser", idUserCurrent);
+        MongoCollection<Payment> colPayment = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Payment>> task = colPayment.find(document).iterator();
+        task.getAsync(callback);
+    }
+    public void removePremium(String idUser, App.Callback<DeleteResult> callback){
+        Document docu = new Document("idUser", idUser);
+        MongoCollection<Payment> collection = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
+        collection.deleteOne(docu).getAsync(callback);
+    }
+
+
+
+
 }

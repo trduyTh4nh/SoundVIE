@@ -30,11 +30,14 @@ import com.example.soundvieproject.adapter.SearchResultAdapter;
 import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.adapter.SongInPlayListAdapter;
 import com.example.soundvieproject.media.Media;
+import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.SongInPlayList;
 import com.example.soundvieproject.model.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,10 +70,7 @@ public class PlaylistActivity extends AppCompatActivity {
 
     ImageView img_song;
 
-    public static  ArrayList<Song> songInPlaylist;
-
-
-
+    public static ArrayList<Song> songInPlaylist;
 
 
     @SuppressLint("MissingInflatedId")
@@ -104,10 +104,8 @@ public class PlaylistActivity extends AppCompatActivity {
         String idPlCurrent = b.getString("idPl");
 
 
-
-
         helper.getUserByObjID(idUser, result -> {
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 User cursor = result.get();
                 tvNamePL.setText(namePl);
                 tvNameUser.setText(cursor.getName());
@@ -139,15 +137,15 @@ public class PlaylistActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                 songInPlaylist = new ArrayList<>();
+                songInPlaylist = new ArrayList<>();
                 for (int k = recyclerView.getChildCount() - 1; k >= 0; k--) {
                     v = recyclerView.getChildAt(k);
 
                     Song songcheck = adapter.getSongspl().get(k);
 
-                 //   CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
+                    //   CheckBox checkBox = (CheckBox) v.findViewById(R.id.checkAddSong);
 
-                    helper.checkSongRep(songcheck.getId(), result -> {
+                    helper.checkSongRep(songcheck.getId(), new ObjectId(idPlCurrent), result -> {
                         if (result.isSuccess()) {
                             songInPlaylist.add(songcheck);
                             Log.d("Xong đã add vào playlist", songcheck.getNameSong());
@@ -167,62 +165,67 @@ public class PlaylistActivity extends AppCompatActivity {
         });
 
 
-
         helper.getSongInPlayList(result -> {
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 MongoCursor<SongInPlayList> cursor = result.get();
-                while (cursor.hasNext()){
+                while (cursor.hasNext()) {
                     // đồng bộ lòng đồng bộ
                     SongInPlayList PlaylistSong = cursor.next();
 
                     Log.d("Checksource", PlaylistSong.toString());
-                    helper.getSongByID(element ->{
-                        if(element.isSuccess()){
+                    helper.getSongByID(element -> {
+                        if (element.isSuccess()) {
                             MongoCursor<Song> songCur = element.get();
-                            while (songCur.hasNext()){
+                            while (songCur.hasNext()) {
                                 Song songIPL = songCur.next();
                                 Log.d("Check song in playlist", songIPL.toString());
-                                if(s == 20){
+                                if (s == 20) {
+                                    songinPlayLists.add(new Song(songIPL.getId(), songIPL.getNameSong(), songIPL.getImgCover(), songIPL.getStateData(), songIPL.getLyrics(), songIPL.getArtists(), songIPL.getSong()));
+                                    adapter.notifyItemInserted(songinPlayLists.size() - 1);
                                     btnAddSong.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Toast.makeText(PlaylistActivity.this, "Danh sách bài hát đã đến giới hạn", Toast.LENGTH_SHORT).show();
-
-                                            Intent intent = new Intent(PlaylistActivity.this, PremiumRegisterActivity.class);
-                                            Bundle transfer = new Bundle();
-                                            transfer.putString("idPlaylistCr", idPlCurrent);
-                                            intent.putExtras(transfer);
-
-                                            new Handler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
+                                            helper.checkPremiumForUser(result1 -> {
+                                                MongoCursor<Payment> cursor1 = result1.get();
+                                                if(cursor1.hasNext()){
+                                                    Intent intent = new Intent(PlaylistActivity.this, ActivityAddSongToPlayList.class);
+                                                    Bundle transfer = new Bundle();
+                                                    transfer.putString("idPlaylistCr", idPlCurrent);
+                                                    intent.putExtras(transfer);
                                                     startActivity(intent);
-                                                    finish(); // Optional: If you want to close the current activity after starting the new one.
                                                 }
-                                            }, 2000);
+                                                else {
+                                                    Toast.makeText(PlaylistActivity.this, "Danh sách bài hát đã đến giới hạn", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(PlaylistActivity.this, PremiumRegisterActivity.class);
+                                                    Bundle transfer = new Bundle();
+                                                    transfer.putString("idPlaylistCr", idPlCurrent);
+                                                    intent.putExtras(transfer);
+                                                    new Handler().postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            startActivity(intent);
+                                                            finish(); // Optional: If you want to close the current activity after starting the new one.
+                                                        }
+                                                    }, 2000);
+                                                }
+                                            });
                                         }
                                     });
 
-                                }
-                                else{
+                                } else {
                                     songinPlayLists.add(new Song(songIPL.getId(), songIPL.getNameSong(), songIPL.getImgCover(), songIPL.getStateData(), songIPL.getLyrics(), songIPL.getArtists(), songIPL.getSong()));
-                                    adapter.notifyItemInserted(songinPlayLists.size()  - 1);
+                                    adapter.notifyItemInserted(songinPlayLists.size() - 1);
                                 }
-
                             }
-                          /////
+                            ///// count adapter check quantity
+
                             s = adapter.getItemCount();
-
-
-
                             quantity.setText(String.valueOf(s));
-
-
 
                             adapter.setItemClickListener(new SongInPlayListAdapter.OnItemsClickListener() {
                                 @Override
                                 public void OnItemClick(Song song) throws IOException {
-                                    if(media.getPlayer().isPlaying()){
+                                    if (media.getPlayer().isPlaying()) {
                                         media.getPlayer().stop();
                                         media.setPlayer(new MediaPlayer());
                                     }
@@ -255,10 +258,10 @@ public class PlaylistActivity extends AppCompatActivity {
                                             media.start();
                                         }
                                     });
+
                                 }
                             });
-                        }
-                        else {
+                        } else {
                             Log.d("Thông báo", "Lỗi");
                         }
                     }, PlaylistSong.getIdSong().toString());
@@ -268,10 +271,11 @@ public class PlaylistActivity extends AppCompatActivity {
 //                adapter = new SongInPlayListAdapter(songinPlayLists, PlaylistActivity.this);
 //                recyclerView.setLayoutManager(layoutManager);
 //                recyclerView.setAdapter(adapter);
-            }
-            else
+            } else
                 Log.d("Thông báo", "Lỗi");
         }, idPlCurrent);
+
+
 
 
 
