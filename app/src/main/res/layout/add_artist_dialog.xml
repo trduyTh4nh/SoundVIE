@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm nghệ sĩ"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvArt"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Huỷ"
+            android:background="@drawable/btnlogin_ripple"
+            android:backgroundTint="@color/black"/>
+        <Button
+            android:id="@+id/btnAddArt"
+            android:background="@drawable/btn_primary_light"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="Thêm"
+            android:backgroundTint="@color/primaryArtist"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+</LinearLayout>

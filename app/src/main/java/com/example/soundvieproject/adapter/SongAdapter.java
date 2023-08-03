@@ -8,25 +8,44 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.media.Media;
+import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public interface OnItemsClickListener{
         void OnItemClick(Song song) throws IOException;
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
     private OnItemsClickListener listener = null;
+    Helper h = Helper.INSTANCE;
     public void setItemClickListener(OnItemsClickListener listener){
         this.listener = listener;
     }
@@ -52,7 +71,26 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         StorageReference ref = storage.getReference("images/"+song.getImgCover());
         Glide.with(context).load(ref).into(imgSong);
         nameSong.setText(song.getNameSong());
-        nameArtist.setText(song.getArtist());
+        ArrayList<String> artists = new ArrayList<>();
+        h.getSongArtists(song.getId(), t -> {
+            if(t.isSuccess()){
+                MongoCursor<ArtistInSong> cur = t.get();
+                while (cur.hasNext()){
+                    ArtistInSong ar = cur.next();
+                    h.getUserByObjID(ar.getIdUser(), t1 -> {
+                        if(t1.isSuccess()){
+                            User u = t1.get();
+                            artists.add(u.getName());
+                            nameArtist.setText(String.join(", ", artists));
+                        }
+                    });
+                }
+
+            }else {
+                Toast.makeText(context, "Lỗi: "+ t.getError().getErrorType(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
         Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));
         imgSong.setOnClickListener(v -> {
             if(listener != null){

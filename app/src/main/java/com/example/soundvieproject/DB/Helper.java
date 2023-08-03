@@ -22,6 +22,7 @@ import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
@@ -36,6 +37,7 @@ import io.realm.mongodb.mongo.MongoClient;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.MongoDatabase;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.options.InsertManyResult;
 import io.realm.mongodb.mongo.result.DeleteResult;
 import io.realm.mongodb.mongo.result.InsertOneResult;
 import io.realm.mongodb.mongo.result.UpdateResult;
@@ -494,5 +496,32 @@ public class Helper {
                 }
             }
         });
+    }
+    public void getArtists(App.Callback<MongoCursor<com.example.soundvieproject.model.User>> callback){
+        Document docu = new Document("idLoai", "ns");
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<com.example.soundvieproject.model.User>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
+    public void insertArtists(ArrayList<ArtistInSong> artists, App.Callback<InsertManyResult> callback){
+        MongoCollection<ArtistInSong> art = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        art.insertMany(artists).getAsync(callback);
+    }
+    public void getSongArtists(ObjectId idSong, App.Callback<MongoCursor<ArtistInSong>> callback){
+        Document docu = new Document("idSong", idSong);
+        MongoCollection<ArtistInSong> col = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<ArtistInSong>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
+    public void incrementListenCount(ObjectId idSong, int amount, App.Callback<UpdateResult> callback){
+        Document docu = new Document("_id", idSong);
+        Document set = new Document("$set", new Document("luotnghe", amount));
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        col.updateOne(docu, set);
+    }
+    public void getLuotNghe(ObjectId idSong, App.Callback<Song> callback){
+        Document doc = new Document("_id", idSong);
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        col.findOne(doc).getAsync(callback);
     }
 }

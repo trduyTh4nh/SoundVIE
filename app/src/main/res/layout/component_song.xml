@@ -39,7 +39,7 @@
             android:textColor="@color/white"
             android:id="@+id/artis_song"
             android:textSize="16dp"
-            android:text="Táo"
+            android:text="Không có NS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

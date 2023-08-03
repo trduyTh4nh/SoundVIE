@@ -131,7 +131,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                             media.setPlayer(new MediaPlayer());
                         }
                         media.setContext(ActivityAddSongToPlayList.this);
-                        media.playMusic(Uri.parse(song.getSong()));
+                        media.playMusic(song);
 
                         btnResume.setVisibility(View.GONE);
                         btnPause.setVisibility(View.VISIBLE);

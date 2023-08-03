@@ -137,7 +137,7 @@ public class HomeFragment extends Fragment {
                             media.setPlayer(new MediaPlayer());
                         }
                         media.setContext(getActivity().getApplicationContext());
-                        media.playMusic(Uri.parse(song.getSong()));
+                        media.playMusic(song);
 
                         btnResume.setVisibility(View.GONE);
                         btnPause.setVisibility(View.VISIBLE);

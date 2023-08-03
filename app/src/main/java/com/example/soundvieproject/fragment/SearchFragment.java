@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment {
                                     m.setPlayer(new MediaPlayer());
                                 }
                                 m.setContext(getActivity().getApplicationContext());
-                                m.playMusic(Uri.parse(s.getSong()));
+                                m.playMusic(s);
                                 currentSong.setVisibility(View.VISIBLE);
                                 btnPause.setOnClickListener(v -> {
                                     btnPause.setVisibility(View.GONE);
