@@ -241,8 +241,8 @@ public class Helper {
 
 
     public void deleteSongWidthID(App.Callback<DeleteResult> callback, ObjectId idSongdel){
-        Document docu = new Document("_id", idSongdel);
-        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlayList", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        Document docu = new Document("idSong", idSongdel);
+        MongoCollection<SongInPlayList> songColDel = db.getCollection("SongInPlaylist", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         songColDel.deleteOne(docu).getAsync(callback);
     }
 
@@ -582,6 +582,12 @@ public class Helper {
         Document docu = new Document("idUser", idUser);
         MongoCollection<Payment> collection = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
         collection.deleteOne(docu).getAsync(callback);
+    }
+    public void getAlbumByUser(App.Callback<MongoCursor<Playlist>> callback){
+        Document docu = new Document("idUser", user.getId());
+        MongoCollection<Playlist> col = db.getCollection("Album", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Playlist>> t = col.find(docu).iterator();
+        t.getAsync(callback);
     }
 
 

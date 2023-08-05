@@ -109,7 +109,7 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
                                     if (result.isSuccess()) {
                                         //Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
                                         Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getNameSong()));
-                                      //  Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
+                                        //  Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
                                         notifyItemRemoved(position);
 
 
