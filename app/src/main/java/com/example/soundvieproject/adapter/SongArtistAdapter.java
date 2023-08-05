@@ -30,22 +30,22 @@ import io.realm.mongodb.mongo.result.DeleteResult;
 public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.ViewHolder>{
     Context context;
     ArrayList<Song> song;
-    ImageView ivSong;
-    TextView tvSong;
-    ImageButton btnSong;
-    Helper h = Helper.INSTANCE;
 
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
+    Helper h = Helper.INSTANCE;
+    int size;
 
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public SongArtistAdapter(Context context, ArrayList<Song> song) {
+
         this.context = context;
         this.song = song;
     }
@@ -59,12 +59,13 @@ public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Song s = song.get(position);
+        Song s = song.get(holder.getAdapterPosition());
+
         StorageHelper sto = new StorageHelper(context);
         StorageReference ref = sto.getStorage().getReference("images/"+s.getImgCover());
-        Glide.with(context).load(ref).into(ivSong);
-        tvSong.setText(s.getNameSong());
-        btnSong.setOnClickListener(new View.OnClickListener() {
+        Glide.with(context).load(ref).into(holder.ivSong);
+        holder.tvSong.setText(s.getNameSong());
+        holder.btnSong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu menu = new PopupMenu(context, view);
@@ -75,6 +76,10 @@ public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.Vi
                             @Override
                             public void onResult(App.Result<DeleteResult> result) {
                                 if(result.isSuccess()){
+                                    song.remove(s);
+                                    if(song.size() > 0){
+                                        notifyItemRemoved(holder.getAdapterPosition());
+                                    }
                                     Toast.makeText(context, "Thành công", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("thất bại", result.getError().toString());
@@ -96,7 +101,9 @@ public class SongArtistAdapter extends RecyclerView.Adapter<SongArtistAdapter.Vi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
+        ImageView ivSong;
+        TextView tvSong;
+        ImageButton btnSong;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivSong = itemView.findViewById(R.id.imgSongPl);

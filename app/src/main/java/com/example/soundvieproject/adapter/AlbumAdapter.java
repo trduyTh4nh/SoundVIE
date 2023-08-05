@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.soundvieproject.AddAlbumActivity;
 import com.example.soundvieproject.AddPlaylistActivity;
 import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
@@ -24,7 +25,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
+
     ImageView ivCover;
     TextView tvTitle, tvDesc;
     Context context;
@@ -33,7 +35,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     LinearLayout ll, btnAdd;
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
-    public PlaylistAdapter(Context c, ArrayList<Playlist> playlists) {
+    public AlbumAdapter(Context c, ArrayList<Playlist> playlists) {
         context = c;
         pl = playlists;
     }
@@ -56,22 +58,22 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlbumAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         if (viewType == 0) {
             v = LayoutInflater.from(context).inflate(R.layout.add_album, parent, false);
         } else {
-            v = LayoutInflater.from(context).inflate(R.layout.playlist_layout, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.album_layout, parent, false);
         }
-        return new ViewHolder(v);
+        return new AlbumAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AlbumAdapter.ViewHolder holder, int position) {
         if (getItemViewType(position) == 0) {
             if (btnAdd != null) {
                 btnAdd.setOnClickListener(v -> {
-                    Intent i = new Intent(context, AddPlaylistActivity.class);
+                    Intent i = new Intent(context, AddAlbumActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);
                 });
@@ -122,5 +124,4 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             btnAdd = itemView.findViewById(R.id.btnAdd);
         }
     }
-
 }

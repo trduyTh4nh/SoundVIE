@@ -2,13 +2,28 @@ package com.example.soundvieproject.fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.adapter.AlbumAdapter;
+import com.example.soundvieproject.model.Album;
+import com.example.soundvieproject.model.Playlist;
+
+import java.util.ArrayList;
+
+import io.realm.mongodb.App;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,13 +34,10 @@ public class AlbumFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    RecyclerView rcvAlbum;
+    AlbumAdapter adap;
+    ArrayList<Playlist> albums;
+    Helper h = Helper.INSTANCE;
     public AlbumFragment() {
         // Required empty public constructor
     }
@@ -41,20 +53,14 @@ public class AlbumFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static AlbumFragment newInstance(String param1, String param2) {
         AlbumFragment fragment = new AlbumFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -62,5 +68,30 @@ public class AlbumFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_album, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rcvAlbum = view.findViewById(R.id.rcvAlbum);
+        albums = new ArrayList<>();
+
+        h.getAlbumByUser(new App.Callback<MongoCursor<Playlist>>() {
+            @Override
+            public void onResult(App.Result<MongoCursor<Playlist>> result) {
+                if(result.isSuccess()){
+                    MongoCursor<Playlist> cur = result.get();
+                    while (cur.hasNext()){
+                        Playlist p = cur.next();
+                        albums.add(p);
+
+                    }
+                    AlbumAdapter adap = new AlbumAdapter(getActivity().getApplicationContext(), albums);
+                    GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
+                    rcvAlbum.setAdapter(adap);
+                    rcvAlbum.setLayoutManager(l);
+                }
+            }
+        });
     }
 }
