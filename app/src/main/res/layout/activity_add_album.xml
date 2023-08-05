@@ -183,10 +183,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
-                    android:backgroundTint="@color/black"
                     android:background="@drawable/btnlogin_ripple"
+                    android:backgroundTint="@color/black"
                     android:text="Hủy"
                     android:textColor="@color/black" />
+
+                <ProgressBar
+                    android:id="@+id/loader"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="15dp"
+                    android:layout_weight="0"
+                    android:indeterminateTint="@color/black" />
             </LinearLayout>
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>

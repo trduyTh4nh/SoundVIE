@@ -589,7 +589,14 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> t = col.find(docu).iterator();
         t.getAsync(callback);
     }
-
+    public void insertAlbum(Playlist p, App.Callback<InsertOneResult> callback){
+        MongoCollection<Playlist> col = db.getCollection("Album", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertOne(p).getAsync(callback);
+    }
+    public void insertSongInAlbum(ArrayList<SongInPlayList> ss, App.Callback<InsertManyResult> callback){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertMany(ss).getAsync(callback);
+    }
 
 
 

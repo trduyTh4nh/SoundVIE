@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,18 +17,30 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.DB.StorageHelper;
 import com.example.soundvieproject.adapter.AddSongAdapter;
 import com.example.soundvieproject.adapter.SongToAlbumAdapter;
 import com.example.soundvieproject.model.ArtistInSong;
+import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.SongInPlayList;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.options.InsertManyResult;
+import io.realm.mongodb.mongo.result.InsertOneResult;
 
 public class AddAlbumActivity extends AppCompatActivity {
     RecyclerView rcvSong, rcvSongAdd;
@@ -38,12 +51,20 @@ public class AddAlbumActivity extends AppCompatActivity {
     AddSongAdapter sAdap;
     Helper h = Helper.INSTANCE;
     EditText edtNameAlbum, edtDescAlbum;
+    StorageHelper sto;
+
     Uri uri;
     SongToAlbumAdapter adap;
+    boolean[] checkList;
+    ProgressBar load;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sto = new StorageHelper(this);
+
         setContentView(R.layout.activity_add_album);
+        load = findViewById(R.id.loader);
+        load.setVisibility(View.GONE);
         rcvSong = findViewById(R.id.rcvSong);
         btnChooseSong = findViewById(R.id.btnChooseSong);
         edtNameAlbum = findViewById(R.id.etdNamePl);
@@ -95,6 +116,8 @@ public class AddAlbumActivity extends AppCompatActivity {
                                         Song s = result.get();
                                         if(s != null){
                                             songListDialog.add(s);
+                                            checkList = new boolean[songListDialog.size()];
+                                            sAdap.setCheckList(checkList);
                                             sAdap.notifyItemInserted(songListDialog.size() - 1);
                                             //adap.notifyItemInserted(songs.size() - 1);
                                             Log.d("CC2", s.toString());
@@ -119,18 +142,63 @@ public class AddAlbumActivity extends AppCompatActivity {
             btnConfirmSong.setOnClickListener(v2 -> {
                 boolean[] checkList = sAdap.getCheckList();
                 for(int i = 0; i < checkList.length; i++){
+                    Log.d("state", checkList[i] ? "true" : "false");
                     if(checkList[i]){
                         songListMain.add(songListDialog.get(i));
                         adap.notifyItemInserted(songListDialog.size() - 1);
-                        d.dismiss();
                     }
 
                 }
+                d.dismiss();
             });
             d.show();
             d.getWindow().setBackgroundDrawableResource(R.drawable.background_rounded_light);
 
 
+        });
+        btnPostAlbum.setOnClickListener(v -> {
+            if(songListMain.size() == 0){
+                AlertDialog.Builder b = new AlertDialog.Builder(AddAlbumActivity.this);
+                b.setTitle("Không có đủ bài hát");
+                b.setMessage("Số bài hát cần để tạo Album là trên 1 bài hát.");
+                b.create().show();
+                return;
+            }
+            Toast.makeText(this, "Đang đăng tải...", Toast.LENGTH_SHORT).show();
+            load.setVisibility(View.VISIBLE);
+            ObjectId id = new ObjectId();
+            String randName = id.toString();
+            StorageReference ref;
+            ref = sto.getStorage().getReference("images/" + randName);
+            ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    ObjectId id = new ObjectId();
+                    Playlist p = new Playlist(id, edtNameAlbum.getText().toString(), randName, h.getUser().getId(), edtDescAlbum.getText().toString());
+                    h.insertAlbum(p, new App.Callback<InsertOneResult>() {
+                        @Override
+                        public void onResult(App.Result<InsertOneResult> result) {
+                            if(result.isSuccess()){
+                                ArrayList<SongInPlayList> ss = new ArrayList<>();
+                                for(Song s : songListMain){
+                                    ss.add(new SongInPlayList(new ObjectId(), id, s.getId()));
+                                }
+                                h.insertSongInAlbum(ss, new App.Callback<InsertManyResult>() {
+                                    @Override
+                                    public void onResult(App.Result<InsertManyResult> result) {
+                                        if (result.isSuccess()){
+                                            Toast.makeText(AddAlbumActivity.this, "Đang Album thành công!", Toast.LENGTH_SHORT).show();
+                                            load.setVisibility(View.GONE);
+                                        } else {
+                                            Toast.makeText(AddAlbumActivity.this, "Đăng Album thất bại do: " + result.getError().getErrorMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         });
     }
 
