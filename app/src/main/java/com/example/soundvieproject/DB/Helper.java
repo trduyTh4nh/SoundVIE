@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.soundvieproject.model.Album;
 import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
@@ -520,6 +521,18 @@ public class Helper {
         Document docu = new Document("idSong", id);
         MongoCollection<ArtistInSong> a = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
         a.deleteMany(docu).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Ràng buộc nghệ sĩ bài hát", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
+        Document docualbum = new Document("idSong", id);
+        MongoCollection<SongInPlayList> albcol = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        albcol.deleteMany(docualbum).getAsync(new App.Callback<DeleteResult>() {
             @Override
             public void onResult(App.Result<DeleteResult> result) {
                 if(result.isSuccess()){
