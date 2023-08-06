@@ -195,6 +195,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
                             d.dismiss();
                         });
                         d.show();
+                        d.getWindow().setBackgroundDrawableResource(R.drawable.background_rounded_light);
                     });
                 }
             }

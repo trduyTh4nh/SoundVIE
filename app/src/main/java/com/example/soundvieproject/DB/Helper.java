@@ -616,6 +616,12 @@ public class Helper {
         MongoCollection<Payment> collection = db.getCollection("Payment", Payment.class).withCodecRegistry(pojoCodecRegistry);
         collection.deleteOne(docu).getAsync(callback);
     }
+    public void getAlbumByUser(App.Callback<MongoCursor<Playlist>> callback){
+        Document docu = new Document("idUser", user.getId());
+        MongoCollection<Playlist> col = db.getCollection("Album", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Playlist>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
 
 
 
