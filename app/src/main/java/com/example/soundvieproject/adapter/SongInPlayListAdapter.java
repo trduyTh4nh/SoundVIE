@@ -28,6 +28,7 @@ import com.example.soundvieproject.R;
 import com.example.soundvieproject.ReportSongActivity;
 import com.example.soundvieproject.model.ReportDetail;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.SongInPlayList;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -45,7 +46,7 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
 
     @Override
     public long getItemId(int position) {
-        return super.getItemId(position);
+        return position;
     }
 
     @Override
@@ -58,12 +59,17 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
     public interface OnItemsClickListener {
         void OnItemClick(Song song) throws IOException;
     }
-
+    public interface OnDeleteListener{
+        void OnDelete(Song song, View v, int pos) throws IOException;
+    }
+    private OnDeleteListener delete = null;
 
     public void setItemClickListener(SongInPlayListAdapter.OnItemsClickListener listener) {
         this.listener = listener;
     }
-
+    public void setDeleteListener(OnDeleteListener listener){
+        this.delete = listener;
+    }
     Helper helper = Helper.INSTANCE;
 
     @NonNull
@@ -98,48 +104,13 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(context, v);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @SuppressLint("NonConstantResourceId")
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.delete_music: {
-                                helper.deleteSongWidthID(result -> {
-                                    if (result.isSuccess()) {
-                                        //Toast.makeText(context, "Xóa thành công ", Toast.LENGTH_SHORT).show();
-                                        Log.d("Bài hát bị xóa", String.valueOf(songspl.get(position).getNameSong()));
-                                      //  Toast.makeText(context, String.valueOf(position), Toast.LENGTH_SHORT).show();
-                                        notifyItemRemoved(position);
-
-
-
-                                    } else {
-                                        Log.d("Delete: ", "không thành công!" + result.getError());
-                                    }
-
-                                }, songspl.get(position).getId());
-
-
-                                break;
-                            }
-                            case R.id.report_music: {
-                                Intent i = new Intent(context, ReportSongActivity.class);
-                                Bundle data = new Bundle();
-                                data.putString("idSongReport", songspl.get(position).getId().toString());
-                                i.putExtras(data);
-                                context.startActivity(i);
-                                break;
-                            }
-                            default:
-                                Toast.makeText(context, "Không có gì", Toast.LENGTH_SHORT).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.inflate(R.menu.menu_edit_music_in_playlist);
-                popupMenu.show();
+               if(delete != null){
+                   try {
+                       delete.OnDelete(song, v, holder.getAdapterPosition());
+                   } catch (IOException e) {
+                       throw new RuntimeException(e);
+                   }
+               }
             }
         });
     }
@@ -149,7 +120,7 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
         this.context = context;
     }
 
-    private final ArrayList<Song> songspl;
+    private ArrayList<Song> songspl;
     Context context;
 
     public ArrayList<Song> getSongspl() {
@@ -180,4 +151,27 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
         }
     }
 
+    public void refreshView(int position) {
+        notifyItemChanged(position);
+    }
+
+    public void clearData() {
+        songspl.removeAll(songspl);
+
+    }
+
+    // Method to add new data to the adapter
+    public void addData() {
+
+        for(Song s : backup){
+            songspl.add(s);
+
+            Log.d("item", s.toString());
+        }
+        notifyDataSetChanged();
+    }
+
+    ArrayList<Song> backup;
+
 }
+

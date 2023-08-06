@@ -32,6 +32,7 @@
                 android:gravity="center">
 
                 <ImageButton
+                    android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
@@ -61,7 +62,9 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="6dp"
                     android:padding="5dp"
-                    android:src="@drawable/icon_option"></ImageButton>
+                    android:src="@drawable/icon_option">
+
+                </ImageButton>
 
             </LinearLayout>
         </LinearLayout>
@@ -75,31 +78,38 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="380dp"
+            android:id="@+id/imgCover"
+            android:layout_width="360dp"
             android:layout_height="360dp"
-            android:background="@drawable/border"
             android:src="@drawable/img_musicplaying">
 
         </ImageView>
 
         <TextView
+            android:id="@+id/nameSong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Chơi vơi"
             android:textColor="@color/white"
-            android:textSize="50dp"
-            android:textStyle="bold"></TextView>
+            android:textSize="35dp"
+            android:textStyle="bold">
+
+        </TextView>
 
         <TextView
+            android:id="@+id/nameArtist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Táo, Orange"
             android:textColor="@color/white"
-            android:textSize="18dp"></TextView>
+            android:textSize="18dp">
+
+        </TextView>
 
         <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -109,34 +119,25 @@
                 android:id="@+id/tvTimeCurrent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0:23"
-                android:textColor="@color/white"></TextView>
+                android:text="0:00"
+                android:textColor="@color/white">
+            </TextView>
 
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="4dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@color/white">
+                <SeekBar
+                    android:id="@+id/seekbar"
+                    android:layout_width="320dp"
+                    android:layout_height="match_parent">
+                </SeekBar>
 
-                <LinearLayout
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/orange">
-
-                    <SeekBar
-                        android:id="@+id/seekbar"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"></SeekBar>
-                </LinearLayout>
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvTimeTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2:29"
-                android:textColor="@color/white"></TextView>
+                android:text="00:00"
+                android:textColor="@color/white">
+
+            </TextView>
         </LinearLayout>
 
         <LinearLayout
@@ -146,12 +147,15 @@
             android:gravity="center">
 
             <ImageButton
+                android:id="@+id/btnlike"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/transparent"
-                android:src="@drawable/vector_heart"></ImageButton>
+                android:src="@drawable/vector_heart">
+
+            </ImageButton>
 
             <ImageButton
                 android:id="@+id/btnleft"
@@ -160,16 +164,27 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@color/transparent"
-                android:src="@drawable/vector_previous"></ImageButton>
+                android:src="@drawable/vector_previous">
+
+            </ImageButton>
 
             <ImageButton
                 android:id="@+id/btnplay"
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/background_forbtn_pause"
-                android:src="@drawable/vector_pause"></ImageButton>
+                android:src="@drawable/baseline_play_arrow_24"></ImageButton>
+            <ImageButton
+                android:visibility="gone"
+                android:id="@+id/btnPause"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/background_forbtn_pause"
+                android:src="@drawable/baseline_pause_24"></ImageButton>
 
             <ImageButton
                 android:id="@+id/btnRight"
@@ -181,7 +196,7 @@
                 android:src="@drawable/vector_next"></ImageButton>
 
             <ImageButton
-                android:id="@+id/btnSelect"
+                android:id="@+id/btnRandom"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
@@ -220,11 +235,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_width="400dp"
+            android:layout_width="380dp"
             android:layout_height="100dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/background_song_picked"
+            android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:paddingRight="10dp"
@@ -290,14 +305,18 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="15dp"
-                        android:src="@drawable/vector_down"></ImageView>
+                        android:src="@drawable/vector_down">
+
+                    </ImageView>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="0dp"
-                        android:src="@drawable/icon_option"></ImageView>
+                        android:src="@drawable/icon_option">
+
+                    </ImageView>
                 </LinearLayout>
 
             </LinearLayout>

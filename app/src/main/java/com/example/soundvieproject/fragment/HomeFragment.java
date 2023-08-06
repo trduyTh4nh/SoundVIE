@@ -101,7 +101,6 @@ public class HomeFragment extends Fragment {
         b.setVisibility(View.VISIBLE);
         list(view);
 
-
     }
     public void list(View view){
         list = new ArrayList<>();
@@ -138,6 +137,8 @@ public class HomeFragment extends Fragment {
                         }
                         media.setContext(getActivity().getApplicationContext());
                         media.playMusic(song);
+
+                        media.setCurrentSong(song);
 
                         btnResume.setVisibility(View.GONE);
                         btnPause.setVisibility(View.VISIBLE);

@@ -12,11 +12,14 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,6 +61,8 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
     Button btnSave;
     Button btnCancel;
 
+    EditText edtSearchSongtoAdd;
+
     MediaPlayer p;
 
 
@@ -79,6 +84,8 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         artist = findViewById(R.id.artist);
         btnSave = findViewById(R.id.btnSave);
         btnCancel = findViewById(R.id.btnCancel);
+        edtSearchSongtoAdd = findViewById(R.id.edtSearch);
+
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +94,42 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
             }
         });
 
+        edtSearchSongtoAdd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        Hup();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                helper.getSongWhenSearch(result -> {
+                    songsArr = new ArrayList();
+                    if(result.isSuccess()){
+                        MongoCursor<Song> cursor = result.get();
+                        while (cursor.hasNext()){
+                            Song songResult = cursor.next();
+                            songsArr.add(new Song(songResult.getId(), songResult.getNameSong(), songResult.getImgCover(), songResult.getStateData(), songResult.getLyrics(), songResult.getArtists(), songResult.getSong()));
+
+                        }
+                        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+                        adapter = new MusicInSearchAdapter(songsArr, ActivityAddSongToPlayList.this, firebaseStorage);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(ActivityAddSongToPlayList.this, LinearLayoutManager.VERTICAL, false);
+                        rvSongInSearch.setLayoutManager(layoutManager);
+                        rvSongInSearch.setAdapter(adapter);
+                    }
+                    else
+                        Toast.makeText(ActivityAddSongToPlayList.this, "Lỗi bất định", Toast.LENGTH_SHORT).show();
+                }, edtSearchSongtoAdd.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
+       // Hup();
 
         Bundle b = getIntent().getExtras();
 
@@ -109,7 +150,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                     if (checked[i]) {
                         ObjectId idSong = songsArr.get(i).getId();
 
-                        helper.checkSongRep(idSong, new ObjectId(idPlCr), result -> {
+                        helper.checkSongRep(idSong, new ObjectId(idPlCur), result -> {
                             if (result.isSuccess()) {
 
                                 //String idPlCr = b.getString("idPlaylistCurrent");
@@ -119,7 +160,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
                                     Log.d("lỗi", "idPl" + idPlCur + " idSong: " + idSong + " obj: " + cursor.next().toString());
                                     ShowPopUp();
                                 } else {
-                                    SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCr), idSong);
+                                    SongInPlayList songInPlayList = new SongInPlayList(new ObjectId(), new ObjectId(idPlCur), idSong);
                                     helper.insertSongInPlayList(songInPlayList);
                                     Toast.makeText(ActivityAddSongToPlayList.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                                 }
@@ -133,60 +174,60 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         });
     }
 
-    public void Hup() {
-        songsArr = new ArrayList<>();
-        helper.getSong(result -> {
-            if (result.isSuccess()) {
-                MongoCursor<Song> cursor = result.get();
-                while (cursor.hasNext()) {
-                    Song song = cursor.next();
-                    Log.d("Check", song.toString());
-                    songsArr.add(new Song(song.getId(), song.getNameSong(), song.getImgCover(), song.getStateData(), song.getLyrics(), song.getArtists(), song.getSong()));
-                }
-                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-                adapter = new MusicInSearchAdapter(songsArr, this, firebaseStorage);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                rvSongInSearch.setLayoutManager(layoutManager);
-                rvSongInSearch.setAdapter(adapter);
-
-                adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
-                    @Override
-                    public void OnItemClick(Song song) throws IOException {
-                        if (media.getPlayer().isPlaying()) {
-                            media.getPlayer().stop();
-                            media.setPlayer(new MediaPlayer());
-                        }
-                        media.setContext(ActivityAddSongToPlayList.this);
-                        media.playMusic(song);
-
-                        btnResume.setVisibility(View.GONE);
-                        btnPause.setVisibility(View.VISIBLE);
-                        currentSong.setVisibility(View.VISIBLE);
-                        //img_song.setImageResource(song.getImgCover());
-                        song_name.setText(song.getNameSong());
-                        artist.setText(song.getArtist());
-
-                        StorageReference sto = firebaseStorage.getReference("images/" + song.getImgCover());
-                        Glide.with(ActivityAddSongToPlayList.this).load(sto).into(img_song);
-
-                        btnPause.setOnClickListener(v -> {
-                            btnPause.setVisibility(View.GONE);
-                            btnResume.setVisibility(View.VISIBLE);
-                            media.pause();
-                        });
-                        btnResume.setOnClickListener(v -> {
-                            btnResume.setVisibility(View.GONE);
-                            btnPause.setVisibility(View.VISIBLE);
-                            media.start();
-                        });
-                    }
-                });
-
-            } else {
-                Toast.makeText(this, "Không thể lấy bài hát", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    public void Hup() {
+//        songsArr = new ArrayList<>();
+//        helper.getSong(result -> {
+//            if (result.isSuccess()) {
+//                MongoCursor<Song> cursor = result.get();
+//                while (cursor.hasNext()) {
+//                    Song song = cursor.next();
+//                    Log.d("Check", song.toString());
+//                    songsArr.add(new Song(song.getId(), song.getNameSong(), song.getImgCover(), song.getStateData(), song.getLyrics(), song.getArtists(), song.getSong()));
+//                }
+//                FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+//                adapter = new MusicInSearchAdapter(songsArr, this, firebaseStorage);
+//                LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+//                rvSongInSearch.setLayoutManager(layoutManager);
+//                rvSongInSearch.setAdapter(adapter);
+//
+////                adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
+////                    @Override
+////                    public void OnItemClick(Song song) throws IOException {
+////                        if (media.getPlayer().isPlaying()) {
+////                            media.getPlayer().stop();
+////                            media.setPlayer(new MediaPlayer());
+////                        }
+////                        media.setContext(ActivityAddSongToPlayList.this);
+////                        media.playMusic(song);
+////
+////                        btnResume.setVisibility(View.GONE);
+////                        btnPause.setVisibility(View.VISIBLE);
+////                        currentSong.setVisibility(View.VISIBLE);
+////                        //img_song.setImageResource(song.getImgCover());
+////                        song_name.setText(song.getNameSong());
+////                        artist.setText(song.getArtist());
+////
+////                        StorageReference sto = firebaseStorage.getReference("images/" + song.getImgCover());
+////                        Glide.with(ActivityAddSongToPlayList.this).load(sto).into(img_song);
+////
+////                        btnPause.setOnClickListener(v -> {
+////                            btnPause.setVisibility(View.GONE);
+////                            btnResume.setVisibility(View.VISIBLE);
+////                            media.pause();
+////                        });
+////                        btnResume.setOnClickListener(v -> {
+////                            btnResume.setVisibility(View.GONE);
+////                            btnPause.setVisibility(View.VISIBLE);
+////                            media.start();
+////                        });
+////                    }
+////                });
+//
+//            } else {
+//                Toast.makeText(this, "Không thể lấy bài hát", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void ShowPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

@@ -75,6 +75,8 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
     @Override
     public void onBindViewHolder(@NonNull MusicInSearchAdapter.ViewHolder holder, int position) {
         Song song = arrSongInSreach.get(position);
+
+
         StorageReference reference = storage.getReference("images/"+song.getImgCover());
         Glide.with(context).load(reference).into(imgCover);
         tvNameSong.setText(song.getNameSong());

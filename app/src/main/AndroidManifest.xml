@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="android.permission.MEDIA_CONTENT_CONTROL"
+        tools:ignore="ReservedSystemPermission" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoundVIEProject"
         tools:targetApi="31">
+        <service android:name=".media.MediaPlayerService" />
         <activity
             android:name=".ActivityOutOfDate"
             android:exported="false" />

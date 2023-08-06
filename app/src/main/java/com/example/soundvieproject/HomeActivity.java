@@ -25,8 +25,11 @@ import com.example.soundvieproject.fragment.ListSongFragment;
 import com.example.soundvieproject.fragment.MoreFragment;
 import com.example.soundvieproject.fragment.SearchFragment;
 import com.example.soundvieproject.fragment.UserFragment;
+import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.model.Payment;
+import com.example.soundvieproject.model.Song;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.internal.InternalTokenProvider;
 
 import org.bson.types.ObjectId;
 import io.realm.mongodb.App;
@@ -39,6 +42,7 @@ public class HomeActivity extends AppCompatActivity {
     ImageButton btnSearch, btnBack, btnSetting;
     LinearLayout changeToMusic;
 
+    Media currentMedia;
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,27 @@ public class HomeActivity extends AppCompatActivity {
         toolbarSearch = findViewById(R.id.toolbarSearch);
         btnBack = findViewById(R.id.btnBack);
         changeToMusic = findViewById(R.id.currentSong);
+        currentMedia = Media.INSTANCE;
+
+
+
+        changeToMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song currentSong = currentMedia.getCurrentSong();
+                Log.d("Current Song", currentSong.toString());
+
+                Intent i = new Intent(HomeActivity.this, PlayingMusicActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("IdSongClicked", String.valueOf(currentSong.getId()));
+                bundle.putString("ImgCover", currentSong.getImgCover());
+                i.putExtras(bundle);
+
+                startActivity(i);
+            }
+        });
+
+
         btnSetting = findViewById(R.id.btnSetting);
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,13 +83,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        changeToMusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, PlayingMusicActivity.class);
-                startActivity(i);
-            }
-        });
+
+
         btnBack.setOnClickListener(v -> {
             getSupportFragmentManager().popBackStack();
             toolbarNormal.setVisibility(View.VISIBLE);
@@ -83,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
                 toolbarSearch.setVisibility(View.VISIBLE);
             }
         });
+
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @SuppressLint("NonConstantResourceId")

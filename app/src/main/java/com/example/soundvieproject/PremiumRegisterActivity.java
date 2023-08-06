@@ -83,6 +83,7 @@ public class PremiumRegisterActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("_id", monthlyRadio.isChecked() ? "64b502e2fcded49715f78db3" : "64b506c1fcded49715f8e27f");
                 b.putString("method", "VISA");
+
                 i.putExtras(b);
                 startActivity(i);
             } else {

@@ -39,11 +39,7 @@ import java.util.Objects;
 
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SearchFragment extends Fragment {
 
     EditText searchBox;
@@ -108,6 +104,8 @@ public class SearchFragment extends Fragment {
                         rcvSong.setAdapter(adap);
                         LinearLayoutManager l = new LinearLayoutManager(getActivity().getApplicationContext());
                         rcvSong.setLayoutManager(l);
+
+
                         adap.setItemClickListener(new SearchResultAdapter.OnItemsClickListener() {
                             @Override
                             public void OnItemClick(Object obj) throws IOException {
@@ -137,6 +135,8 @@ public class SearchFragment extends Fragment {
                         });
                     }
                 }, searchBox.getText().toString());
+
+
                 h.getArtistByQuery(t -> {
                     if(t.isSuccess()){
                         a = new ArrayList<>();

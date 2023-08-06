@@ -73,9 +73,10 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp">
         <EditText
+            android:id="@+id/edtSearch"
             android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:hint="Tìm kiếm"
@@ -84,7 +85,7 @@
             android:drawableLeft="@drawable/icon_search"
             android:background="@drawable/background_search"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="55dp">
         </EditText>
     </LinearLayout>
     <LinearLayout

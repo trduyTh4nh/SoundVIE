@@ -14,11 +14,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -157,7 +159,7 @@ public class PlaylistActivity extends AppCompatActivity {
 
                 Intent i = new Intent(PlaylistActivity.this, ActivityAddSongToPlayList.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("idPlaylistCurrent", idPlCurrent);
+                bundle.putString("idPlaylistCr", idPlCurrent);
                 i.putExtras(bundle);
                 startActivity(i);
 
@@ -259,6 +261,53 @@ public class PlaylistActivity extends AppCompatActivity {
                                         }
                                     });
 
+                                }
+                            });
+                            adapter.setDeleteListener(new SongInPlayListAdapter.OnDeleteListener() {
+                                @Override
+                                public void OnDelete(Song song, View v, int pos) throws IOException {
+                                    PopupMenu popupMenu = new PopupMenu(getApplicationContext(), v);
+                                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                        @SuppressLint("NonConstantResourceId")
+                                        @Override
+                                        public boolean onMenuItemClick(MenuItem item) {
+                                            switch (item.getItemId()) {
+                                                case R.id.delete_music: {
+                                                    helper.deleteSongWidthID(result -> {
+                                                        if (result.isSuccess()) {
+                                                            songinPlayLists.remove(song);
+                                                            recyclerView.setAdapter(adapter);
+                                                            Toast.makeText(getApplicationContext(), "Thành công", Toast.LENGTH_SHORT).show();
+
+
+
+                                                        } else {
+                                                            Log.d("thất bại", result.getError().toString());
+                                                        }
+
+
+                                                    }, songinPlayLists.get(pos).getId());
+
+
+                                                    break;
+                                                }
+                                                case R.id.report_music: {
+                                                    Intent i = new Intent(getApplicationContext(), ReportSongActivity.class);
+                                                    Bundle data = new Bundle();
+                                                    data.putString("idSongReport", songinPlayLists.get(pos).getId().toString());
+                                                    i.putExtras(data);
+                                                    startActivity(i);
+                                                    break;
+                                                }
+                                                default:
+                                                    Toast.makeText(getApplicationContext(), "Không có gì", Toast.LENGTH_SHORT).show();
+                                                    break;
+                                            }
+                                            return false;
+                                        }
+                                    });
+                                    popupMenu.inflate(R.menu.menu_edit_music_in_playlist);
+                                    popupMenu.show();
                                 }
                             });
                         } else {
