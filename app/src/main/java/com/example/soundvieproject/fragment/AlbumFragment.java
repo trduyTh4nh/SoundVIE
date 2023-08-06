@@ -69,7 +69,25 @@ public class AlbumFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_album, container, false);
     }
+    public void getData(){
+        h.getAlbumByUser(new App.Callback<MongoCursor<Playlist>>() {
+            @Override
+            public void onResult(App.Result<MongoCursor<Playlist>> result) {
+                if(result.isSuccess()){
+                    MongoCursor<Playlist> cur = result.get();
+                    while (cur.hasNext()){
+                        Playlist p = cur.next();
+                        albums.add(p);
 
+                    }
+                    AlbumAdapter adap = new AlbumAdapter(getActivity().getApplicationContext(), albums);
+                    GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
+                    rcvAlbum.setAdapter(adap);
+                    rcvAlbum.setLayoutManager(l);
+                }
+            }
+        });
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

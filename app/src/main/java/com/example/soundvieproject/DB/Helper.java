@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.soundvieproject.model.Album;
 import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
 import com.example.soundvieproject.model.Playlist;
@@ -562,6 +563,18 @@ public class Helper {
                 }
             }
         });
+        Document docualbum = new Document("idSong", id);
+        MongoCollection<SongInPlayList> albcol = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        albcol.deleteMany(docualbum).getAsync(new App.Callback<DeleteResult>() {
+            @Override
+            public void onResult(App.Result<DeleteResult> result) {
+                if(result.isSuccess()){
+                    Log.d("Ràng buộc nghệ sĩ bài hát", "Ràng buộc thành công");
+                } else {
+                    Log.d("Thất bại", result.getError().toString());
+                }
+            }
+        });
     }
 
 
@@ -622,7 +635,14 @@ public class Helper {
         RealmResultTask<MongoCursor<Playlist>> t = col.find(docu).iterator();
         t.getAsync(callback);
     }
-
+    public void insertAlbum(Playlist p, App.Callback<InsertOneResult> callback){
+        MongoCollection<Playlist> col = db.getCollection("Album", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertOne(p).getAsync(callback);
+    }
+    public void insertSongInAlbum(ArrayList<SongInPlayList> ss, App.Callback<InsertManyResult> callback){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertMany(ss).getAsync(callback);
+    }
 
 
 

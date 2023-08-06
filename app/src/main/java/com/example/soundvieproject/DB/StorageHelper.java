@@ -6,6 +6,9 @@ import android.net.Uri;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import org.bson.types.ObjectId;
 
 public class StorageHelper {
     FirebaseStorage store;
@@ -15,7 +18,6 @@ public class StorageHelper {
     public StorageHelper(Context c){
         context = c;
         store = FirebaseStorage.getInstance();
-        ref = store.getReference("3107mp3.mp3");
     }
     public FirebaseStorage getStorage(){
         return  store;
@@ -24,7 +26,6 @@ public class StorageHelper {
     public void download(OnSuccessListener<Uri> callback){
         final Uri[] test = {null};
         ref.getDownloadUrl().addOnSuccessListener(callback);
-
-
     }
+
 }

@@ -1,6 +1,7 @@
 package com.example.soundvieproject.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,16 @@ public class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHold
     ArrayList<Song> arrSong;
     boolean[] checkList;
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public AddSongAdapter(Context context, ArrayList<Song> arrSong) {
         this.context = context;
         this.arrSong = arrSong;
@@ -40,7 +51,6 @@ public class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        checkList = new boolean[this.arrSong.size()];
         Song s = arrSong.get(holder.getAdapterPosition());
         StorageHelper help = new StorageHelper(context);
         StorageReference ref = help.getStorage().getReference("images/"+s.getImgCover());
@@ -49,7 +59,11 @@ public class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHold
         holder.cbCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                checkList[holder.getAdapterPosition()] = b;
+                Log.d("pos", String.valueOf(position));
+                checkList[position] = b;
+                for(boolean i : checkList){
+                    Log.d("Checkmate", i ? "true" : "false");
+                }
             }
         });
     }
@@ -69,6 +83,10 @@ public class AddSongAdapter extends RecyclerView.Adapter<AddSongAdapter.ViewHold
             tvSong = itemView.findViewById(R.id.tvSong);
             imgPl = itemView.findViewById(R.id.imgSongPl);
         }
+    }
+
+    public void setCheckList(boolean[] checkList) {
+        this.checkList = checkList;
     }
 
     public boolean[] getCheckList() {
