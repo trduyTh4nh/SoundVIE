@@ -7,6 +7,7 @@
     android:layout_margin="5dp"
     >
     <LinearLayout
+        android:gravity="center_vertical"
         android:background="@drawable/transparent_ripple"
         android:id="@+id/llplay"
         android:layout_width="match_parent"
@@ -26,70 +27,63 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal"
-
-            android:paddingTop="5dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <LinearLayout
-                android:layout_marginStart="10dp"
-                android:layout_width="160dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/nameSongPl"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
                     android:text="Lửng lơ"
                     android:textColor="@color/white"
                     android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/artistSongPl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="2dp"
-                    android:text="Masew, B Ray, REDT, Ý Tiên"
-                    android:textColor="@color/white"
-                    android:textSize="15dp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_weight="0"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_weight="1"
+                android:gravity="end">
 
                 <ImageButton
-                    android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:background="@color/transparent"
 
-                    android:src="@drawable/vector_heart">
+                    android:src="@drawable/heart_line">
 
                 </ImageButton>
 
                 <ImageButton
-                    android:id="@+id/btnDownload"
-                    android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="15dp"
-                    android:src="@drawable/vector_down"></ImageButton>
+                    android:background="@color/transparent"
+                    android:src="@drawable/download_2_line"></ImageButton>
 
                 <ImageButton
-                    android:layout_marginStart="16dp"
                     android:id="@+id/btnMenuEdit"
-                    android:layout_marginLeft="2dp"
-                    android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/icon_option"></ImageButton>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="2dp"
+                    android:background="@color/transparent"
+                    android:src="@drawable/more_line"></ImageButton>
+
             </LinearLayout>
 
         </LinearLayout>

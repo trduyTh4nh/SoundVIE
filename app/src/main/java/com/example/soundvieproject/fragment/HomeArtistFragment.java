@@ -22,6 +22,8 @@ import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.User;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.DecimalFormat;
+
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
@@ -94,9 +96,12 @@ public class HomeArtistFragment extends Fragment {
                                     Song s = result.get();
                                     if(s != null){
                                         luotnghee+=result.get().getLuotnghe();
-                                        luotnghe.setText("" + luotnghee);
+                                        double tmp = luotnghee;
+                                        DecimalFormat formatter = new DecimalFormat("#,###");
+                                        luotnghe.setText("" + formatter.format(tmp));
                                         tienHH = luotnghee * 0.5;
-                                        sotienhh.setText(tienHH + " VND");
+                                        tmp = tienHH;
+                                        sotienhh.setText(formatter.format(tmp) + " VND");
                                     }
 
                                 }

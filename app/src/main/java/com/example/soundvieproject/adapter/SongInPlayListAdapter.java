@@ -106,7 +106,6 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
         Glide.with(context).load(stoRefer).into(imgSongpl);
         //  imgSongpl.setImageURI(Uri.parse(song.getImgCover()));
         nameSongpl.setText(song.getNameSong());
-        nameArtist.setText(song.getArtis());
         llplay.setOnClickListener(v -> {
             if (listener != null) {
                 try {
@@ -257,7 +256,6 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
             super(itemView);
             imgSongpl = itemView.findViewById(R.id.imgSongPl);
             nameSongpl = itemView.findViewById(R.id.nameSongPl);
-            nameArtist = itemView.findViewById(R.id.artistSongPl);
             btnMenu = itemView.findViewById(R.id.btnMenuEdit);
             llplay = itemView.findViewById(R.id.llplay);
             btnDownload = itemView.findViewById(R.id.btnDownload);

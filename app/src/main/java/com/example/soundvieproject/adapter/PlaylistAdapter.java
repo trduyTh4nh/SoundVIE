@@ -77,7 +77,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         if (viewType == 0) {
-            v = LayoutInflater.from(context).inflate(R.layout.add_album, parent, false);
+            v = LayoutInflater.from(context).inflate(R.layout.add_playlist, parent, false);
         } else {
             v = LayoutInflater.from(context).inflate(R.layout.playlist_layout, parent, false);
         }
