@@ -25,7 +25,7 @@ import java.util.Stack;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
-import kotlinx.coroutines.internal.ArrayQueue;
+import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class Media {
 
@@ -152,6 +152,23 @@ public class Media {
         currentSong = s;
         Uri uri = Uri.parse(s.getSong());
         //   Toast.makeText(context, "select resource" + uri, Toast.LENGTH_SHORT).show();
+        helper.getLuotNghe(s.getId(), new App.Callback<Song>() {
+            @Override
+            public void onResult(App.Result<Song> result) {
+                if(result.isSuccess()){
+                    Log.d("Luotnghe", ""+result.get().getLuotnghe());
+                    helper.incrementListenCount(result.get().getId(), result.get().getLuotnghe() + 1, new App.Callback<UpdateResult>() {
+                        @Override
+                        public void onResult(App.Result<UpdateResult> result) {
+                            if(result.isSuccess())
+                                Log.d("Luotnghe", "Success");
+                            else
+                                Log.d("Luotnghe", "Failed " + result.getError().getMessage());
+                        }
+                    });
+                }
+            }
+        });
         player.setDataSource(context, uri);
         player.prepareAsync();
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

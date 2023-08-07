@@ -63,7 +63,7 @@ public class AlbumActivity extends AppCompatActivity {
         StorageReference ref = sto.getStorage().getReference("images/"+b.getString("image"));
         Glide.with(this).load(ref).into(ivCover);
         songs = new ArrayList<>();
-        adap = new SongInAlbumAdapter(songs, this);
+        adap = new SongInAlbumAdapter(songs, this, id);
         rcvSong = findViewById(R.id.rcvSongInAlbum);
         rcvSong.setAdapter(adap);
         LinearLayoutManager l = new LinearLayoutManager(this);

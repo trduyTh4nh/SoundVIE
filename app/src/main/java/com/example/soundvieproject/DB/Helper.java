@@ -607,7 +607,7 @@ public class Helper {
         Document docu = new Document("_id", idSong);
         Document set = new Document("$set", new Document("luotnghe", amount));
         MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
-        col.updateOne(docu, set);
+        col.updateOne(docu, set).getAsync(callback);
     }
     public void getLuotNghe(ObjectId idSong, App.Callback<Song> callback){
         Document doc = new Document("_id", idSong);
@@ -658,6 +658,31 @@ public class Helper {
         MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         col.insertOne(s).getAsync(callback);
 
+    }
+    public void deleteAlbum(ObjectId id, App.Callback<DeleteResult> callback){
+        MongoCollection<Playlist> col = db.getCollection("Album", Playlist.class).withCodecRegistry(pojoCodecRegistry);
+        Document doc = new Document("_id", id);
+        deleteSongsInAlbum(id);
+        col.deleteOne(doc).getAsync(callback);
+    }
+    public void deleteSongsInAlbum(ObjectId idAlbum){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        Document doc = new Document("idPlaylist", idAlbum);
+        col.deleteMany(doc).getAsync(t -> {
+            if(t.isSuccess()){
+                Log.d("Ràng buộc", "Thành công!");
+            } else {
+                Log.e("Ràng buộc", "Lỗi: "+ t.getError().getMessage());
+            }
+        });
+
+    }
+    public void deleteSongInAlbum(ObjectId idAlbum, ObjectId idSong, App.Callback<DeleteResult> callback){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        Document doc = new Document();
+        doc.append("idAlbum", idAlbum);
+        doc.append("idSong", idSong);
+        col.deleteOne(doc).getAsync(callback);
     }
 
 

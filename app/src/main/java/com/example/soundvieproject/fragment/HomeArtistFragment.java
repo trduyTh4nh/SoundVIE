@@ -17,10 +17,13 @@ import com.bumptech.glide.Glide;
 import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.DB.StorageHelper;
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.model.ArtistInSong;
+import com.example.soundvieproject.model.Song;
 import com.example.soundvieproject.model.User;
 import com.google.firebase.storage.StorageReference;
 
 import io.realm.mongodb.App;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 
 public class HomeArtistFragment extends Fragment {
@@ -31,17 +34,19 @@ public class HomeArtistFragment extends Fragment {
 
     }
     Helper h = Helper.INSTANCE;
+    TextView luotnghe, sotienhh;
     ProgressBar prog;
     public static HomeArtistFragment newInstance(String param1, String param2) {
         HomeArtistFragment fragment = new HomeArtistFragment();
 
         return fragment;
     }
-
+    double tienHH;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+    int luotnghee;
     TextView tvHelloArtist;
     ImageView artistImg;
     @Override
@@ -68,6 +73,36 @@ public class HomeArtistFragment extends Fragment {
                     StorageHelper h = new StorageHelper(getActivity());
                     StorageReference ref = h.getStorage().getReference("image/"+u.getAvatar());
                     Glide.with(getActivity()).load(ref).into(artistImg);
+                }
+
+            }
+        });
+        luotnghe = view.findViewById(R.id.luotnghe);
+        sotienhh = view.findViewById(R.id.sotienhh);
+        luotnghee = 0;
+        h.getSongByArtist(h.getUser().getId(), new App.Callback<MongoCursor<ArtistInSong>>() {
+            @Override
+            public void onResult(App.Result<MongoCursor<ArtistInSong>> result) {
+                if (result.isSuccess()){
+                    MongoCursor<ArtistInSong> s = result.get();
+                    while (s.hasNext()){
+                        ArtistInSong a = s.next();
+                        h.getSongByIdSong(a.getIdSong(), new App.Callback<Song>() {
+                            @Override
+                            public void onResult(App.Result<Song> result) {
+                                if(result.isSuccess()){
+                                    Song s = result.get();
+                                    if(s != null){
+                                        luotnghee+=result.get().getLuotnghe();
+                                        luotnghe.setText("" + luotnghee);
+                                        tienHH = luotnghee * 0.5;
+                                        sotienhh.setText(tienHH + " VND");
+                                    }
+
+                                }
+                            }
+                        });
+                    }
                 }
 
             }
