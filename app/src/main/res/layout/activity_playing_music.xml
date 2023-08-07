@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="3dp"
-                    android:background="@color/transparent"
+                    android:background="@drawable/transparent_ripple"
                     android:src="@drawable/baseline_keyboard_arrow_down_24">
 
                 </ImageButton>
@@ -152,7 +152,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/transparent"
+                android:background="@drawable/transparent_ripple"
                 android:src="@drawable/vector_heart">
 
             </ImageButton>
@@ -163,7 +163,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/transparent"
+                android:background="@drawable/transparent_ripple"
                 android:src="@drawable/vector_previous">
 
             </ImageButton>
@@ -175,7 +175,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/background_forbtn_pause"
-                android:src="@drawable/baseline_play_arrow_24"></ImageButton>
+                android:src="@drawable/baseline_play_arrow_24">
+
+            </ImageButton>
             <ImageButton
                 android:visibility="gone"
                 android:id="@+id/btnPause"
@@ -184,7 +186,9 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:background="@drawable/background_forbtn_pause"
-                android:src="@drawable/baseline_pause_24"></ImageButton>
+                android:src="@drawable/baseline_pause_24">
+
+            </ImageButton>
 
             <ImageButton
                 android:id="@+id/btnRight"
@@ -192,17 +196,22 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/transparent"
-                android:src="@drawable/vector_next"></ImageButton>
+                android:background="@drawable/transparent_ripple"
+                android:src="@drawable/vector_next">
+
+            </ImageButton>
 
             <ImageButton
+
                 android:id="@+id/btnRandom"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@color/transparent"
-                android:src="@drawable/vector_random"></ImageButton>
+                android:background="@drawable/transparent_ripple"
+                android:src="@drawable/vector_random">
+
+            </ImageButton>
         </LinearLayout>
 
         <LinearLayout
@@ -222,7 +231,9 @@
                     android:text="Tiếp theo"
                     android:textColor="@color/white"
                     android:textSize="20dp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold">
+
+                </TextView>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -230,14 +241,16 @@
                     android:layout_alignParentRight="true"
                     android:text="Xem thêm"
                     android:textColor="@color/white"
-                    android:textSize="18dp"></TextView>
+                    android:textSize="18dp">
+
+                </TextView>
             </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="380dp"
+            android:layout_width="400dp"
             android:layout_height="100dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/background_song_picked"
             android:gravity="center"
             android:paddingLeft="10dp"
@@ -246,7 +259,7 @@
             android:paddingBottom="10dp">
 
             <ImageView
-                android:id="@+id/imgSongPl"
+                android:id="@+id/imgSongNext"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:scaleType="centerCrop"
@@ -268,7 +281,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/nameSongPl"
+                        android:id="@+id/nameSongNext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lửng lơ"
@@ -276,7 +289,7 @@
                         android:textSize="20dp" />
 
                     <TextView
-                        android:id="@+id/artistSongPl"
+                        android:id="@+id/artistSongNext"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginTop="2dp"

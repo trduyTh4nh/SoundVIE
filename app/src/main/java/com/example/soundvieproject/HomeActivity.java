@@ -43,6 +43,12 @@ public class HomeActivity extends AppCompatActivity {
     LinearLayout changeToMusic;
 
     Media currentMedia;
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     @SuppressLint({"WrongViewCast", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +68,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Song currentSong = currentMedia.getCurrentSong();
+                int currentPoint = currentMedia.getPlayer().getCurrentPosition();
                 Log.d("Current Song", currentSong.toString());
 
                 Intent i = new Intent(HomeActivity.this, PlayingMusicActivity.class);
                 Bundle bundle = new Bundle();
+
+                bundle.putInt("currentPoint", currentPoint);
                 bundle.putString("IdSongClicked", String.valueOf(currentSong.getId()));
                 bundle.putString("ImgCover", currentSong.getImgCover());
                 i.putExtras(bundle);

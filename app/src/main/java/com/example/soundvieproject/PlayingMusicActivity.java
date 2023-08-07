@@ -3,8 +3,10 @@ package com.example.soundvieproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.ThumbnailImageViewTarget;
 import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.media.MediaPlayerUtils;
@@ -27,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import org.bson.types.ObjectId;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Locale;
 
 import io.realm.mongodb.App;
@@ -45,9 +50,9 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
     Media media;
 
-    ImageView imgCover;
-    TextView nameSong;
-    TextView nameArtist;
+    ImageView imgCover, imgCoverNext;
+    TextView nameSong, nameSongNext;
+    TextView nameArtist, nameAritstNext;
 
 
     FirebaseStorage storage;
@@ -60,6 +65,46 @@ public class PlayingMusicActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable runnable;
 
+    @SuppressLint("SetTextI18n")
+    private void refreshData(Song songPlaying){
+
+        songPlaying = media.getCurrentSong();
+        nameSong.setText(songPlaying.getNameSong());
+        StorageReference ref = storage.getReference("images/"+songPlaying.getImgCover());
+        Glide.with(this).load(ref).into(imgCover);
+        helper.getArtitsbyIDSongPlaying(result1 -> {
+            if(result1.isSuccess()){
+                ArtistInSong artistOfSongPlaying = result1.get();
+                if(artistOfSongPlaying == null){
+                    nameArtist.setText("null");
+                }
+                else {
+                    Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                    helper.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                        @Override
+                        public void onResult(App.Result<User> kq) {
+                            User artist = kq.get();
+                            nameArtist.setText(artist.getName());
+                        }
+                    });
+                }
+            }
+
+
+        }, String.valueOf(songPlaying.getId()));
+
+        media.getPlayer().setOnPreparedListener(mp -> {
+            int totalDuration = mp.getDuration();
+            tvTimeTotal.setText(formatTime(totalDuration));
+            seekBar.setMax(totalDuration);
+            int currentPosition = 0;
+            media.getPlayer().seekTo(currentPosition);
+            seekBar.setProgress(currentPosition);
+            media.start();
+            updateSeekBarProgress();
+        });
+
+    }
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +123,20 @@ public class PlayingMusicActivity extends AppCompatActivity {
         imgCover = findViewById(R.id.imgCover);
         nameSong = findViewById(R.id.nameSong);
         nameArtist = findViewById(R.id.nameArtist);
+
+        nameSongNext = findViewById(R.id.nameSongNext);
+        nameAritstNext = findViewById(R.id.artistSongNext);
+        imgCoverNext = findViewById(R.id.imgSongNext);
+
         Bundle data = getIntent().getExtras();
         String idSongStransfered = data.getString("IdSongClicked");
         String ImgCoverCur = data.getString("ImgCover");
         btnBack = findViewById(R.id.btnBack);
         storage = FirebaseStorage.getInstance();
+
+        media = Media.INSTANCE;
+
+
 
 
        // Log.d("Song is playing: ", songPlaying.toString());
@@ -166,10 +220,129 @@ public class PlayingMusicActivity extends AppCompatActivity {
                         int totalDuration = mp.getDuration();
                         tvTimeTotal.setText(formatTime(totalDuration));
                         seekBar.setMax(totalDuration);
-
+                        int currentPosition = data.getInt("currentPoint");
+                        media.getPlayer().seekTo(currentPosition);
+                        seekBar.setProgress(currentPosition);
+                        media.start();
 
                         updateSeekBarProgress();
                     });
+
+                    btnleft.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            try {
+                                if(!media.playPrevSong()){
+                                   btnleft.setEnabled(true);
+                                }
+                                Song songPrev = media.getPrevSong();
+
+                                if(songPrev != null){
+                                    nameSongNext.setText(songPrev.getNameSong());
+
+                                    helper.getArtitsbyIDSongPlaying(result1 -> {
+                                        if(result1.isSuccess()){
+                                            ArtistInSong artistOfSongPlaying = result1.get();
+                                            if(artistOfSongPlaying == null){
+                                                nameAritstNext.setText("null");
+                                            }
+                                            else {
+                                                Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                                helper.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                                    @Override
+                                                    public void onResult(App.Result<User> kq) {
+                                                        User artist = kq.get();
+                                                        nameAritstNext.setText(artist.getName());
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                    }, String.valueOf(songPrev.getId()));
+
+                                    StorageReference reference = storage.getReference("images/"+ songPrev.getImgCover());
+                                    Glide.with(PlayingMusicActivity.this).load(reference).into(imgCoverNext);
+
+//                                    media.setCurrentSong(songPrev);
+                                }
+                                Song currentSong  = media.getCurrentSong();
+                                refreshData(currentSong);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+
+                    btnright.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                if(!media.playNextSong()){
+                                  btnright.setEnabled(true);
+                                }
+
+                                Song songNext = media.getNextSong();
+                                if(songNext != null){
+                                    nameSongNext.setText(songNext.getNameSong());
+                                    helper.getArtitsbyIDSongPlaying(result1 -> {
+                                        if(result1.isSuccess()){
+                                            ArtistInSong artistOfSongPlaying = result1.get();
+                                            if(artistOfSongPlaying == null){
+                                                nameAritstNext.setText("null");
+                                            }
+                                            else {
+                                                Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                                helper.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                                    @Override
+                                                    public void onResult(App.Result<User> kq) {
+                                                        User artist = kq.get();
+                                                        nameAritstNext.setText(artist.getName());
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                    }, String.valueOf(songNext.getId()));
+
+                                    StorageReference reference = storage.getReference("images/"+ songNext.getImgCover());
+                                    Glide.with(PlayingMusicActivity.this).load(reference).into(imgCoverNext);
+                                    //media.setCurrentSong(songNext);
+                                }
+
+                                Song s = media.getCurrentSong();
+                                refreshData(s);
+
+
+
+
+
+
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                        }
+                    });
+
+
+                    btnrandom.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Log.d("Clicked","Random");
+                            int currentPosition = data.getInt("currentPoint");
+                            if(media.getPlayer().getCurrentPosition() == currentPosition)
+                            {
+                                try {
+                                    media.randomSong();
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }
+                        }
+                    });
+
+
                     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                         @Override
                         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -214,9 +387,13 @@ public class PlayingMusicActivity extends AppCompatActivity {
         return String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+    }
 
-//    private String millisecondToString(int millisecond) {
+    //    private String millisecondToString(int millisecond) {
 //        long sec = millisecond / 1000;
 //        long min = sec / 60;
 //        sec = sec % 60;

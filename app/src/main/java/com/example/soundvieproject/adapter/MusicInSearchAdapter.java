@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.soundvieproject.R;
+import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.model.Song;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,6 +41,7 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
     public interface OnItemsClickListener{
         void OnItemClick(Song song) throws IOException;
     }
+    Media media = Media.INSTANCE;
     private SongAdapter.OnItemsClickListener listener = null;
     public void setItemClickListener(SongAdapter.OnItemsClickListener listener){
         this.listener = listener;
@@ -87,7 +89,9 @@ public class MusicInSearchAdapter extends RecyclerView.Adapter<MusicInSearchAdap
         songWidth.setOnClickListener(v -> {
             if(listener != null){
                 try {
-                    listener.OnItemClick(song);
+                    listener.OnItemClick(song, position);
+
+
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
