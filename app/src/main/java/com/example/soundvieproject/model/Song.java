@@ -23,6 +23,18 @@ public class Song extends RealmObject {
     private String artist;
     private int luotnghe;
     public Song(){}
+
+    public Song(ObjectId id, String nameSong, String imgCover, String stateData, String lyrics, String song, String artist, int luotnghe) {
+        this.id = id;
+        this.nameSong = nameSong;
+        this.imgCover = imgCover;
+        this.stateData = stateData;
+        this.lyrics = lyrics;
+        this.song = song;
+        this.artist = artist;
+        this.luotnghe = luotnghe;
+    }
+
     //có lượt nghe
     public Song(ObjectId id, String nameSong, String imgCover, String stateData, String lyrics, String song, int luotnghe) {
         this.id = id;

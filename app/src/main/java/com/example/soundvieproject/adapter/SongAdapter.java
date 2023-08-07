@@ -72,25 +72,7 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         Glide.with(context).load(ref).into(imgSong);
         nameSong.setText(song.getNameSong());
         ArrayList<String> artists = new ArrayList<>();
-        h.getSongArtists(song.getId(), t -> {
-            if(t.isSuccess()){
-                MongoCursor<ArtistInSong> cur = t.get();
-                while (cur.hasNext()){
-                    ArtistInSong ar = cur.next();
-                    h.getUserByObjID(ar.getIdUser(), t1 -> {
-                        if(t1.isSuccess()){
-                            User u = t1.get();
-                            artists.add(u.getName());
-                            nameArtist.setText(String.join(", ", artists));
-                        }
-                    });
-                }
-
-            }else {
-                Toast.makeText(context, "Lỗi: "+ t.getError().getErrorType(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        nameArtist.setText(song.getArtist());
         Log.d("Debug", String.format("%s, %s", song.getNameSong(), song.getArtist()));
         imgSong.setOnClickListener(v -> {
             if(listener != null){
@@ -107,7 +89,7 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
      TextView nameArtist;
     @Override
     public int getItemCount() {
-        return songs.size();
+        return songs.size() > 5 ? 5 : songs.size();
     }
 
     public  class ViewHolder extends RecyclerView.ViewHolder {
