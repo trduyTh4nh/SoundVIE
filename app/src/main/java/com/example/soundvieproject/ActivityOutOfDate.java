@@ -32,6 +32,11 @@ public class ActivityOutOfDate extends AppCompatActivity {
     Payment p;
 
     @Override
+    public void onBackPressed() {
+        return;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_out_of_date);
@@ -44,14 +49,30 @@ public class ActivityOutOfDate extends AppCompatActivity {
         String idUserSigned = getData.getString("idUserSignedPayment");
 
         btnRenew.setOnClickListener(v -> {
-            h.updatePayment(idUserSigned, result -> {
-                if(result.isSuccess()){
-                    Log.d("Update payment", "Thành công");
-                    finish();
+//            h.updatePayment(idUserSigned, result -> {
+//                if(result.isSuccess()){
+//                    Log.d("Update payment", "Thành công");
+//
+//                }
+//                else
+//                    Log.d("Update payment", "Thất bại");
+//            });
+
+            Intent i = new Intent(this, VisaActivity.class);
+            h.getPayment(new App.Callback<Payment>() {
+                @Override
+                public void onResult(App.Result<Payment> result) {
+                    Bundle signal = new Bundle();
+                    signal.putString("callback", "update");
+                    signal.putString("_id", result.get().getIdGoi().toString());
+                    signal.putString("method", "VISA");
+                    i.putExtras(signal);
+                    i.putExtras(signal);
+                    startActivity(i);
                 }
-                else
-                    Log.d("Update payment", "Thất bại");
             });
+
+
         });
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +154,8 @@ public class ActivityOutOfDate extends AppCompatActivity {
             public void onClick(View v) {
                 h.removePremium(idUser, result -> {
                     if (result.isSuccess()) {
+                        Intent i = new Intent(ActivityOutOfDate.this, HomeActivity.class);
+                        startActivity(i);
                         Toast.makeText(ActivityOutOfDate.this, "Hủy thành công!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ActivityOutOfDate.this, "Lỗi hủy gói premium", Toast.LENGTH_SHORT).show();

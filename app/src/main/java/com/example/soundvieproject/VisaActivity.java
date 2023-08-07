@@ -19,6 +19,7 @@ import java.text.DecimalFormat;
 
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.result.InsertOneResult;
+import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class VisaActivity extends AppCompatActivity {
     TextView premiumType;
@@ -40,6 +41,8 @@ public class VisaActivity extends AppCompatActivity {
         tvCost = findViewById(R.id.tvCost);
         btnContinue = findViewById(R.id.btnContinue);
         String premid = b.getString("_id");
+        String callback = b.getString("callback");
+
 
         h.getPremium(premid, new App.Callback<Premium>() {
             @Override
@@ -56,16 +59,28 @@ public class VisaActivity extends AppCompatActivity {
             }
         });
         btnContinue.setOnClickListener(v -> {
-            h.insertPayment(new ObjectId(premid), "VISA", new App.Callback<InsertOneResult>() {
-                @Override
-                public void onResult(App.Result<InsertOneResult> result) {
-                    if(result.isSuccess()){
-                        Toast.makeText(VisaActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(VisaActivity.this, HomeActivity.class);
-                        startActivity(i);
+            if(callback != null){
+                h.updatePayment(h.getUser().getId(), new App.Callback<UpdateResult>() {
+                    @Override
+                    public void onResult(App.Result<UpdateResult> result) {
+                        if(result.isSuccess()){
+                            Toast.makeText(VisaActivity.this, "Làm mới thành công", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(VisaActivity.this, HomeActivity.class);
+                            startActivity(i);
+                        }
                     }
-                }
-            });
+                });
+            } else
+                h.insertPayment(new ObjectId(premid), "VISA", new App.Callback<InsertOneResult>() {
+                    @Override
+                    public void onResult(App.Result<InsertOneResult> result) {
+                        if(result.isSuccess()){
+                            Toast.makeText(VisaActivity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(VisaActivity.this, HomeActivity.class);
+                            startActivity(i);
+                        }
+                    }
+                });
         });
     }
 }

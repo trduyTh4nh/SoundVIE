@@ -31,7 +31,9 @@ import com.example.soundvieproject.R;
 import com.example.soundvieproject.adapter.SongAdapter;
 import com.example.soundvieproject.media.Media;
 import com.example.soundvieproject.media.MediaPlayerUtils;
+import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Song;
+import com.example.soundvieproject.model.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -41,6 +43,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import io.realm.RealmList;
+import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 
@@ -102,7 +105,47 @@ public class HomeFragment extends Fragment {
         list(view);
 
 
+
+
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Song songCurrent = media.getCurrentSong();
+        if(songCurrent != null){
+            StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
+            StorageReference ref = help.getStorage().getReference("images/" + songCurrent.getImgCover());
+            Glide.with(getActivity()).load(ref).into(img_song);
+
+            song_name.setText(songCurrent.getNameSong());
+
+
+            instance.getArtitsbyIDSongPlaying(result1 -> {
+                if(result1.isSuccess()){
+                    ArtistInSong artistOfSongPlaying = result1.get();
+                    if(artistOfSongPlaying == null){
+                        artist.setText("null");
+                    }
+                    else {
+                        Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                        instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                            @Override
+                            public void onResult(App.Result<User> kq) {
+                                User artists = kq.get();
+                                artist.setText(artists.getName());
+                            }
+                        });
+                    }
+                }
+
+            }, String.valueOf(songCurrent.getId()));
+            artist.setText(songCurrent.getArtist());
+
+
+        }
+    }
+
     public void list(View view){
         list = new ArrayList<>();
         instance.getSong(t -> {
@@ -131,20 +174,62 @@ public class HomeFragment extends Fragment {
                 b.setVisibility(View.GONE);
                 adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
                     @Override
-                    public void OnItemClick(Song song) throws IOException {
+                    public void OnItemClick(Song song, int index) throws IOException {
                         if(media.getPlayer().isPlaying()){
                             media.getPlayer().stop();
                             media.setPlayer(new MediaPlayer());
                         }
                         media.setContext(getActivity().getApplicationContext());
-                        media.playMusic(song);
+                        /// xử lý truyền dũ liệu bài hát
+
+                        media.playMusicInPlaylist(list, index);
+                        media.setCurrentSong(song);
+
+
+//                        media.setNextSong(list.get(index++));
+
+//                        int k = index;
+//
+//                        if((index + 1) <= list.size() - 1){
+//                            Song nextSong = list.get(k++);
+//                            media.setNextSong(nextSong);
+//                        }
+//
+//                        if((index - 1) >= 0){
+//                            Song prevSong = list.get(k--);
+//                            media.setPrevSong(prevSong);
+//                        }
+
 
                         btnResume.setVisibility(View.GONE);
                         btnPause.setVisibility(View.VISIBLE);
                         currentSong.setVisibility(View.VISIBLE);
+
+
                         //img_song.setImageResource(song.getImgCover());
                         song_name.setText(song.getNameSong());
+                        instance.getArtitsbyIDSongPlaying(result1 -> {
+                            if(result1.isSuccess()){
+                                ArtistInSong artistOfSongPlaying = result1.get();
+                                if(artistOfSongPlaying == null){
+                                    artist.setText("null");
+                                }
+                                else {
+                                    Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                    instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                        @Override
+                                        public void onResult(App.Result<User> kq) {
+                                            User artists = kq.get();
+                                            artist.setText(artists.getName());
+                                        }
+                                    });
+                                }
+                            }
+
+                        }, String.valueOf(song.getId()));
                         artist.setText(song.getArtist());
+
+
                         btnPause.setOnClickListener(v -> {
                             btnPause.setVisibility(View.GONE);
                             btnResume.setVisibility(View.VISIBLE);
@@ -155,9 +240,11 @@ public class HomeFragment extends Fragment {
                             btnPause.setVisibility(View.VISIBLE);
                             media.start();
                         });
+
                         StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
                         StorageReference ref = help.getStorage().getReference("images/" + song.getImgCover());
                         Glide.with(getActivity()).load(ref).into(img_song);
+
                     }
                 });
             } else {

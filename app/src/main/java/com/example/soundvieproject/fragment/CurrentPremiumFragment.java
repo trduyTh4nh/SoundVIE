@@ -74,7 +74,7 @@ public class CurrentPremiumFragment extends Fragment {
         tvPremiumPlan = view.findViewById(R.id.tvPremiumPlan);
         tvPremiumPrice = view.findViewById(R.id.tvPremiumPrice);
         tvExpire = view.findViewById(R.id.tvPremiumExpire);
-        btnCancel = view.findViewById(R.id.btnCancelPremium);
+        btnCancel = view.findViewById(R.id.btnCancel);
 
         h.getPayment(result -> {
             if(result.isSuccess()){
@@ -82,15 +82,14 @@ public class CurrentPremiumFragment extends Fragment {
 
                 Date payDate = payment.getNgayTT();
                 Calendar calendarTT = Calendar.getInstance();
-                calendarTT.setTime(payDate);
 
                 long payMilisecond = calendarTT.getTimeInMillis();
 
                 Calendar nextMonth = Calendar.getInstance();
-                nextMonth.setTime(calendarTT.getTime());
+                nextMonth.setTime(payDate);
                 nextMonth.add(Calendar.MONTH, 1);
 
-                long millisecondsInOneMonth = -(nextMonth.getTimeInMillis() - calendarTT.getTimeInMillis());
+                long millisecondsInOneMonth = (nextMonth.getTimeInMillis() - calendarTT.getTimeInMillis());
 
                 Log.d("Thời gian tháng sau", String.valueOf(millisecondsInOneMonth));
 

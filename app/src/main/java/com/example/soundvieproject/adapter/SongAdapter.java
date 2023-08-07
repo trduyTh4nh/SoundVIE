@@ -31,7 +31,7 @@ import io.realm.mongodb.mongo.iterable.MongoCursor;
 
 public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public interface OnItemsClickListener{
-        void OnItemClick(Song song) throws IOException;
+        void OnItemClick(Song song, int index) throws IOException;
     }
 
     @Override
@@ -95,7 +95,7 @@ public class SongAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         imgSong.setOnClickListener(v -> {
             if(listener != null){
                 try {
-                    listener.OnItemClick(song);
+                    listener.OnItemClick(song, position);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
