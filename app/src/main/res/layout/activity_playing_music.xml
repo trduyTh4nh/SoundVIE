@@ -11,7 +11,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar_main"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="60dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +78,7 @@
         android:orientation="vertical">
 
         <ImageView
+            android:scaleType="centerCrop"
             android:id="@+id/imgCover"
             android:layout_width="360dp"
             android:layout_height="360dp"
@@ -92,7 +93,7 @@
             android:layout_marginTop="15dp"
             android:text="Chơi vơi"
             android:textColor="@color/white"
-            android:textSize="35dp"
+            android:textSize="32dp"
             android:textStyle="bold">
 
         </TextView>
@@ -123,12 +124,14 @@
                 android:textColor="@color/white">
             </TextView>
 
-                <SeekBar
-                    android:id="@+id/seekbar"
-                    android:layout_width="320dp"
-                    android:layout_height="match_parent">
-                </SeekBar>
 
+            <SeekBar
+                android:thumb="@drawable/custom_thumb"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/seekbar"
+                android:layout_width="310dp"
+                android:layout_height="match_parent">
+            </SeekBar>
 
             <TextView
                 android:id="@+id/tvTimeTotal"
@@ -248,6 +251,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/lnNextSong"
             android:layout_width="400dp"
             android:layout_height="100dp"
             android:layout_marginTop="28dp"
@@ -270,10 +274,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingTop="5dp">
+                android:gravity="center_vertical"
+                android:paddingStart="5dp">
 
                 <LinearLayout
                     android:layout_width="180dp"
@@ -301,7 +303,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_gravity="center_vertical"
                     android:paddingLeft="2dp">
 
                     <ImageView

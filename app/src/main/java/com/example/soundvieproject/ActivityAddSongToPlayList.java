@@ -97,9 +97,7 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
         edtSearchSongtoAdd.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 helper.getSongWhenSearch(result -> {
@@ -124,12 +122,11 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
 
 
-       // Hup();
+        //Hup();
 
         Bundle b = getIntent().getExtras();
 
@@ -190,44 +187,57 @@ public class ActivityAddSongToPlayList extends AppCompatActivity {
 //                rvSongInSearch.setLayoutManager(layoutManager);
 //                rvSongInSearch.setAdapter(adapter);
 //
-////                adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
-////                    @Override
-////                    public void OnItemClick(Song song) throws IOException {
-////                        if (media.getPlayer().isPlaying()) {
-////                            media.getPlayer().stop();
-////                            media.setPlayer(new MediaPlayer());
-////                        }
-////                        media.setContext(ActivityAddSongToPlayList.this);
-////                        media.playMusic(song);
-////
-////                        btnResume.setVisibility(View.GONE);
-////                        btnPause.setVisibility(View.VISIBLE);
-////                        currentSong.setVisibility(View.VISIBLE);
-////                        //img_song.setImageResource(song.getImgCover());
-////                        song_name.setText(song.getNameSong());
-////                        artist.setText(song.getArtist());
-////
-////                        StorageReference sto = firebaseStorage.getReference("images/" + song.getImgCover());
-////                        Glide.with(ActivityAddSongToPlayList.this).load(sto).into(img_song);
-////
-////                        btnPause.setOnClickListener(v -> {
-////                            btnPause.setVisibility(View.GONE);
-////                            btnResume.setVisibility(View.VISIBLE);
-////                            media.pause();
-////                        });
-////                        btnResume.setOnClickListener(v -> {
-////                            btnResume.setVisibility(View.GONE);
-////                            btnPause.setVisibility(View.VISIBLE);
-////                            media.start();
-////                        });
-////                    }
-////                });
+//                adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
+//                    @Override
+//                    public void OnItemClick(Song song, int index) throws IOException {
+//                        if (media.getPlayer().isPlaying()) {
+//                            media.getPlayer().stop();
+//                            media.setPlayer(new MediaPlayer());
+//                        }
+//                        else {
+//
+//                            media.getPlayer().stop();
+//                            media.setPlayer(new MediaPlayer());
+//                        }
+//                        media.setContext(ActivityAddSongToPlayList.this);
+//                        media.playMusic(song);
+//                        btnResume.setVisibility(View.GONE);
+//                        btnPause.setVisibility(View.VISIBLE);
+//                        currentSong.setVisibility(View.VISIBLE);
+//                        //img_song.setImageResource(song.getImgCover());
+//                        song_name.setText(song.getNameSong());
+//                        artist.setText(song.getArtist());
+//
+//                        StorageReference sto = firebaseStorage.getReference("images/" + song.getImgCover());
+//                        Glide.with(ActivityAddSongToPlayList.this).load(sto).into(img_song);
+//
+//                        btnPause.setOnClickListener(v -> {
+//                            btnPause.setVisibility(View.GONE);
+//                            btnResume.setVisibility(View.VISIBLE);
+//                            media.pause();
+//                        });
+//                        btnResume.setOnClickListener(v -> {
+//                            btnResume.setVisibility(View.GONE);
+//                            btnPause.setVisibility(View.VISIBLE);
+//                            media.start();
+//                        });
+//                    }
+//
+//
+//                });
 //
 //            } else {
 //                Toast.makeText(this, "Không thể lấy bài hát", Toast.LENGTH_SHORT).show();
 //            }
 //        });
 //    }
+
+    @Override
+    protected void onPause() {
+        if(media.getPlayer().isPlaying())
+            media.setPlayer(null);
+        super.onPause();
+    }
 
     private void ShowPopUp() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

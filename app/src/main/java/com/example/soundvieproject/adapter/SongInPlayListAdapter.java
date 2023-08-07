@@ -57,7 +57,7 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
     private OnItemsClickListener listener = null;
 
     public interface OnItemsClickListener {
-        void OnItemClick(Song song) throws IOException;
+        void OnItemClick(Song song, int pos) throws IOException;
     }
     public interface OnDeleteListener{
         void OnDelete(Song song, View v, int pos) throws IOException;
@@ -92,7 +92,7 @@ public class SongInPlayListAdapter extends RecyclerView.Adapter<SongInPlayListAd
         llplay.setOnClickListener(v -> {
             if (listener != null) {
                 try {
-                    listener.OnItemClick(song);
+                    listener.OnItemClick(song, position);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

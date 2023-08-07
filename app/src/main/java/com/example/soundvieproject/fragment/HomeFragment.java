@@ -141,8 +141,6 @@ public class HomeFragment extends Fragment {
 
             }, String.valueOf(songCurrent.getId()));
             artist.setText(songCurrent.getArtist());
-
-
         }
     }
 
@@ -184,7 +182,6 @@ public class HomeFragment extends Fragment {
 
                         media.playMusicInPlaylist(list, index);
                         media.setCurrentSong(song);
-
 
 //                        media.setNextSong(list.get(index++));
 
