@@ -120,7 +120,6 @@ public class AddAlbumActivity extends AppCompatActivity {
                                             sAdap.setCheckList(checkList);
                                             sAdap.notifyItemInserted(songListDialog.size() - 1);
                                             //adap.notifyItemInserted(songs.size() - 1);
-                                            Log.d("CC2", s.toString());
                                         }
 
 
@@ -144,8 +143,13 @@ public class AddAlbumActivity extends AppCompatActivity {
                 for(int i = 0; i < checkList.length; i++){
                     Log.d("state", checkList[i] ? "true" : "false");
                     if(checkList[i]){
-                        songListMain.add(songListDialog.get(i));
-                        adap.notifyItemInserted(songListDialog.size() - 1);
+                        if(isTrung(songListDialog.get(i))){
+                            continue;
+                        }
+                            songListMain.add(songListDialog.get(i));
+                            adap.notifyItemInserted(songListDialog.size() - 1);
+
+
                     }
 
                 }
@@ -157,10 +161,20 @@ public class AddAlbumActivity extends AppCompatActivity {
 
         });
         btnPostAlbum.setOnClickListener(v -> {
+            if(edtDescAlbum.getText().toString().equals("") || edtNameAlbum.getText().toString().equals("")){
+                AlertDialog.Builder b = new AlertDialog.Builder(AddAlbumActivity.this);
+                b.setTitle("Không có đủ thông tin");
+                b.setMessage("Cần nhập đủ thông tin (Tên, Mô tả).");
+                b.setPositiveButton("Đã rõ", null);
+                b.create().show();
+                return;
+            }
+            songListMain = adap.getSongs();
             if(songListMain.size() == 0){
                 AlertDialog.Builder b = new AlertDialog.Builder(AddAlbumActivity.this);
                 b.setTitle("Không có đủ bài hát");
                 b.setMessage("Số bài hát cần để tạo Album là trên 1 bài hát.");
+                b.setPositiveButton("Đã rõ", null);
                 b.create().show();
                 return;
             }
@@ -169,6 +183,7 @@ public class AddAlbumActivity extends AppCompatActivity {
             ObjectId id = new ObjectId();
             String randName = id.toString();
             StorageReference ref;
+
             ref = sto.getStorage().getReference("images/" + randName);
             ref.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -201,7 +216,14 @@ public class AddAlbumActivity extends AppCompatActivity {
             });
         });
     }
-
+    private boolean isTrung(Song s){
+        for(Song ss : songListMain){
+            if(s.getId().toString().equals(ss.getId().toString())){
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

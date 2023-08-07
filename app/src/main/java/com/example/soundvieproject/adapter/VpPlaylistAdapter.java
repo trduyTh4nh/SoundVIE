@@ -6,14 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.ArtistInSong;
+import com.example.soundvieproject.model.Playlist;
 import com.example.soundvieproject.model.Song;
 
 import java.util.ArrayList;
@@ -27,9 +30,11 @@ public class VpPlaylistAdapter extends RecyclerView.Adapter<VpPlaylistAdapter.Vi
     ProgressBar bar;
     Helper h = Helper.INSTANCE;
     ArrayList<Song> arrSong;
+    ArrayList<Playlist> arrPlaylist;
     public VpPlaylistAdapter(Context context, ArrayList<Song> arrSong) {
         this.context = context;
         this.arrSong = arrSong;
+        arrPlaylist = new ArrayList<>();
     }
     @NonNull
     @Override
@@ -70,7 +75,27 @@ public class VpPlaylistAdapter extends RecyclerView.Adapter<VpPlaylistAdapter.Vi
                 }
             });
         } else {
+            Log.d("Page", "2");
 
+            h.getAlbumByUser(new App.Callback<MongoCursor<Playlist>>() {
+                @Override
+                public void onResult(App.Result<MongoCursor<Playlist>> result) {
+                    if (result.isSuccess()){
+                        MongoCursor<Playlist> res = result.get();
+                        while (res.hasNext()){
+                            Playlist p = res.next();
+                            arrPlaylist.add(p);
+                            Log.d("Album", p.toString());
+                        }
+                        AlbumLinearLayoutAdapter adap1 = new AlbumLinearLayoutAdapter(arrPlaylist, context);
+                        rcvViewPager.setAdapter(adap1);
+                        LinearLayoutManager l = new LinearLayoutManager(context);
+                        rcvViewPager.setLayoutManager(l);
+                    } else {
+                        Toast.makeText(context, "Error: " + result.getError().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 

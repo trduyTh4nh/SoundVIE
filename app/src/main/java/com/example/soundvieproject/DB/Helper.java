@@ -198,15 +198,9 @@ public class Helper {
         });
     }
 
-    public void addPlaylist(Playlist playl) {
+    public void addPlaylist(Playlist playl, App.Callback<InsertOneResult> callback) {
         MongoCollection<Playlist> playlist = db.getCollection("Playlist", Playlist.class).withCodecRegistry(pojoCodecRegistry);
-        playlist.insertOne(playl).getAsync(result -> {
-            if (result.isSuccess()) {
-                Log.d("Insert playlist", "Success");
-            } else {
-                Log.d("Insert playlist", "Failed because: " + result.getError());
-            }
-        });
+        playlist.insertOne(playl).getAsync(callback);
     }
 
 

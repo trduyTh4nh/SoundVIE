@@ -52,12 +52,18 @@ public class ListSongFragment extends Fragment {
         Log.d("Hello", "hello");
         return inflater.inflate(R.layout.fragment_list_song, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getPlaylists();
+    }
+
     RecyclerView rcvList;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         rcvList = view.findViewById(R.id.rcvPlayList);
         super.onViewCreated(view, savedInstanceState);
-        getPlaylists();
     }
     public void getPlaylists(){
         arrayPlayList = new ArrayList<>();

@@ -80,7 +80,9 @@ public class AddPlaylistActivity extends AppCompatActivity {
                     public void onResult(App.Result<com.example.soundvieproject.model.User> result) {
                         if(result.isSuccess()){
                             user = result.get().getIdUser();
-                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user, desPL));
+                            instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user, desPL), tsk -> {
+
+                            });
                         }
                     }
                 });
@@ -126,12 +128,13 @@ public class AddPlaylistActivity extends AppCompatActivity {
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AddPlaylistActivity.this, "Success upload image playlist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPlaylistActivity.this, "Thêm danh sách phát thành công.", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(AddPlaylistActivity.this, "Failed upload image playlist", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddPlaylistActivity.this, "Thêm danh sách thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 

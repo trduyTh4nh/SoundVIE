@@ -88,10 +88,10 @@ public class AlbumFragment extends Fragment {
             }
         });
     }
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        rcvAlbum = view.findViewById(R.id.rcvAlbum);
+    public void onResume() {
+        super.onResume();
         albums = new ArrayList<>();
 
         h.getAlbumByUser(new App.Callback<MongoCursor<Playlist>>() {
@@ -111,5 +111,14 @@ public class AlbumFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        rcvAlbum = view.findViewById(R.id.rcvAlbum);
+        albums = new ArrayList<>();
+
+
     }
 }

@@ -20,6 +20,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp">
                 <ImageView
+                    android:scaleType="centerCrop"
                     android:id="@+id/imgPl"
                     android:src="@drawable/img_playlist"
                     android:layout_width="wrap_content"
@@ -149,39 +150,40 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_weight="1"
-                android:layout_marginTop="20dp"
-                android:id="@+id/rv_songsPl"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp">
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_songsPl"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:paddingBottom="85dp"></androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
 
 
 
 
            <LinearLayout
                android:layout_alignParentBottom="true"
-               android:background="@color/black"
+               android:background="@drawable/background_card"
                android:layout_weight="0"
                android:id="@+id/currentSong"
                android:layout_width="match_parent"
-               android:layout_height="90dp"
+               android:layout_height="wrap_content"
                android:visibility="visible"
-               android:padding="15dp"
+               android:padding="10dp"
                android:gravity="center_vertical">
                <ImageView
                    android:id="@+id/img_song"
                    android:layout_width="64dp"
-                   android:src="@drawable/chungtacuahientai"
+                   android:src="@drawable/default_avt"
                    android:layout_height="64dp"
                    android:scaleType="centerCrop"
                    />
@@ -195,7 +197,7 @@
                        android:id="@+id/song_name"
                        android:layout_width="wrap_content"
                        android:layout_height="wrap_content"
-                       android:text="Test"
+                       android:text="Vui lòng chọn bài hát"
                        android:textSize="20dp"
                        android:textStyle="bold"
                        android:textColor="@color/white"/>
