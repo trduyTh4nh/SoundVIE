@@ -10,6 +10,13 @@ import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Song;
 
 import java.io.IOException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Queue;
+import java.util.Random;
+import java.util.Stack;
+
+import kotlinx.coroutines.internal.ArrayQueue;
 
 public class Media {
 
@@ -68,4 +75,47 @@ public class Media {
 
         this.player = player;
     }
+    Queue<Song> q;
+    Stack<Song> st;
+    public void playMusicInPlaylist(ArrayList<Song> s, int index) throws IOException {
+        for(int i = 0; i < s.size(); i++){
+            if(i >= index){
+                q.add(s.get(i));
+            } else {
+                st.push(s.get(i));
+            }
+        }
+        Song sg = q.remove();
+        st = new Stack<>();
+        cur = sg;
+        st.push(sg);
+        playMusic(sg);
+    }
+    Song cur;
+    public boolean playNextSong() throws IOException {
+        if(q.isEmpty()){
+            return false;
+        }
+        Song s = q.remove();
+        cur = s;
+        st.push(s);
+        playMusic(s);
+        return true;
+    }
+    public boolean playPrevSong() throws IOException {
+        if(st.isEmpty()){
+            return false;
+        }
+        q.add(cur);
+        Song s = st.pop();
+        playMusic(s);
+        return true;
+    }
+    public void randomSong() throws IOException {
+        Random r = new Random();
+        ArrayList<Song> arr = new ArrayList<>(q);
+        Song s = arr.get(r.nextInt(arr.size()));
+        playMusic(s);
+    }
+
 }

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.soundvieproject.AddAlbumActivity;
 import com.example.soundvieproject.AddPlaylistActivity;
+import com.example.soundvieproject.AlbumActivity;
 import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Playlist;
@@ -85,7 +88,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, PlaylistActivity.class);
+                Intent i = new Intent(context, AlbumActivity.class);
                 Bundle b = new Bundle();
                 b.putString("namepl", p.getName());
                 b.putString("despl", p.getDes());
@@ -95,6 +98,22 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
                 i.putExtras(b);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
+            }
+        });
+        ll.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                PopupMenu menu = new PopupMenu(context, view);
+                menu.inflate(R.menu.artist_song_menu);
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+
+                        return false;
+                    }
+                });
+                menu.show();
+                return false;
             }
         });
 
