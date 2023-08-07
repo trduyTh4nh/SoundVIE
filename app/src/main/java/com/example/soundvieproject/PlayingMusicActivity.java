@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +60,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
 
     ImageButton btnBack;
    // StorageReference reference;
+    LinearLayout layout;
 
 
 
@@ -111,6 +113,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playing_music);
 
+        layout = findViewById(R.id.lnNextSong);
         btnleft = findViewById(R.id.btnleft);
         btnright = findViewById(R.id.btnRight);
         bntplay = findViewById(R.id.btnplay);
@@ -313,15 +316,55 @@ public class PlayingMusicActivity extends AppCompatActivity {
                                 Song s = media.getCurrentSong();
                                 refreshData(s);
 
-
-
-
-
-
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
 
+                        }
+                    });
+
+                    layout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                if(!media.playNextSong()){
+                                    btnright.setEnabled(true);
+                                }
+
+                                Song songNext = media.getNextSong();
+                                if(songNext != null){
+                                    nameSongNext.setText(songNext.getNameSong());
+                                    helper.getArtitsbyIDSongPlaying(result1 -> {
+                                        if(result1.isSuccess()){
+                                            ArtistInSong artistOfSongPlaying = result1.get();
+                                            if(artistOfSongPlaying == null){
+                                                nameAritstNext.setText("null");
+                                            }
+                                            else {
+                                                Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                                helper.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                                    @Override
+                                                    public void onResult(App.Result<User> kq) {
+                                                        User artist = kq.get();
+                                                        nameAritstNext.setText(artist.getName());
+                                                    }
+                                                });
+                                            }
+                                        }
+
+                                    }, String.valueOf(songNext.getId()));
+
+                                    StorageReference reference = storage.getReference("images/"+ songNext.getImgCover());
+                                    Glide.with(PlayingMusicActivity.this).load(reference).into(imgCoverNext);
+                                    //media.setCurrentSong(songNext);
+                                }
+
+                                Song s = media.getCurrentSong();
+                                refreshData(s);
+
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
 

@@ -26,11 +26,7 @@ import java.util.Random;
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListSongFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ListSongFragment extends Fragment {
 
 

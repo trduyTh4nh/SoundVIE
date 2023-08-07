@@ -170,7 +170,7 @@
 
            <LinearLayout
                android:layout_alignParentBottom="true"
-               android:background="@color/backgroundBox"
+               android:background="@color/black"
                android:layout_weight="0"
                android:id="@+id/currentSong"
                android:layout_width="match_parent"

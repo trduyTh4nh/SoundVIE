@@ -98,6 +98,7 @@ public class PlaylistActivity extends AppCompatActivity {
         media = Media.INSTANCE;
 
 
+
         Bundle b = getIntent().getExtras();
         String imgResource = b.getString("image");
         String namePl = b.getString("namepl");
@@ -226,13 +227,33 @@ public class PlaylistActivity extends AppCompatActivity {
 
                             adapter.setItemClickListener(new SongInPlayListAdapter.OnItemsClickListener() {
                                 @Override
-                                public void OnItemClick(Song song) throws IOException {
+                                public void OnItemClick(Song song, int pos) throws IOException {
                                     if (media.getPlayer().isPlaying()) {
                                         media.getPlayer().stop();
                                         media.setPlayer(new MediaPlayer());
                                     }
                                     media.setContext(PlaylistActivity.this);
                                     media.playMusic(song);
+
+                                    currentSong.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent i = new Intent(PlaylistActivity.this, PlayingMusicActivity.class);
+                                            Bundle data = new Bundle();
+
+                                            data.putString("IdSongClicked", String.valueOf(song.getId()));
+                                            data.putString("ImgCover", song.getImgCover());
+                                            i.putExtras(data);
+                                            startActivity(i);
+
+
+                                            try {
+                                                media.playMusicInPlaylist(songinPlayLists, pos);
+                                            } catch (IOException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }
+                                    });
 
                                     btnResume.setVisibility(View.GONE);
                                     btnPause.setVisibility(View.VISIBLE);
@@ -328,5 +349,12 @@ public class PlaylistActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        adapter.notifyDataSetChanged();
     }
 }
