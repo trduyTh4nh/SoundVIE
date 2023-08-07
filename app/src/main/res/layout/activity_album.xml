@@ -1,9 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AlbumActivity">
+    tools:context=".AlbumActivity"
+    android:orientation="vertical"
+    android:background="@drawable/artist_home_bg">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarNormal3"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="20dp">
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/arrow_left_line"
+                android:background="@drawable/transparent_ripple"
+                android:padding="10dp"
+                android:tint="@color/black"
+                tools:ignore="UseAppTint" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Album"
+                android:textColor="@color/black"
+                android:textSize="23dp"
+                android:textStyle="bold">
+
+            </TextView>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|end">
+
+
+                <ImageButton
+                    style="@style/imageBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
+                    android:padding="10dp"
+                    android:src="@drawable/icon_setting_black"></ImageButton>
+
+                <ProgressBar
+                    android:id="@+id/loadingProgress"
+                    android:layout_width="23dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="15dp"
+                    android:indeterminateTint="@color/black" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp">
+                <ImageView
+                    android:id="@+id/ivCoverAlbum"
+                    android:src="@drawable/im_lunglo"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"/>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_marginStart="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên Album"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên Album"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="normal"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+            <ImageButton
+                android:id="@+id/addSongAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_circle_line"
+                android:background="@drawable/transparent_ripple"
+                android:padding="10dp"
+                android:tint="@color/black"
+                tools:ignore="UseAppTint" />
+            <ImageButton
+                android:id="@+id/btnEditAlbum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pencil_line"
+                android:background="@drawable/transparent_ripple"
+                android:padding="10dp"
+                android:tint="@color/black"
+                tools:ignore="UseAppTint" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/headphone_line"
+                android:background="@drawable/transparent_ripple"
+                android:padding="10dp"
+                android:tint="@color/black"
+                tools:ignore="UseAppTint" />
+            <TextView
+                android:id="@+id/tvListenCount"
+                android:layout_marginStart="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvSongInAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+</LinearLayout>

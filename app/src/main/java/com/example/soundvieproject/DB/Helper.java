@@ -643,7 +643,22 @@ public class Helper {
         MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         col.insertMany(ss).getAsync(callback);
     }
+    public void getMusicAlbum(ObjectId id, App.Callback<MongoCursor<SongInPlayList>> callback){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        Document docu = new Document("idPlaylist", id);
+        RealmResultTask<MongoCursor<SongInPlayList>> t = col.find(docu).iterator();
+        t.getAsync(callback);
+    }
+    public void getSongInAlbum(ObjectId id, App.Callback<Song> callback){
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        Document docu = new Document("_id", id);
+        col.findOne(docu).getAsync(callback);
+    }
+    public void insertSongSingularInAlbum(SongInPlayList s, App.Callback<InsertOneResult> callback){
+        MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
+        col.insertOne(s).getAsync(callback);
 
+    }
 
 
 }
