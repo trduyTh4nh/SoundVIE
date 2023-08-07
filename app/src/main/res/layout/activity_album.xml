@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AlbumActivity"
-    android:orientation="vertical"
-    android:background="@drawable/artist_home_bg">
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarNormal3"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:gravity="center"
-        tools:ignore="MissingConstraints">
+        android:gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"

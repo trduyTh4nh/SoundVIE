@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.soundvieproject.AddAlbumActivity;
 import com.example.soundvieproject.AddPlaylistActivity;
 import com.example.soundvieproject.AlbumActivity;
+import com.example.soundvieproject.DB.Helper;
 import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Playlist;
@@ -33,6 +35,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
     ImageView ivCover;
     TextView tvTitle, tvDesc;
     Context context;
+    Helper h = Helper.INSTANCE;
     ArrayList<Playlist> pl;
     StorageReference storageReference;
     LinearLayout ll, btnAdd;
@@ -108,7 +111,12 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder>{
                 menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-
+                        h.deleteAlbum(p.getId(), t -> {
+                            if(pl.size() > 0)
+                                pl.remove(p);
+                            Toast.makeText(context, "Xoá thành công danh sách phát " + p.getName(), Toast.LENGTH_SHORT).show();
+                            notifyItemRemoved(holder.getAdapterPosition());
+                        });
                         return false;
                     }
                 });
