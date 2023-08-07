@@ -73,6 +73,7 @@
                 </ImageButton>
 
                 <ImageButton
+                    android:id="@+id/btnDownload"
                     android:background="@color/transparent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

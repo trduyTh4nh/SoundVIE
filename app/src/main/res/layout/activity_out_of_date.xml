@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="Gói Premium hết hạn"
         android:textColor="@color/white"
-        android:textSize="50sp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <TextView
