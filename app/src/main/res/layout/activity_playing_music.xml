@@ -80,8 +80,8 @@
         <ImageView
             android:scaleType="centerCrop"
             android:id="@+id/imgCover"
-            android:layout_width="360dp"
-            android:layout_height="360dp"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
             android:src="@drawable/img_musicplaying">
 
         </ImageView>
@@ -114,7 +114,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
 
             <TextView
                 android:id="@+id/tvTimeCurrent"
@@ -129,7 +131,8 @@
                 android:thumb="@drawable/custom_thumb"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/seekbar"
-                android:layout_width="310dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent">
             </SeekBar>
 
@@ -252,13 +255,15 @@
 
         <LinearLayout
             android:id="@+id/lnNextSong"
-            android:layout_width="400dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:background="@drawable/background_song_picked"
             android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp">
 
@@ -273,14 +278,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingStart="5dp">
 
                 <LinearLayout
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:paddingEnd="16dp">
 
                     <TextView
                         android:id="@+id/nameSongNext"
@@ -301,37 +308,39 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:paddingLeft="2dp">
+                    android:layout_weight="0"
+                    android:gravity="end">
 
-                    <ImageView
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/vector_heart">
+                        android:background="@color/transparent"
 
-                    </ImageView>
+                        android:src="@drawable/heart_line">
 
-                    <ImageView
+                    </ImageButton>
+
+                    <ImageButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginLeft="15dp"
-                        android:src="@drawable/vector_down">
+                        android:background="@color/transparent"
+                        android:src="@drawable/download_2_line"></ImageButton>
 
-                    </ImageView>
-
-                    <ImageView
+                    <ImageButton
+                        android:id="@+id/btnMenuEdit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="0dp"
-                        android:src="@drawable/icon_option">
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="2dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/more_line"></ImageButton>
 
-                    </ImageView>
                 </LinearLayout>
 
             </LinearLayout>
