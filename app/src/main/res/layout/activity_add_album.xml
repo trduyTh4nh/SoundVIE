@@ -41,6 +41,7 @@
                     android:gravity="center_vertical">
 
                     <ImageButton
+                        android:clipToOutline="true"
                         android:id="@+id/btnChooseImage"
                         android:layout_width="128dp"
                         android:layout_height="128dp"

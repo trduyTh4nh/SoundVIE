@@ -24,6 +24,10 @@ public class SongToAlbumAdapter extends RecyclerView.Adapter<SongToAlbumAdapter.
     ArrayList<Song> songs;
     Context context;
 
+    public ArrayList<Song> getSongs() {
+        return songs;
+    }
+
     public SongToAlbumAdapter(ArrayList<Song> songs, Context context) {
         this.songs = songs;
         this.context = context;

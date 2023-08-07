@@ -59,26 +59,14 @@ public class SongArtistFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_song_artist, container, false);
     }
-    Helper h = Helper.INSTANCE;
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        tvSongCount = view.findViewById(R.id.tvSongNum);
-        vpSong = view.findViewById(R.id.vpUser);
-        tlSong = view.findViewById(R.id.tlUser);
-        bar = getActivity().findViewById(R.id.loadingProgress);
+    public void onResume() {
         songs = new ArrayList<>();
         adap = new SongArtistAdapter(getActivity().getApplicationContext(), songs);
         LinearLayoutManager l = new LinearLayoutManager(getActivity());
-        rcvSong = view.findViewById(R.id.rcvSongArtist);
         rcvSong.setAdapter(adap);
         rcvSong.setLayoutManager(l);
-        btnAddSong = view.findViewById(R.id.btnAddSong);
-        btnAddSong.setOnClickListener(v -> {
-            Intent i = new Intent(getActivity().getApplicationContext(), ArtistUpMusicActivity.class);
-            startActivity(i);
-        });
-        bar.setVisibility(View.VISIBLE);
         h.getSongByArtist(h.getA().currentUser().getId(), new App.Callback<MongoCursor<ArtistInSong>>() {
             @Override
             public void onResult(App.Result<MongoCursor<ArtistInSong>> result) {
@@ -111,6 +99,27 @@ public class SongArtistFragment extends Fragment {
                 }
             }
         });
+        super.onResume();
+    }
+
+    Helper h = Helper.INSTANCE;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        tvSongCount = view.findViewById(R.id.tvSongNum);
+        vpSong = view.findViewById(R.id.vpUser);
+        tlSong = view.findViewById(R.id.tlUser);
+        bar = getActivity().findViewById(R.id.loadingProgress);
+
+        rcvSong = view.findViewById(R.id.rcvSongArtist);
+
+        btnAddSong = view.findViewById(R.id.btnAddSong);
+        btnAddSong.setOnClickListener(v -> {
+            Intent i = new Intent(getActivity().getApplicationContext(), ArtistUpMusicActivity.class);
+            startActivity(i);
+        });
+        bar.setVisibility(View.VISIBLE);
+
 
     }
 }
