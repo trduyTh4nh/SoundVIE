@@ -226,9 +226,59 @@ public class PlayingMusicActivity extends AppCompatActivity {
                         int currentPosition = data.getInt("currentPoint");
                         media.getPlayer().seekTo(currentPosition);
                         seekBar.setProgress(currentPosition);
+
                         media.start();
 
                         updateSeekBarProgress();
+                        media.getPlayer().setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mp) {
+                                if(!mp.isPlaying()){
+                                    try {
+                                        if(!media.playNextSong()){
+                                            btnright.setEnabled(true);
+                                        }
+                                    } catch (IOException e) {
+                                        throw new RuntimeException(e);
+                                    }
+
+                                    Song songNext = media.getNextSong();
+                                    if(songNext != null){
+                                        nameSongNext.setText(songNext.getNameSong());
+                                        helper.getArtitsbyIDSongPlaying(result1 -> {
+                                            if(result1.isSuccess()){
+                                                ArtistInSong artistOfSongPlaying = result1.get();
+                                                if(artistOfSongPlaying == null){
+                                                    nameAritstNext.setText("null");
+                                                }
+                                                else {
+                                                    Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                                    helper.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                                        @Override
+                                                        public void onResult(App.Result<User> kq) {
+                                                            User artist = kq.get();
+                                                            nameAritstNext.setText(artist.getName());
+                                                        }
+                                                    });
+                                                }
+                                            }
+
+                                        }, String.valueOf(songNext.getId()));
+
+                                        StorageReference reference = storage.getReference("images/"+ songNext.getImgCover());
+                                        Glide.with(PlayingMusicActivity.this).load(reference).into(imgCoverNext);
+                                        //media.setCurrentSong(songNext);
+                                    }
+
+                                    Song s = media.getCurrentSong();
+                                    refreshData(s);
+                                }
+                                else {
+
+                                }
+                            }
+                        });
+
                     });
 
                     btnleft.setOnClickListener(new View.OnClickListener() {
@@ -323,6 +373,7 @@ public class PlayingMusicActivity extends AppCompatActivity {
                         }
                     });
 
+
                     layout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -384,6 +435,8 @@ public class PlayingMusicActivity extends AppCompatActivity {
                             }
                         }
                     });
+
+
 
 
                     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {

@@ -63,6 +63,7 @@ public class SearchFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -72,6 +73,25 @@ public class SearchFragment extends Fragment {
     Helper h = Helper.INSTANCE;
     ArrayList<Object> s;
     ArrayList<Object> a;
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        m.getPlayer().stop();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        m.getPlayer().stop();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        m.getPlayer().stop();
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         searchBox = getActivity().findViewById(R.id.edtSearch);
@@ -100,9 +120,9 @@ public class SearchFragment extends Fragment {
                             Song song = cur.next();
                             s.add(new Song(song.getId(), song.getNameSong(), song.getImgCover(), song.getStateData(), song.getLyrics(), song.getArtists(), song.getSong()));
                         }
-                        SearchResultAdapter adap = new SearchResultAdapter(s, getActivity().getApplicationContext());
+                        SearchResultAdapter adap = new SearchResultAdapter(s, getContext());
                         rcvSong.setAdapter(adap);
-                        LinearLayoutManager l = new LinearLayoutManager(getActivity().getApplicationContext());
+                        LinearLayoutManager l = new LinearLayoutManager(getContext());
                         rcvSong.setLayoutManager(l);
 
 
@@ -112,11 +132,13 @@ public class SearchFragment extends Fragment {
                                 Song s = (Song) obj;
                                 if(m.getPlayer().isPlaying()){
                                     m.getPlayer().stop();
+                                    btnResume.setVisibility(View.VISIBLE);
                                     m.setPlayer(new MediaPlayer());
                                 }
-                                m.setContext(getActivity().getApplicationContext());
+                                m.setContext(getContext());
                                 m.playMusic(s);
                                 currentSong.setVisibility(View.VISIBLE);
+
                                 btnPause.setOnClickListener(v -> {
                                     btnPause.setVisibility(View.GONE);
                                     btnResume.setVisibility(View.VISIBLE);
@@ -128,9 +150,9 @@ public class SearchFragment extends Fragment {
                                     m.start();
                                 });
                                 song_name.setText(s.getNameSong());
-                                StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
+                                StorageHelper help = new StorageHelper(getContext());
                                 StorageReference ref = help.getStorage().getReference("images/" + s.getImgCover());
-                                Glide.with(getActivity()).load(ref).into(img_song);
+                                Glide.with(getContext()).load(ref).into(img_song);
                             }
                         });
                     }
@@ -145,9 +167,9 @@ public class SearchFragment extends Fragment {
                             User usr = u.next();
                             a.add(usr);
                         }
-                        SearchResultAdapter adapter = new SearchResultAdapter(a, getActivity().getApplicationContext());
+                        SearchResultAdapter adapter = new SearchResultAdapter(a, getContext());
                         rcvArtist.setAdapter(adapter);
-                        LinearLayoutManager l = new LinearLayoutManager(getActivity().getApplicationContext());
+                        LinearLayoutManager l = new LinearLayoutManager(getContext());
                         rcvArtist.setLayoutManager(l);
                     }
                 }, searchBox.getText().toString());

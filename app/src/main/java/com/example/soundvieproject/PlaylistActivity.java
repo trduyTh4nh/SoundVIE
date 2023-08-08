@@ -240,12 +240,12 @@ public class PlaylistActivity extends AppCompatActivity {
                                         public void onClick(View v) {
                                             Intent i = new Intent(PlaylistActivity.this, PlayingMusicActivity.class);
                                             Bundle data = new Bundle();
-
+                                            int currentPoint = media.getPlayer().getCurrentPosition();
                                             data.putString("IdSongClicked", String.valueOf(song.getId()));
                                             data.putString("ImgCover", song.getImgCover());
+                                            data.putInt("currentPoint", currentPoint);
                                             i.putExtras(data);
                                             startActivity(i);
-
 
                                             try {
                                                 media.playMusicInPlaylist(songinPlayLists, pos);

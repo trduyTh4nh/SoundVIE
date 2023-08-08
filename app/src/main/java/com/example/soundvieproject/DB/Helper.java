@@ -4,9 +4,11 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.soundvieproject.LoginActivity;
 import com.example.soundvieproject.model.Album;
 import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
@@ -287,12 +289,16 @@ public class Helper {
             if (t.isSuccess()) {
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
                 updateUser(email, password, phone, name, c);
+                Intent i = new Intent(c, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                c.startActivity(i);
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
             }
         });
     }
+
 
     public void prepare() {
 

@@ -71,7 +71,7 @@
                         </EditText>
 
                         <EditText
-                            android:inputType="textPassword"
+                            android:inputType="number"
                             android:textColor="@color/white"
                             android:id="@+id/edtPhone"
                             android:textColorHint="@color/white"

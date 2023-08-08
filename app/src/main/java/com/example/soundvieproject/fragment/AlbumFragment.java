@@ -91,6 +91,9 @@ public class AlbumFragment extends Fragment {
 
     @Override
     public void onResume() {
+        if(getContext() == null){
+            return;
+        }
         super.onResume();
         albums = new ArrayList<>();
 
@@ -104,7 +107,7 @@ public class AlbumFragment extends Fragment {
                         albums.add(p);
 
                     }
-                    AlbumAdapter adap = new AlbumAdapter(getActivity().getApplicationContext(), albums);
+                    AlbumAdapter adap = new AlbumAdapter(getContext(), albums);
                     GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
                     rcvAlbum.setAdapter(adap);
                     rcvAlbum.setLayoutManager(l);

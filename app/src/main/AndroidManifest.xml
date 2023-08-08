@@ -24,6 +24,11 @@
             android:exported="false" />
         <activity
             android:name=".RequestArtistActivity"
+                  android:exported="false"
+         />
+        <activity
+            android:name=".IncomeActivity"
+
             android:exported="false" />
         <activity
             android:name=".MusicDownloadedActivity"

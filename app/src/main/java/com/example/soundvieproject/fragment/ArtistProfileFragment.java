@@ -96,6 +96,9 @@ public class ArtistProfileFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        if(getContext() == null){
+            return;
+        }
         super.onViewCreated(view, savedInstanceState);
         tvName = view.findViewById(R.id.tvName);
         ivUser = view.findViewById(R.id.ivUser);
@@ -117,17 +120,17 @@ public class ArtistProfileFragment extends Fragment {
                         StorageHelper h = new StorageHelper(getContext());
                         FirebaseStorage sto = h.getStorage();
                         StorageReference ref = sto.getReference("image/"+u.getAvatar());
-                        Glide.with(getContext()).load(ref).into(ivUser);
+                        Glide.with(getContext().getApplicationContext()).load(ref).into(ivUser);
                     }
                     progress.setVisibility(View.GONE);
                 }
             }
         });
         btnEdit.setOnClickListener(v -> {
-            Intent i = new Intent(getActivity().getApplicationContext(), EditUserActivity.class);
+            Intent i = new Intent(getContext().getApplicationContext(), EditUserActivity.class);
             startActivity(i);
         });
-        VpPlaylistAdapter adap = new VpPlaylistAdapter(getActivity(), new ArrayList<>());
+        VpPlaylistAdapter adap = new VpPlaylistAdapter(getContext(), new ArrayList<>());
         vpSong.setAdapter(adap);
         new TabLayoutMediator(tlSong, vpSong, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
