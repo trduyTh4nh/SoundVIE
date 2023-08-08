@@ -293,8 +293,14 @@ public class Helper {
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 c.startActivity(i);
             } else {
-                Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
-                Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
+                String errorMsg = t.getError().getErrorCode().name();
+                if(errorMsg.equals("ACCOUNT_NAME_IN_USE")){
+                    Toast.makeText(c, "Email đã tồn tại, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(c, "Lỗi mạng, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
+                }
+
+                Log.e("Error", "Register error: " + t.getError().getErrorCode().name());
             }
         });
     }

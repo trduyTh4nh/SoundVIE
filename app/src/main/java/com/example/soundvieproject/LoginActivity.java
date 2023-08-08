@@ -138,7 +138,12 @@ public class LoginActivity extends AppCompatActivity {
                             });
                         } else
                         {
-                           Log.v("Login", "Failed");
+                            String error = result.getError().getErrorCode().name();
+                            if ("INVALID_EMAIL_PASSWORD".equals(error)) {
+                                Toast.makeText(LoginActivity.this, "Người dùng không tồn tại hoặc mật khẩu sai.", Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(LoginActivity.this, "Lỗi mạng, vui lòng thử lại sau", Toast.LENGTH_SHORT).show();
+                            Log.v("Login", "Failed" + result.getError().getErrorCode().name());
                         }
                     }
                 });

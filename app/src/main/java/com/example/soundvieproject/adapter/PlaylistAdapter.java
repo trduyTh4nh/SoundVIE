@@ -129,8 +129,9 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
                         case R.id.delete_playslit:
                             helper.deletePlaylist(p.getId(), result -> {
                                 if(result.isSuccess()){
-                                    pl.remove(position - 1);
-                                    notifyItemRemoved(position);
+                                    if(pl.size() > 0)
+                                        pl.remove(p);
+                                    notifyItemRemoved(holder.getAdapterPosition());
                                     helper.deleteSongsInPlaylist(p.getId());
                                     Toast.makeText(context, "xóa thành công", Toast.LENGTH_SHORT).show();
                                 }

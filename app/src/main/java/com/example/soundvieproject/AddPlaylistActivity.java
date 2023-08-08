@@ -118,7 +118,10 @@ public class AddPlaylistActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 102 && data != null && data.getData() != null){
-
+            if (data.getData() == null) {
+                Toast.makeText(this, "Phải có hình ảnh", Toast.LENGTH_SHORT).show();
+                return;
+            }
             imageUri = data.getData();
             btnChooseImage.setImageURI(imageUri);
         }
@@ -129,6 +132,10 @@ public class AddPlaylistActivity extends AppCompatActivity {
     private void uploadImage(){
         ObjectId id = new ObjectId();
         uriImage = id.toString();
+        if(imageUri == null){
+            Toast.makeText(this, "Phải có hình ảnh", Toast.LENGTH_SHORT).show();
+            return;
+        }
         storageReference = FirebaseStorage.getInstance().getReference("images/" + uriImage);
         storageReference.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override

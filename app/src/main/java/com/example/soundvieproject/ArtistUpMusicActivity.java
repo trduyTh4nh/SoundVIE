@@ -106,13 +106,16 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
         rcvArtist = findViewById(R.id.rcvArtist);
         edtLyrics = findViewById(R.id.edtLyrics);
         edtArtist = findViewById(R.id.edtArtist);
+        btnCancel = findViewById(R.id.btnCancel);
         btnUp = findViewById(R.id.btnUp);
         tvBytes = findViewById(R.id.tvBytes);
         btnChoose = findViewById(R.id.btnChooseSong);
         btnSelect = findViewById(R.id.btnSelect);
         usrList = new ArrayList<>();
         btnChooseArtist = findViewById(R.id.btnChooseArtist);
-
+        btnCancel.setOnClickListener(v -> {
+            finish();
+        });
 
         // click choose image
 
@@ -207,6 +210,13 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
         btnUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnUp.setVisibility(View.GONE);
+                Toast.makeText(ArtistUpMusicActivity.this, "Đang đăng tải...", Toast.LENGTH_SHORT).show();
+                if(u == null || imageUri == null){
+                    btnUp.setVisibility(View.VISIBLE);
+                    Toast.makeText(ArtistUpMusicActivity.this, "Chưa có File bài hát hoặc hình ảnh!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Log.d("Res", u.toString());
                 StorageReference mainRef = r.getStorage().getReference();
                 StorageReference musicRef = mainRef.child((new ObjectId()).toString());
@@ -245,13 +255,14 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
 
                             user = instance.getUser();
                             ArrayList<ArtistInSong> artistss = new ArrayList<>();
+                            usrList = adap.getUsrs();
                             for(com.example.soundvieproject.model.User usr : usrList){
                                 artistss.add(new ArtistInSong(new ObjectId(), usr.getIdUser(), idSong));
                             }
                             instance.insertArtists(artistss, t -> {
                                 if(t.isSuccess()){
                                     Toast.makeText(ArtistUpMusicActivity.this, "Đăng thành công!", Toast.LENGTH_SHORT).show();
-
+                                    finish();
                                 } else {
                                     Toast.makeText(ArtistUpMusicActivity.this, "Có lỗi: "+t.getError().getErrorType(), Toast.LENGTH_SHORT).show();
                                 }
@@ -262,6 +273,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
                         }
                     }
                 });
+
                 ObjectId id = new ObjectId();
                 uriImage = id.toString();
                 storageReference = FirebaseStorage.getInstance().getReference("images/"+uriImage);
