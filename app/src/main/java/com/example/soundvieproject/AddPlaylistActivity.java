@@ -100,10 +100,9 @@ public class AddPlaylistActivity extends AppCompatActivity {
     }
 
     public void selectImage(){
-        Intent i  = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("*/*");
-        startActivityForResult(i,100);
+        Intent i  = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i,102);
 
     }
 
@@ -113,7 +112,7 @@ public class AddPlaylistActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100 && data != null && data.getData() != null){
+        if (requestCode == 102 && data != null && data.getData() != null){
             imageUri = data.getData();
             btnChooseImage.setImageURI(imageUri);
         }
