@@ -702,6 +702,12 @@ public class Helper {
         doc.append("idSong", idSong);
         col.deleteOne(doc).getAsync(callback);
     }
+    public void upgradeToArtist(App.Callback<UpdateResult> callback){
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        Document newVal = new Document("$set", new Document("idLoai", "ns"));
+        Document doc = new Document("idUser", user.getId());
+        col.updateOne(doc, newVal).getAsync(callback);
+    }
 
 
 }
