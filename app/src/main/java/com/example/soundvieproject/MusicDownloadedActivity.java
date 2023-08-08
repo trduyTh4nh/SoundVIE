@@ -31,6 +31,14 @@ public class MusicDownloadedActivity extends AppCompatActivity {
     TextView name_song;
     LinearLayout currentSong;
     ImageButton btnPause, btnResume;
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if(media.getPlayer().isPlaying())
+            media.getPlayer().stop();
+    }
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
