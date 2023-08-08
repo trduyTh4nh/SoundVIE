@@ -20,6 +20,9 @@
         android:theme="@style/Theme.SoundVIEProject"
         tools:targetApi="31">
         <activity
+            android:name=".IncomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".MusicDownloadedActivity"
             android:exported="false" />
 
