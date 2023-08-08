@@ -41,6 +41,7 @@ import org.bson.types.ObjectId;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import io.realm.RealmList;
 import io.realm.mongodb.App;
@@ -146,42 +147,59 @@ public class HomeFragment extends Fragment {
 
     public void list(View view){
         list = new ArrayList<>();
-        instance.getSong(t -> {
+        instance.getPopularSong(t -> {
             if(t.isSuccess()){
                 MongoCursor<Song> cur = t.get();
                 while (cur.hasNext()){
+                    ArrayList<String> artists = new ArrayList<>();
+                    Song song = cur.next();
+                    Log.d("Test", song.toString());
 
-                    Song s = cur.next();
-                    Log.d("Test", s.toString());
-                    list.add(new Song(s.getId(), s.getNameSong(), s.getImgCover(), s.getStateData(), s.getLyrics(), s.getArtists(), s.getSong()));
-                }
+                    instance.getSongArtists(song.getId(), t1 -> {
+                        if(t1.isSuccess()){
+                            MongoCursor<ArtistInSong> cur1 = t1.get();
+                            while (cur1.hasNext()){
+                                Log.d(song.getNameSong(), "Has artist");
+                                ArtistInSong ar = cur1.next();
+                                instance.getUserByObjID(ar.getIdUser(), t2 -> {
+                                    if(t2.isSuccess()){
+                                        User u = t2.get();
+                                        Log.d(song.getNameSong(), u.getName());
+                                        artists.add(u.getName());
+                                        Log.d(song.getNameSong(), String.join(", ", artists));
+                                        list.add(new Song(song.getId(), song.getNameSong(), song.getImgCover(), song.getStateData(), song.getLyrics(), song.getSong(), String.join(", ", artists), song.getLuotnghe()));
+                                        list.sort(new Comparator<Song>() {
+                                            @Override
+                                            public int compare(Song song, Song t1) {
+                                                return t1.getLuotnghe() - song.getLuotnghe();
+                                            }
+                                        });
+                                        FirebaseStorage sto = FirebaseStorage.getInstance();
+                                        adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
+                                        adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
+                                        rcv2 = view.findViewById(R.id.rv_songsPopular);
 
-                FirebaseStorage sto = FirebaseStorage.getInstance();
-                adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
-                adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
-                rcv2 = view.findViewById(R.id.rv_songsPopular);
-
-                LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(adapter);
+                                        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                                        recyclerView.setLayoutManager(layoutManager);
+                                        recyclerView.setAdapter(adapter);
 
 
-                LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
-                rcv2.setLayoutManager(layoutManager1);
-                rcv2.setAdapter(adapter);
-                b.setVisibility(View.GONE);
-                adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
-                    @Override
-                    public void OnItemClick(Song song, int index) throws IOException {
-                        if(media.getPlayer().isPlaying()){
-                            media.getPlayer().stop();
-                            media.setPlayer(new MediaPlayer());
-                        }
-                        media.setContext(getActivity().getApplicationContext());
-                        /// xử lý truyền dũ liệu bài hát
+                                        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                                        rcv2.setLayoutManager(layoutManager1);
+                                        rcv2.setAdapter(adapter);
+                                        b.setVisibility(View.GONE);
+                                        adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
+                                            @Override
+                                            public void OnItemClick(Song song, int index) throws IOException {
+                                                if(media.getPlayer().isPlaying()){
+                                                    media.getPlayer().stop();
+                                                    media.setPlayer(new MediaPlayer());
+                                                }
+                                                media.setContext(getActivity().getApplicationContext());
+                                                /// xử lý truyền dũ liệu bài hát
 
-                        media.playMusicInPlaylist(list, index);
-                        media.setCurrentSong(song);
+                                                media.playMusicInPlaylist(list, index);
+                                                media.setCurrentSong(song);
 
 //                        media.setNextSong(list.get(index++));
 
@@ -198,52 +216,63 @@ public class HomeFragment extends Fragment {
 //                        }
 
 
-                        btnResume.setVisibility(View.GONE);
-                        btnPause.setVisibility(View.VISIBLE);
-                        currentSong.setVisibility(View.VISIBLE);
+                                                btnResume.setVisibility(View.GONE);
+                                                btnPause.setVisibility(View.VISIBLE);
+                                                currentSong.setVisibility(View.VISIBLE);
 
 
-                        //img_song.setImageResource(song.getImgCover());
-                        song_name.setText(song.getNameSong());
-                        instance.getArtitsbyIDSongPlaying(result1 -> {
-                            if(result1.isSuccess()){
-                                ArtistInSong artistOfSongPlaying = result1.get();
-                                if(artistOfSongPlaying == null){
-                                    artist.setText("null");
-                                }
-                                else {
-                                    Log.d("Artist of song: ", artistOfSongPlaying.toString());
-                                    instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
-                                        @Override
-                                        public void onResult(App.Result<User> kq) {
-                                            User artists = kq.get();
-                                            artist.setText(artists.getName());
-                                        }
-                                    });
-                                }
+                                                //img_song.setImageResource(song.getImgCover());
+                                                song_name.setText(song.getNameSong());
+                                                instance.getArtitsbyIDSongPlaying(result1 -> {
+                                                    if(result1.isSuccess()){
+                                                        ArtistInSong artistOfSongPlaying = result1.get();
+                                                        if(artistOfSongPlaying == null){
+                                                            artist.setText("null");
+                                                        }
+                                                        else {
+                                                            Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                                                            instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                                                @Override
+                                                                public void onResult(App.Result<User> kq) {
+                                                                    User artists = kq.get();
+                                                                    artist.setText(artists.getName());
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+
+                                                }, String.valueOf(song.getId()));
+                                                artist.setText(song.getArtist());
+
+
+                                                btnPause.setOnClickListener(v -> {
+                                                    btnPause.setVisibility(View.GONE);
+                                                    btnResume.setVisibility(View.VISIBLE);
+                                                    media.pause();
+                                                });
+                                                btnResume.setOnClickListener(v -> {
+                                                    btnResume.setVisibility(View.GONE);
+                                                    btnPause.setVisibility(View.VISIBLE);
+                                                    media.start();
+                                                });
+
+                                                StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
+                                                StorageReference ref = help.getStorage().getReference("images/" + song.getImgCover());
+                                                Glide.with(getActivity()).load(ref).into(img_song);
+
+                                            }
+                                        });
+                                    }
+                                });
                             }
 
-                        }, String.valueOf(song.getId()));
-                        artist.setText(song.getArtist());
+                        }else {
+                            Toast.makeText(getActivity(), "Lỗi", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
 
-                        btnPause.setOnClickListener(v -> {
-                            btnPause.setVisibility(View.GONE);
-                            btnResume.setVisibility(View.VISIBLE);
-                            media.pause();
-                        });
-                        btnResume.setOnClickListener(v -> {
-                            btnResume.setVisibility(View.GONE);
-                            btnPause.setVisibility(View.VISIBLE);
-                            media.start();
-                        });
-
-                        StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
-                        StorageReference ref = help.getStorage().getReference("images/" + song.getImgCover());
-                        Glide.with(getActivity()).load(ref).into(img_song);
-
-                    }
-                });
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Không thể lấy bài hát.", Toast.LENGTH_SHORT).show();
             }

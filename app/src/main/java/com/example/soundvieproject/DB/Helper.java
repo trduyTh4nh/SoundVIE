@@ -209,7 +209,11 @@ public class Helper {
         RealmResultTask<MongoCursor<Song>> task = col.find().iterator();
         task.getAsync(callback);
     }
-
+    public void getPopularSong(App.Callback<MongoCursor<Song>> callback){
+        MongoCollection<Song> col = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
+        RealmResultTask<MongoCursor<Song>> task = col.find().sort(new Document("luotnghe", -1)).iterator();
+        task.getAsync(callback);
+    }
     public void getAllSong(App.Callback<MongoCursor<Song>> callback){
         MongoCollection<Song> collection = db.getCollection("Song", Song.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<Song>> task = collection.find().iterator();
@@ -592,6 +596,7 @@ public class Helper {
         art.insertMany(artists).getAsync(callback);
     }
     public void getSongArtists(ObjectId idSong, App.Callback<MongoCursor<ArtistInSong>> callback){
+        Log.d("idSong", idSong.toString());
         Document docu = new Document("idSong", idSong);
         MongoCollection<ArtistInSong> col = db.getCollection("ArtistsInSong", ArtistInSong.class).withCodecRegistry(pojoCodecRegistry);
         RealmResultTask<MongoCursor<ArtistInSong>> t = col.find(docu).iterator();
