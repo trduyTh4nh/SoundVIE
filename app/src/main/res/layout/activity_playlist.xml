@@ -19,12 +19,15 @@
                 android:background="@drawable/border"
                 android:layout_width="100dp"
                 android:layout_height="100dp">
+
                 <ImageView
-                    android:scaleType="centerCrop"
                     android:id="@+id/imgPl"
-                    android:src="@drawable/img_playlist"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerCrop"
+                    android:scaleX="2"
+                    android:scaleY="2"
+                    android:src="@drawable/img_playlist">
 
                 </ImageView>
             </androidx.cardview.widget.CardView>
@@ -71,12 +74,10 @@
                     android:text="Just a playlist, nothing else"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                 </TextView>
             </LinearLayout>
         </LinearLayout>
         <Button
-
             android:textStyle="bold"
             android:textSize="18dp"
             android:textAllCaps="false"

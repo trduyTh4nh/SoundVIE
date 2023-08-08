@@ -23,4 +23,5 @@
     <color name="deleted">#8CFE7272</color>
     <color name="error">#FE7272</color>
     <color name="card_light">#F0F0F0</color>
+    <color name="income">#F0F0F0</color>
 </resources>

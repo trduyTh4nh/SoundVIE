@@ -4,9 +4,11 @@ import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.soundvieproject.LoginActivity;
 import com.example.soundvieproject.model.Album;
 import com.example.soundvieproject.model.ArtistInSong;
 import com.example.soundvieproject.model.Payment;
@@ -287,12 +289,16 @@ public class Helper {
             if (t.isSuccess()) {
                 Toast.makeText(c, "Đăng ký thành công.", Toast.LENGTH_SHORT).show();
                 updateUser(email, password, phone, name, c);
+                Intent i = new Intent(c, LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                c.startActivity(i);
             } else {
                 Toast.makeText(c, "Lỗi bất định, vui lòng thử lại sau.", Toast.LENGTH_SHORT).show();
                 Log.e("Error", "Register error: " + t.getError().getErrorCode().toString());
             }
         });
     }
+
 
     public void prepare() {
 
@@ -698,9 +704,15 @@ public class Helper {
     public void deleteSongInAlbum(ObjectId idAlbum, ObjectId idSong, App.Callback<DeleteResult> callback){
         MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         Document doc = new Document();
-        doc.append("idAlbum", idAlbum);
+        doc.append("idPlaylist", idAlbum);
         doc.append("idSong", idSong);
         col.deleteOne(doc).getAsync(callback);
+    }
+    public void upgradeToArtist(App.Callback<UpdateResult> callback){
+        MongoCollection<com.example.soundvieproject.model.User> col = db.getCollection("user", com.example.soundvieproject.model.User.class).withCodecRegistry(pojoCodecRegistry);
+        Document newVal = new Document("$set", new Document("idLoai", "ns"));
+        Document doc = new Document("idUser", user.getId());
+        col.updateOne(doc, newVal).getAsync(callback);
     }
 
 

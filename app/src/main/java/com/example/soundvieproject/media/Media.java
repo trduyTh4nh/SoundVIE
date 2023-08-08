@@ -254,7 +254,8 @@ public class Media {
             }
         }
         Song sg = q.remove();
-        printQueue();
+        if(!q.isEmpty())
+            printQueue();
         st = new Stack<>();
         currentSong = sg;
         st.push(sg);
@@ -282,16 +283,19 @@ public class Media {
             Log.d("next", "Song " + currentSong.getNameSong() + " added to stack");
 
             Song s = q.remove();
-            Song s1 = printQueue();
-            setNextSong(s1);
+            if(!q.isEmpty()){
+                Song s1 = printQueue();
+                setNextSong(s1);
 //            ArrayList<Song> song = new ArrayList<>(st);
 //            setNextSong(song.get(1));
 
-            Log.d("song", s.toString());
-            currentSong = s;
-            Log.d("next", "Song " + s.getNameSong() + " removed from queue");
-            playMusic(s);
-            return true;
+                Log.d("song", s.toString());
+                currentSong = s;
+                Log.d("next", "Song " + s.getNameSong() + " removed from queue");
+                playMusic(s);
+                return true;
+            }
+
         }
 
         return false;

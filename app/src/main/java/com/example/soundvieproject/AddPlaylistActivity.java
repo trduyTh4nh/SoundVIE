@@ -72,6 +72,8 @@ public class AddPlaylistActivity extends AppCompatActivity {
         btnCreatePL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnCreatePL.setVisibility(View.GONE);
+                Toast.makeText(AddPlaylistActivity.this, "Đang thêm Playlist", Toast.LENGTH_SHORT).show();
                 String namePL = edtNamePL.getText().toString();
                 String desPL = edtDesPL.getText().toString();
                 uploadImage();
@@ -81,7 +83,10 @@ public class AddPlaylistActivity extends AppCompatActivity {
                         if(result.isSuccess()){
                             user = result.get().getIdUser();
                             instance.addPlaylist(new Playlist(new ObjectId(), namePL, uriImage ,user, desPL), tsk -> {
-
+                                if(tsk.isSuccess()){
+                                    Toast.makeText(AddPlaylistActivity.this, "Thêm Playlist thành công!", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
                             });
                         }
                     }
@@ -100,10 +105,9 @@ public class AddPlaylistActivity extends AppCompatActivity {
     }
 
     public void selectImage(){
-        Intent i  = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("*/*");
-        startActivityForResult(i,100);
+        Intent i  = new Intent(Intent.ACTION_PICK);
+        i.setType("image/*");
+        startActivityForResult(i,102);
 
     }
 
@@ -113,7 +117,8 @@ public class AddPlaylistActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 100 && data != null && data.getData() != null){
+        if (requestCode == 102 && data != null && data.getData() != null){
+
             imageUri = data.getData();
             btnChooseImage.setImageURI(imageUri);
         }

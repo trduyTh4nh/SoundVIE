@@ -155,6 +155,10 @@ public class EditUserActivity extends AppCompatActivity {
 
             }
         });
+        btnBecomeArtist.setOnClickListener(v -> {
+            Intent i = new Intent(EditUserActivity.this, RequestArtistActivity.class);
+            startActivity(i);
+        });
     }
 
     String imageUri;

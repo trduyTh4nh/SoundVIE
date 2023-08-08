@@ -16,6 +16,12 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class ArtistHomeActivity extends AppCompatActivity {
     BottomNavigationView bottom;
+
+    @Override
+    public void onBackPressed() {
+        return;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

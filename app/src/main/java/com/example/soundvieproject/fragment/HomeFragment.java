@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -126,26 +127,26 @@ public class HomeFragment extends Fragment {
             Glide.with(getActivity()).load(ref).into(img_song);
 
             song_name.setText(songCurrent.getNameSong());
-
-
-            instance.getArtitsbyIDSongPlaying(result1 -> {
-                if (result1.isSuccess()) {
-                    ArtistInSong artistOfSongPlaying = result1.get();
-                    if (artistOfSongPlaying == null) {
-                        artist.setText("null");
-                    } else {
-                        Log.d("Artist of song: ", artistOfSongPlaying.toString());
-                        instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
-                            @Override
-                            public void onResult(App.Result<User> kq) {
-                                User artists = kq.get();
-                                artist.setText(artists.getName());
-                            }
-                        });
+            if(songCurrent.getId() != null){
+                instance.getArtitsbyIDSongPlaying(result1 -> {
+                    if (result1.isSuccess()) {
+                        ArtistInSong artistOfSongPlaying = result1.get();
+                        if (artistOfSongPlaying == null) {
+                            artist.setText("null");
+                        } else {
+                            Log.d("Artist of song: ", artistOfSongPlaying.toString());
+                            instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
+                                @Override
+                                public void onResult(App.Result<User> kq) {
+                                    User artists = kq.get();
+                                    artist.setText(artists.getName());
+                                }
+                            });
+                        }
                     }
-                }
 
-            }, String.valueOf(songCurrent.getId()));
+                }, String.valueOf(songCurrent.getId()));
+            }
             artist.setText(songCurrent.getArtist());
         }
     }
@@ -198,6 +199,7 @@ public class HomeFragment extends Fragment {
                                             public void OnItemClick(Song song, int index) throws IOException {
                                                 if (media.getPlayer().isPlaying()) {
                                                     media.getPlayer().stop();
+                                                    media.getPlayer().release();
                                                     media.setPlayer(new MediaPlayer());
                                                 }
                                                 media.setContext(getActivity().getApplicationContext());

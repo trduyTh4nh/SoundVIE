@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tài khoản cá nhân"
+                android:text="Tài khoản nghệ sĩ"
                 android:textSize="16sp"
                 android:textStyle="normal"
                 android:textColor="@color/black"/>
@@ -71,15 +71,7 @@
         android:background="@drawable/btnlogin_ripple"
         android:backgroundTint="@color/black"
         android:textColor="@color/black"/>
-    <TextView
-        android:layout_marginTop="16dp"
-        android:id="@+id/tvSongcount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0 bài hát - 0 album"
-        android:textSize="16sp"
-        android:textStyle="normal"
-        android:textColor="@color/black"/>
+
     <com.google.android.material.tabs.TabLayout
         app:tabIndicatorColor="@color/primaryArtist"
         app:tabTextColor="@color/black"

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RequestArtistActivity"
+    android:background="@color/black">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarNormal5"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|start">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0"
+                    android:background="@drawable/btnlogin_ripple"
+                    android:text="Hủy"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"/>
+
+                <ProgressBar
+                    android:id="@+id/loadingProgress"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_margin="15dp"
+                    android:indeterminateTint="@color/white"
+                    android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarNormal5"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+        <LinearLayout
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sáng tạo cho SoundVIE"
+                android:textColor="@color/white"
+                android:textSize="45dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trở thành nghệ sĩ để có thể sáng tác bài hát cho nên tảng SoundVIE và nhận các đặc quyền"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="normal"/>
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:background="@drawable/edittext_login">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Kinh nghiệm"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="normal"/>
+                <View
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <EditText
+                    android:textColor="@color/white"
+                    android:background="@drawable/background_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="16dp"
+                    android:hint="Tối thiểu 1 năm"
+                    android:textColorHint="@color/white"/>
+
+            </LinearLayout>
+            <EditText
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext_login"
+                android:padding="16dp"
+                android:hint="CCCD"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:background="@drawable/edittext_login"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tài khoản mạng xã hội"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/facebook_circle_line"
+                    android:drawablePadding="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textSize="16dp"
+                    android:hint="Facebook"
+                    android:textColorHint="@color/white"/>
+                <EditText
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/instagram_line"
+                    android:drawablePadding="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textSize="16dp"
+                    android:hint="Instagram"
+                    android:textColorHint="@color/white"/>
+                <EditText
+                    android:textColor="@color/white"
+                    android:drawableLeft="@drawable/twitter_x_line"
+                    android:drawablePadding="16dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/background_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:textSize="16dp"
+                    android:hint="Twitter/X"
+                    android:textColorHint="@color/white"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thông tin chuyển khoản"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Thêm thông tin chuyển khoản để có thể nhận tiền hoa hồng cho bài hát."
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edittext_login"
+                android:hint="Ngân hàng liên kết"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edittext_login"
+                android:hint="Số tài khoản"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/edittext_login"
+                android:hint="Chủ tài khoản"
+                android:padding="16dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+            <Button
+                android:id="@+id/requestArtist"
+                android:layout_marginTop="16dp"
+                android:text="Yêu cầu xét duyệt"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_primary"/>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

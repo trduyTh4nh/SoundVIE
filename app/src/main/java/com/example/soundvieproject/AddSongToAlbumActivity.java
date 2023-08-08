@@ -102,7 +102,7 @@ public class AddSongToAlbumActivity extends AppCompatActivity {
                                     SongInPlayList song = res.next();
                                     Log.d("Song", idS.toString() + " : " + song.getIdSong().toString());
                                     if(idS.toString().equals(song.getIdSong().toString())){
-                                        Toast.makeText(AddSongToAlbumActivity.this, "Trùng", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddSongToAlbumActivity.this, "Một hoặc nhiều bài hát đã có trên Album", Toast.LENGTH_SHORT).show();
                                         loading.setVisibility(View.GONE);
                                         btnSave.setVisibility(View.VISIBLE);
                                         btnCance.setVisibility(View.VISIBLE);
@@ -112,7 +112,7 @@ public class AddSongToAlbumActivity extends AppCompatActivity {
                                 h.insertSongSingularInAlbum(tmpS, t -> {
                                     if(t.isSuccess()){
                                         loading.setVisibility(View.GONE);
-                                        Toast.makeText(AddSongToAlbumActivity.this, "Xong!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AddSongToAlbumActivity.this, "Thêm bài hát thành công!", Toast.LENGTH_SHORT).show();
                                         btnCance.setVisibility(View.VISIBLE);
                                         btnCance.setText("Xong");
                                     }

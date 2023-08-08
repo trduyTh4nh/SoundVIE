@@ -116,6 +116,14 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!edtPass.getText().toString().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")){
+                    Toast.makeText(SignupActivity.this, "Mật khẩu không khớp (phải có 8 ký tự, một chữ in hoa và in thường và có ít nhất 1 số.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!edtEmail.getText().toString().matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")){
+                    Toast.makeText(SignupActivity.this, "Email không hợp lệ.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 h.register(edtEmail.getText().toString(), edtPass.getText().toString(), edtPhone.getText().toString(), edtName.getText().toString(), getApplicationContext());
             }
         });
