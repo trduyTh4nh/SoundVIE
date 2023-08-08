@@ -29,6 +29,9 @@ public class ArtistInSongAdapter extends RecyclerView.Adapter<ArtistInSongAdapte
     TextView tvArtist;
     ImageButton btnMore;
 
+    public ArrayList<User> getUsrs() {
+        return usrs;
+    }
 
     public ArtistInSongAdapter(Context context, ArrayList<User> usrs) {
         this.context = context;

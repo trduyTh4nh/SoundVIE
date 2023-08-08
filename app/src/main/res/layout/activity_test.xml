@@ -43,6 +43,7 @@
                 android:textStyle="bold"></Button>
 
             <Button
+                android:id="@+id/btnCancel"
                 android:layout_width="75dp"
                 android:layout_height="45dp"
                 android:layout_margin="5dp"
