@@ -5,17 +5,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.soundvieproject.AddPlaylistActivity;
+import com.example.soundvieproject.DB.Helper;
+import com.example.soundvieproject.DB.SQLiteDB;
 import com.example.soundvieproject.PlaylistActivity;
 import com.example.soundvieproject.R;
 import com.example.soundvieproject.model.Playlist;
@@ -28,14 +34,26 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
     ImageView ivCover;
     TextView tvTitle, tvDesc;
     Context context;
+
+    Helper helper = Helper.INSTANCE;
+    ImageButton btnDownload;
     ArrayList<Playlist> pl;
     StorageReference storageReference;
     LinearLayout ll, btnAdd;
+
+    SQLiteDB sqLiteDB;
+
     FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
     public PlaylistAdapter(Context c, ArrayList<Playlist> playlists) {
         context = c;
         pl = playlists;
+    }
+
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public ArrayList<Playlist> getPl() {
@@ -80,6 +98,8 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
         }
         Playlist p = pl.get(position - 1);
 
+
+
         ll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +113,38 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
                 i.putExtras(b);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
+            }
+        });
+
+        ll.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                PopupMenu popupMenu = new PopupMenu(context, v);
+                MenuInflater inflater = popupMenu.getMenuInflater();
+                inflater.inflate(R.menu.menu_for_playlist, popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(item -> {
+                    switch (item.getItemId()) {
+                        case R.id.delete_playslit:
+                            helper.deletePlaylist(p.getId(), result -> {
+                                if(result.isSuccess()){
+                                    pl.remove(position - 1);
+                                    notifyItemRemoved(position);
+                                    helper.deleteSongsInPlaylist(p.getId());
+                                    Toast.makeText(context, "xóa thành công", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        break;
+                        default:
+                            return false;
+                    }
+                    return false;
+                });
+
+                popupMenu.show(); // Show the popup menu
+
+                return false;
             }
         });
 
@@ -120,6 +172,7 @@ public class PlaylistAdapter extends RecyclerView.Adapter<PlaylistAdapter.ViewHo
             ivCover = itemView.findViewById(R.id.ivCover);
             ll = itemView.findViewById(R.id.llLayout);
             btnAdd = itemView.findViewById(R.id.btnAdd);
+
         }
     }
 

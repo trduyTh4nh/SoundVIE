@@ -76,12 +76,13 @@
             </LinearLayout>
         </LinearLayout>
         <Button
+
             android:textStyle="bold"
             android:textSize="18dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/button_transparent"
+            android:background="@drawable/btnlogin_ripple"
             android:text="Chơi nhạc"
             android:layout_marginTop="15dp"
             android:layout_gravity="center"
@@ -142,10 +143,6 @@
 
             </TextView>
         </LinearLayout>
-
-
-
-
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -34,6 +34,7 @@
                 android:layout_gravity="center"
                 android:gravity="center_vertical|end">
                 <ImageButton
+                    android:id="@+id/btnBack"
                     android:src="@drawable/arrow_left_line"
                     android:background="@drawable/transparent_ripple"
                     android:layout_width="wrap_content"
@@ -98,6 +99,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
+                android:id="@+id/btnProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -113,8 +115,10 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
 
+    <LinearLayout
+        android:background="@drawable/transparent_ripple"
+        android:id="@+id/musicDownloaded"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -131,7 +135,7 @@
                 android:textSize="20dp"
                 android:layout_margin="5dp"
                 android:textColor="@color/white"
-                android:text="Tài khoản"
+                android:text="Bài hát đã tải về"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </TextView>
@@ -156,6 +160,7 @@
 
     </LinearLayout>
     <LinearLayout
+        android:background="@drawable/transparent_ripple"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -198,6 +203,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@drawable/transparent_ripple"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -240,6 +246,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@drawable/transparent_ripple"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -279,6 +286,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:background="@drawable/transparent_ripple"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -317,6 +325,7 @@
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
+        android:background="@drawable/transparent_ripple"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
         android:layout_marginTop="30dp"
@@ -356,7 +365,7 @@
     </LinearLayout>
     <LinearLayout
         android:gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button

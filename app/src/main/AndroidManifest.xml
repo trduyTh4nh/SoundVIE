@@ -20,7 +20,7 @@
         android:theme="@style/Theme.SoundVIEProject"
         tools:targetApi="31">
         <activity
-            android:name=".ArtistProfileActivity"
+            android:name=".MusicDownloadedActivity"
             android:exported="false" />
 
         <service android:name=".media.MediaPlayerService" />

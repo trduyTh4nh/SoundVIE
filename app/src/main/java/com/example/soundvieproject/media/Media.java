@@ -156,7 +156,7 @@ public class Media {
             @Override
             public void onResult(App.Result<Song> result) {
                 if(result.isSuccess()){
-                    Log.d("Luotnghe", ""+result.get().getLuotnghe());
+                    Log.d("Luotnghe", "" + result.get().getLuotnghe());
                     helper.incrementListenCount(result.get().getId(), result.get().getLuotnghe() + 1, new App.Callback<UpdateResult>() {
                         @Override
                         public void onResult(App.Result<UpdateResult> result) {
@@ -169,6 +169,20 @@ public class Media {
                 }
             }
         });
+        player.setDataSource(context, uri);
+        player.prepareAsync();
+        player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                player.start();
+            }
+        });
+    }
+
+    public void playMusicLocal(Song s) throws IOException {
+        currentSong = s;
+        Uri uri = Uri.parse(s.getSong());
+
         player.setDataSource(context, uri);
         player.prepareAsync();
         player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {

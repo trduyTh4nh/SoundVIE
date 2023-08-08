@@ -8,6 +8,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,8 +43,10 @@ import org.bson.types.ObjectId;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.RejectedExecutionException;
 
 import io.realm.RealmList;
+import io.realm.internal.async.RealmThreadPoolExecutor;
 import io.realm.mongodb.App;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
 
@@ -55,6 +58,7 @@ public class HomeFragment extends Fragment {
 
     Helper instance = Helper.INSTANCE;
     ArrayList<Song> list;
+
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -76,7 +80,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
     Button btnPremium;
+
+
     SongAdapter adapter;
     SongAdapter adapter2;
     RecyclerView rcv2;
@@ -88,6 +95,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     MediaPlayer p;
     ProgressBar b;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -106,15 +114,13 @@ public class HomeFragment extends Fragment {
         list(view);
 
 
-
-
     }
 
     @Override
-    public void onResume() {
+    public void onResume() throws RejectedExecutionException {
         super.onResume();
         Song songCurrent = media.getCurrentSong();
-        if(songCurrent != null){
+        if (songCurrent != null) {
             StorageHelper help = new StorageHelper(getActivity().getApplicationContext());
             StorageReference ref = help.getStorage().getReference("images/" + songCurrent.getImgCover());
             Glide.with(getActivity()).load(ref).into(img_song);
@@ -123,12 +129,11 @@ public class HomeFragment extends Fragment {
 
 
             instance.getArtitsbyIDSongPlaying(result1 -> {
-                if(result1.isSuccess()){
+                if (result1.isSuccess()) {
                     ArtistInSong artistOfSongPlaying = result1.get();
-                    if(artistOfSongPlaying == null){
+                    if (artistOfSongPlaying == null) {
                         artist.setText("null");
-                    }
-                    else {
+                    } else {
                         Log.d("Artist of song: ", artistOfSongPlaying.toString());
                         instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
                             @Override
@@ -145,24 +150,24 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void list(View view){
+    public void list(View view) {
         list = new ArrayList<>();
         instance.getPopularSong(t -> {
-            if(t.isSuccess()){
+            if (t.isSuccess()) {
                 MongoCursor<Song> cur = t.get();
-                while (cur.hasNext()){
+                while (cur.hasNext()) {
                     ArrayList<String> artists = new ArrayList<>();
                     Song song = cur.next();
                     Log.d("Test", song.toString());
 
                     instance.getSongArtists(song.getId(), t1 -> {
-                        if(t1.isSuccess()){
+                        if (t1.isSuccess()) {
                             MongoCursor<ArtistInSong> cur1 = t1.get();
-                            while (cur1.hasNext()){
+                            while (cur1.hasNext()) {
                                 Log.d(song.getNameSong(), "Has artist");
                                 ArtistInSong ar = cur1.next();
                                 instance.getUserByObjID(ar.getIdUser(), t2 -> {
-                                    if(t2.isSuccess()){
+                                    if (t2.isSuccess()) {
                                         User u = t2.get();
                                         Log.d(song.getNameSong(), u.getName());
                                         artists.add(u.getName());
@@ -175,23 +180,23 @@ public class HomeFragment extends Fragment {
                                             }
                                         });
                                         FirebaseStorage sto = FirebaseStorage.getInstance();
-                                        adapter = new SongAdapter(getActivity().getApplicationContext(), list, sto);
-                                        adapter2 = new SongAdapter(getActivity().getApplicationContext(), list, sto);
+                                        adapter = new SongAdapter(getContext(), list, sto);
+                                        adapter2 = new SongAdapter(getContext(), list, sto);
                                         rcv2 = view.findViewById(R.id.rv_songsPopular);
 
-                                        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                                        LinearLayoutManager layoutManager = new LinearLayoutManager((FragmentActivity) getContext(), LinearLayoutManager.HORIZONTAL, false);
                                         recyclerView.setLayoutManager(layoutManager);
                                         recyclerView.setAdapter(adapter);
 
 
-                                        LinearLayoutManager layoutManager1 = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
+                                        LinearLayoutManager layoutManager1 = new LinearLayoutManager((FragmentActivity) getContext(), LinearLayoutManager.HORIZONTAL, false);
                                         rcv2.setLayoutManager(layoutManager1);
                                         rcv2.setAdapter(adapter);
                                         b.setVisibility(View.GONE);
                                         adapter.setItemClickListener(new SongAdapter.OnItemsClickListener() {
                                             @Override
                                             public void OnItemClick(Song song, int index) throws IOException {
-                                                if(media.getPlayer().isPlaying()){
+                                                if (media.getPlayer().isPlaying()) {
                                                     media.getPlayer().stop();
                                                     media.setPlayer(new MediaPlayer());
                                                 }
@@ -224,12 +229,11 @@ public class HomeFragment extends Fragment {
                                                 //img_song.setImageResource(song.getImgCover());
                                                 song_name.setText(song.getNameSong());
                                                 instance.getArtitsbyIDSongPlaying(result1 -> {
-                                                    if(result1.isSuccess()){
+                                                    if (result1.isSuccess()) {
                                                         ArtistInSong artistOfSongPlaying = result1.get();
-                                                        if(artistOfSongPlaying == null){
+                                                        if (artistOfSongPlaying == null) {
                                                             artist.setText("null");
-                                                        }
-                                                        else {
+                                                        } else {
                                                             Log.d("Artist of song: ", artistOfSongPlaying.toString());
                                                             instance.getUserByObjID(artistOfSongPlaying.getIdUser(), new App.Callback<User>() {
                                                                 @Override
@@ -266,13 +270,11 @@ public class HomeFragment extends Fragment {
                                 });
                             }
 
-                        }else {
+                        } else {
                             Toast.makeText(getActivity(), "Lỗi", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-
-
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Không thể lấy bài hát.", Toast.LENGTH_SHORT).show();
             }
