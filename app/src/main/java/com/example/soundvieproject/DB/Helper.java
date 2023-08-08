@@ -698,7 +698,7 @@ public class Helper {
     public void deleteSongInAlbum(ObjectId idAlbum, ObjectId idSong, App.Callback<DeleteResult> callback){
         MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         Document doc = new Document();
-        doc.append("idAlbum", idAlbum);
+        doc.append("idPlaylist", idAlbum);
         doc.append("idSong", idSong);
         col.deleteOne(doc).getAsync(callback);
     }

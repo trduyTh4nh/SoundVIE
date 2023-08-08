@@ -284,7 +284,7 @@ public class ArtistUpMusicActivity extends AppCompatActivity {
     private void openFile() {
         Intent i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         i.addCategory(Intent.CATEGORY_OPENABLE);
-        i.setType("*/*");
+        i.setType("audio/*");
         startActivityForResult(i, 2);
     }
     private void selectImage(){
