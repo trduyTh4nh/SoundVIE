@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_wait_inform"
+    android:orientation="vertical"
+    android:padding="25dp"
+    tools:context=".RequestSuccessActivity">
+
+    <TextView
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thành công"
+        android:textColor="@color/white"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:tint="@color/white"
+        android:src="@drawable/loader_line"
+        android:layout_width="128dp"
+        android:layout_height="128dp">
+
+    </ImageView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yêu cầu của bạn đã được gửi"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Nhân viên của chúng tôi sẽ xét duyệt và cấp quyền nghệ sĩ cho bạn sớm nhất có thể"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Sau khi đã cấp quyền nghệ sĩ, chúng tôi sẽ thông báo cho bạn."
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+
+    <Button
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_primary"
+        android:text="Xong"
+        android:textColor="@color/black" />
+</LinearLayout>
+
