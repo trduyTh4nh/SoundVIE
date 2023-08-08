@@ -99,6 +99,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
+                android:id="@+id/btnProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -114,48 +115,7 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:background="@drawable/transparent_ripple"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:paddingLeft="30dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-            <TextView
-                android:textSize="20dp"
-                android:layout_margin="5dp"
-                android:textColor="@color/white"
-                android:text="Tài khoản"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TextView>
-
-        </LinearLayout>
-
-        <RelativeLayout
-            android:paddingRight="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
-                android:layout_alignParentRight="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/transparent_ripple"
-                android:src="@drawable/baseline_chevron_right_24">
-
-            </ImageButton>
-        </RelativeLayout>
-
-
-
-    </LinearLayout>
     <LinearLayout
         android:background="@drawable/transparent_ripple"
         android:id="@+id/musicDownloaded"

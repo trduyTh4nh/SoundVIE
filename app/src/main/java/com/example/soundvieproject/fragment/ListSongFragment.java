@@ -22,6 +22,7 @@ import com.example.soundvieproject.model.Playlist;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.RejectedExecutionException;
 
 import io.realm.mongodb.mongo.MongoCollection;
 import io.realm.mongodb.mongo.iterable.MongoCursor;
@@ -65,7 +66,7 @@ public class ListSongFragment extends Fragment {
         rcvList = view.findViewById(R.id.rcvPlayList);
         super.onViewCreated(view, savedInstanceState);
     }
-    public void getPlaylists(){
+    public void getPlaylists() throws RejectedExecutionException {
         arrayPlayList = new ArrayList<>();
         helper.getPlayList(result -> {
             if(result.isSuccess()){
@@ -75,8 +76,8 @@ public class ListSongFragment extends Fragment {
                     Log.d("Check", playlist.toString());
                     arrayPlayList.add(new Playlist(playlist.getId(), playlist.getName(), playlist.getImage(), playlist.getIdUser(), playlist.getDes()));
                 }
-                PlaylistAdapter adap = new PlaylistAdapter(getActivity().getApplicationContext(), arrayPlayList);
-                GridLayoutManager l = new GridLayoutManager(getActivity(), 2);
+                PlaylistAdapter adap = new PlaylistAdapter(getContext(), arrayPlayList);
+                GridLayoutManager l = new GridLayoutManager(getContext(), 2);
                 rcvList.setAdapter(adap);
                 rcvList.setLayoutManager(l);
 

@@ -673,13 +673,13 @@ public class Helper {
     public void deleteSongsInAlbum(ObjectId idAlbum){
         MongoCollection<SongInPlayList> col = db.getCollection("SongInAlbum", SongInPlayList.class).withCodecRegistry(pojoCodecRegistry);
         Document doc = new Document("idPlaylist", idAlbum);
-        col.deleteMany(doc).getAsync(t -> {
+        col.deleteMany(doc).getAsync((t -> {
             if(t.isSuccess()){
                 Log.d("Ràng buộc", "Thành công!");
             } else {
                 Log.e("Ràng buộc", "Lỗi: "+ t.getError().getMessage());
             }
-        });
+        }));
 
     }
 

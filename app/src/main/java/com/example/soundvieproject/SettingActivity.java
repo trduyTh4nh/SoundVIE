@@ -31,6 +31,7 @@ public class SettingActivity extends AppCompatActivity {
 
     ImageButton btnBack;
     LinearLayout btnDowLoaded;
+    ImageButton btnProfile;
     Helper helper =  Helper.INSTANCE;
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,7 +40,16 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
 
         btnBack = findViewById(R.id.btnBack);
+        btnProfile = findViewById(R.id.btnProfile);
         btnDowLoaded = findViewById(R.id.musicDownloaded);
+
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SettingActivity.this, EditUserActivity.class);
+                startActivity(i);
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
