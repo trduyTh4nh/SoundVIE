@@ -4,8 +4,8 @@ hơi mạnh
 CSDL: MongoDB, SQLIte\
 Storage: Firebase Cloud Storage
 # Tiến độ
-![](https://geps.dev/progress/45)\
-45% - Một vài tính năng cơ bản
+![](https://geps.dev/progress/75)\
+75% - Đã báo cáo, nhưng thiếu tính năng và có nhiều bug (kq: 9 điểm).
 # Mục tiêu
 Hoàn thành 20/49 nghiệp vụ đã thiết kế.
 # Tải binary:
